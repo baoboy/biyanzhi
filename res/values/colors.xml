@@ -7,5 +7,6 @@
     <color name="black">#000000</color>
     <color name="color_d5">#d5d5d5</color>
     <color name="gray">#ff7f7f7f</color>
+    <color name="self_comment_color">#37b669</color>
 
 </resources>

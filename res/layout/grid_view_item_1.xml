@@ -3,48 +3,55 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/item_bg"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingTop="8dip" >
 
-    <com.biyanzhi.view.RoundAnglePictureImageView
-        android:id="@+id/img"
-        android:layout_width="300dip"
-        android:layout_height="300dip"
-        android:scaleType="centerCrop"
-        android:src="@drawable/default_avatar" />
-
-    <TextView
-        android:id="@+id/txt_content"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dip"
-        android:layout_marginLeft="5dip"
-        android:layout_marginRight="5dip"
-        android:layout_marginTop="10dip"
-        android:gravity="center"
-        android:singleLine="true"
-        android:text="无病呻吟"
-        android:textColor="#666666"
-        android:textSize="12sp" />
-    <!-- android:background="#7dd5d5d5" -->
+        android:background="@drawable/item_bg"
+        android:orientation="vertical" >
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dip"
-        android:background="#d5d5d5" />
+        <com.biyanzhi.view.RoundAnglePictureImageView
+            android:id="@+id/img"
+            android:layout_width="300dip"
+            android:layout_height="300dip"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_avatar" />
 
-    <TextView
-        android:id="@+id/txt_score"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dip"
-        android:layout_marginLeft="5dip"
-        android:layout_marginRight="5dip"
-        android:layout_marginTop="10dip"
-        android:gravity="center"
-        android:singleLine="true"
-        android:text="10个人喜欢"
-        android:textColor="#666666"
-        android:textSize="12sp" />
+        <TextView
+            android:id="@+id/txt_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="10dip"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="无病呻吟"
+            android:textColor="#666666"
+            android:textSize="12sp" />
+        <!-- android:background="#7dd5d5d5" -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dip"
+            android:background="#d5d5d5" />
+
+        <TextView
+            android:id="@+id/txt_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="10dip"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="10个人喜欢"
+            android:textColor="#666666"
+            android:textSize="12sp" />
+    </LinearLayout>
 
 </LinearLayout>

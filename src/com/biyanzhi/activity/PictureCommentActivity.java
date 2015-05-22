@@ -16,19 +16,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.biyanzhi.R;
+import com.biyanzhi.adapter.CommentAdapter;
+import com.biyanzhi.data.Comment;
 import com.biyanzhi.data.Picture;
 import com.biyanzhi.data.PictureScore;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
+import com.biyanzhi.task.SendCommentTask;
 import com.biyanzhi.task.SendPictureScoreTask;
 import com.biyanzhi.utils.Constants;
+import com.biyanzhi.utils.DateUtils;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.SharedUtils;
+import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
@@ -47,6 +55,7 @@ public class PictureCommentActivity extends BaseActivity implements
 	private Button btnComment;
 	private EditText edit_comment;
 	private Dialog dialog;
+	private List<Comment> comments = new ArrayList<Comment>();
 
 	private int position;
 
@@ -58,6 +67,7 @@ public class PictureCommentActivity extends BaseActivity implements
 	private LinearLayout comment_layout;
 
 	private RelativeLayout layout_title;
+	private ListView mListView;
 
 	private Picture picture;
 
@@ -65,6 +75,7 @@ public class PictureCommentActivity extends BaseActivity implements
 	private TextView txt_score;
 
 	private boolean autoChange;
+	private CommentAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +84,7 @@ public class PictureCommentActivity extends BaseActivity implements
 		picture = (Picture) getIntent().getSerializableExtra("picture");
 		initView();
 		setValue();
+		viewLineVisible();
 	}
 
 	private void initView() {
@@ -91,6 +103,7 @@ public class PictureCommentActivity extends BaseActivity implements
 		LayoutParams layoutParams = img.getLayoutParams();
 		layoutParams.width = Utils.getSecreenWidth(this) - 100;
 		img.setLayoutParams(layoutParams);
+		mListView = (ListView) findViewById(R.id.comment_listView);
 		setListener();
 	}
 
@@ -114,6 +127,9 @@ public class PictureCommentActivity extends BaseActivity implements
 	}
 
 	private void setValue() {
+		comments = picture.getComments();
+		adapter = new CommentAdapter(this, comments);
+		mListView.setAdapter(adapter);
 		String content = picture.getContent();
 		if ("".equals(content)) {
 			txt_context.setVisibility(View.GONE);
@@ -132,6 +148,15 @@ public class PictureCommentActivity extends BaseActivity implements
 		}
 	}
 
+	private void viewLineVisible() {
+		if (comments.size() > 0) {
+			comment_layout.setVisibility(View.VISIBLE);
+		} else {
+			comment_layout.setVisibility(View.GONE);
+		}
+
+	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -143,6 +168,7 @@ public class PictureCommentActivity extends BaseActivity implements
 			if (content.length() == 0) {
 				return;
 			}
+			sendComment(content);
 			break;
 		case R.id.img:
 			List<String> imgUrl = new ArrayList<String>();
@@ -158,6 +184,41 @@ public class PictureCommentActivity extends BaseActivity implements
 		default:
 			break;
 		}
+	}
+
+	private void sendComment(String content) {
+		dialog = DialogUtil.createLoadingDialog(this, "«Î…‘∫Ú");
+		dialog.show();
+		final Comment comment = new Comment();
+		comment.setComment_content(content);
+		if (isReplaySomeOne) {
+			comment.setReply_someone_name(replaySomeOneName);
+			comment.setReply_someone_id(replaySomeOneID);
+		}
+		comment.setPicture_id(picture.getPicture_id());
+		comment.setComment_time(DateUtils.getShowTime());
+		comment.setPublisher_id(SharedUtils.getIntUid());
+		comment.setPublisher_avatar(SharedUtils.getAPPUserAvatar());
+		comment.setPublisher_name(SharedUtils.getAPPUserName());
+		SendCommentTask task = new SendCommentTask(picture.getPublisher_id());
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				if (dialog != null) {
+					dialog.dismiss();
+				}
+				if (result != RetError.NONE) {
+					return;
+				}
+				edit_comment.setText("");
+				ToastUtil.showToast("ªÿ∏¥≥…π¶", Toast.LENGTH_SHORT);
+				comments.add(0, comment);
+				adapter.notifyDataSetChanged();
+				viewLineVisible();
+
+			}
+		});
+		task.executeParallel(comment);
 	}
 
 	private void delReplaySomeOne() {

@@ -19,8 +19,7 @@
         android:layout_marginRight="8dip"
         android:horizontalSpacing="8dip"
         android:numColumns="2"
-        android:scrollbars="none"
-        android:verticalSpacing="8dip" >
+        android:scrollbars="none" >
     </GridView>
     <!-- <com.etsy.android.grid.StaggeredGridView -->
     <!-- android:id="@+id/grid_view" -->

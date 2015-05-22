@@ -96,7 +96,7 @@ public class DateUtils {
 		return strdate;
 	}
 
-	public static String getGrowthShowTime() {
+	public static String getShowTime() {
 		return format(new Date(), "yyyy-MM-dd HH:mm");
 	}
 
