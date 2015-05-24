@@ -92,7 +92,6 @@ public class CommentAdapter extends BaseAdapter {
 			if (comment.getPublisher_id() == SharedUtils.getIntUid()) {
 				holder.txt_comment_content.setTextColor(mContext.getResources()
 						.getColor(R.color.self_comment_color));
-				Utils.print("aaaaaaaaaaaaaaaaaaaaaaa");
 			} else {
 				holder.txt_comment_content.setTextColor(Color.BLACK);
 			}

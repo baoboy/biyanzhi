@@ -1,5 +1,6 @@
 package com.biyanzhi.data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import com.biyanzhi.data.result.ApiRequest;
@@ -11,7 +12,7 @@ import com.biyanzhi.parser.IParser;
 import com.biyanzhi.parser.StringParser;
 import com.biyanzhi.utils.SharedUtils;
 
-public class Comment {
+public class Comment implements Serializable {
 	private final String COMMENT_API = "addcomment.do";
 
 	private int comment_id;

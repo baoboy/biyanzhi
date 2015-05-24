@@ -1,13 +1,15 @@
 package com.biyanzhi.parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.biyanzhi.data.Comment;
 import com.biyanzhi.data.Picture;
-import com.biyanzhi.data.PictureImage;
 import com.biyanzhi.data.PictureList;
 import com.biyanzhi.data.result.Result;
 
@@ -36,21 +38,36 @@ public class PictureListParser implements IParser {
 			int picture_image_width = obj.getInt("picture_image_width");
 			int picture_image_height = obj.getInt("picture_image_height");
 			int score_number = obj.getInt("score_number");
-
-			// JSONArray jsonImages = obj.getJSONArray("images");
-			// List<PictureImage> images = new ArrayList<PictureImage>();
-			// for (int j = 0; j < jsonImages.length(); j++) {
-			// JSONObject obj2 = (JSONObject) jsonImages.opt(j);
-			// int image_id = obj2.getInt("image_id");
-			// String image_url = obj2.getString("image_url");
-			// PictureImage pimg = new PictureImage();
-			// pimg.setImage_id(image_id);
-			// pimg.setImage_url(image_url);
-			// images.add(pimg);
-			// }
+			// comments
+			JSONArray commentsJson = obj.getJSONArray("comments");
+			List<Comment> comments = new ArrayList<Comment>();
+			for (int j = 0; j < commentsJson.length(); j++) {
+				JSONObject obj2 = (JSONObject) commentsJson.opt(j);
+				int comment_id = obj2.getInt("comment_id");
+				int comment_publisher_id = obj2.getInt("publisher_id");
+				String comment_time = obj2.getString("comment_time");
+				String comment_content = obj2.getString("comment_content");
+				String comm_publisher_name = obj2.getString("publisher_name");
+				String comm_publisher_avatar = obj2
+						.getString("publisher_avatar");
+				String reply_someone_name = obj2
+						.getString("reply_someone_name");
+				int reply_someone_id = obj2.getInt("reply_someone_id");
+				Comment comment = new Comment();
+				comment.setComment_content(comment_content);
+				comment.setComment_id(comment_id);
+				comment.setComment_time(comment_time);
+				comment.setPublisher_id(publisher_id);
+				comment.setPicture_id(picture_id);
+				comment.setPublisher_avatar(comm_publisher_avatar);
+				comment.setPublisher_name(comm_publisher_name);
+				comment.setReply_someone_name(reply_someone_name);
+				comment.setReply_someone_id(reply_someone_id);
+				comments.add(comment);
+			}
+			sortComment(comments);
 			Picture picture = new Picture();
 			picture.setContent(content);
-			// picture.setImages(images);
 			picture.setPicture_id(picture_id);
 			picture.setPublish_time(publish_time);
 			picture.setPublisher_avatar(publisher_avatar);
@@ -61,6 +78,7 @@ public class PictureListParser implements IParser {
 			picture.setPicture_image_height(picture_image_height);
 			picture.setPicture_image_width(picture_image_width);
 			picture.setScore_number(score_number);
+			picture.setComments(comments);
 			lists.add(picture);
 		}
 		PictureList cl = new PictureList();
@@ -68,5 +86,15 @@ public class PictureListParser implements IParser {
 		Result<PictureList> ret = new Result<PictureList>();
 		ret.setData(cl);
 		return ret;
+	}
+
+	private void sortComment(List<Comment> comments) {
+		Collections.sort(comments, new Comparator<Comment>() {
+			@Override
+			public int compare(Comment lhs, Comment rhs) {
+				return rhs.getComment_time().compareTo(lhs.getComment_time());
+			}
+		});
+
 	}
 }

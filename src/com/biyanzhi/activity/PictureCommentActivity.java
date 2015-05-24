@@ -8,10 +8,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,6 +32,8 @@ import com.biyanzhi.data.Comment;
 import com.biyanzhi.data.Picture;
 import com.biyanzhi.data.PictureScore;
 import com.biyanzhi.enums.RetError;
+import com.biyanzhi.popwindow.CommentPopwindow;
+import com.biyanzhi.popwindow.CommentPopwindow.OnCommentOnClick;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
 import com.biyanzhi.task.SendCommentTask;
 import com.biyanzhi.task.SendPictureScoreTask;
@@ -45,7 +50,7 @@ import com.biyianzhi.interfaces.ConfirmDialog;
 import fynn.app.PromptDialog;
 
 public class PictureCommentActivity extends BaseActivity implements
-		OnClickListener, TextWatcher {
+		OnClickListener, TextWatcher, OnItemClickListener, OnCommentOnClick {
 	private ImageView img_avatar;
 	private TextView txt_user_name;
 	private TextView txt_time;
@@ -56,8 +61,6 @@ public class PictureCommentActivity extends BaseActivity implements
 	private EditText edit_comment;
 	private Dialog dialog;
 	private List<Comment> comments = new ArrayList<Comment>();
-
-	private int position;
 
 	private boolean isReplaySomeOne = false;
 
@@ -76,6 +79,7 @@ public class PictureCommentActivity extends BaseActivity implements
 
 	private boolean autoChange;
 	private CommentAdapter adapter;
+	private CommentPopwindow pop;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +128,7 @@ public class PictureCommentActivity extends BaseActivity implements
 				showScore((int) (arg1 * 20));
 			}
 		});
+		mListView.setOnItemClickListener(this);
 	}
 
 	private void setValue() {
@@ -282,5 +287,38 @@ public class PictureCommentActivity extends BaseActivity implements
 		picscore.setPicture_id(picture.getPicture_id());
 		picscore.setPicture_score(score);
 		task.executeParallel(picscore);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View view, int position,
+			long arg3) {
+		pop = new CommentPopwindow(this, view, position,
+				picture.getPublisher_id());
+		pop.setmCallBack(this);
+		pop.show();
+	}
+
+	@Override
+	public void onClick(int position, int id) {
+		switch (id) {
+		case R.id.txt_reply:
+			reply(position);
+			break;
+		case R.id.txt_del:
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void reply(int position) {
+		Comment comment = comments.get(position);
+		edit_comment.setText(Html.fromHtml("<font color=#F06617>@"
+				+ comment.getPublisher_name() + "</font> "));
+		edit_comment.setSelection(edit_comment.getText().toString().length());
+		Utils.getFocus(edit_comment);
+		isReplaySomeOne = true;
+		replaySomeOneID = comment.getPublisher_id();
+		replaySomeOneName = comment.getPublisher_name();
 	}
 }

@@ -8,40 +8,40 @@ package fynn.app;
 
 public final class R {
 	public static final class drawable {
-		public static final int fynn_prompt_dialog_bg_normal = 0x7f02000b;
-		public static final int fynn_prompt_dialog_btn_center_normal = 0x7f02000c;
-		public static final int fynn_prompt_dialog_btn_center_pressed = 0x7f02000d;
-		public static final int fynn_prompt_dialog_btn_center_selector = 0x7f02000e;
-		public static final int fynn_prompt_dialog_btn_left_normal = 0x7f02000f;
-		public static final int fynn_prompt_dialog_btn_left_pressed = 0x7f020010;
-		public static final int fynn_prompt_dialog_btn_left_selector = 0x7f020011;
-		public static final int fynn_prompt_dialog_btn_right_normal = 0x7f020012;
-		public static final int fynn_prompt_dialog_btn_right_pressed = 0x7f020013;
-		public static final int fynn_prompt_dialog_btn_right_selector = 0x7f020014;
-		public static final int fynn_prompt_dialog_btn_single_normal = 0x7f020015;
-		public static final int fynn_prompt_dialog_btn_single_pressed = 0x7f020016;
-		public static final int fynn_prompt_dialog_btn_single_selector = 0x7f020017;
-		public static final int fynn_prompt_dialog_title_bar_bg_skyblue = 0x7f020018;
+		public static final int fynn_prompt_dialog_bg_normal = 0x7f02000d;
+		public static final int fynn_prompt_dialog_btn_center_normal = 0x7f02000e;
+		public static final int fynn_prompt_dialog_btn_center_pressed = 0x7f02000f;
+		public static final int fynn_prompt_dialog_btn_center_selector = 0x7f020010;
+		public static final int fynn_prompt_dialog_btn_left_normal = 0x7f020011;
+		public static final int fynn_prompt_dialog_btn_left_pressed = 0x7f020012;
+		public static final int fynn_prompt_dialog_btn_left_selector = 0x7f020013;
+		public static final int fynn_prompt_dialog_btn_right_normal = 0x7f020014;
+		public static final int fynn_prompt_dialog_btn_right_pressed = 0x7f020015;
+		public static final int fynn_prompt_dialog_btn_right_selector = 0x7f020016;
+		public static final int fynn_prompt_dialog_btn_single_normal = 0x7f020017;
+		public static final int fynn_prompt_dialog_btn_single_pressed = 0x7f020018;
+		public static final int fynn_prompt_dialog_btn_single_selector = 0x7f020019;
+		public static final int fynn_prompt_dialog_title_bar_bg_skyblue = 0x7f02001a;
 	}
 	public static final class id {
-		public static final int btn_divider1 = 0x7f090060;
-		public static final int btn_divider2 = 0x7f090062;
-		public static final int btn_view = 0x7f09005e;
-		public static final int button_center = 0x7f090061;
-		public static final int button_left = 0x7f09005f;
-		public static final int button_right = 0x7f090063;
-		public static final int dialog = 0x7f090058;
-		public static final int layout_addview = 0x7f09005b;
-		public static final int message = 0x7f09005c;
-		public static final int msg_btn_divider = 0x7f09005d;
-		public static final int title = 0x7f090048;
-		public static final int title_msg_divider = 0x7f09005a;
-		public static final int titlebar = 0x7f090059;
+		public static final int btn_divider1 = 0x7f090069;
+		public static final int btn_divider2 = 0x7f09006b;
+		public static final int btn_view = 0x7f090067;
+		public static final int button_center = 0x7f09006a;
+		public static final int button_left = 0x7f090068;
+		public static final int button_right = 0x7f09006c;
+		public static final int dialog = 0x7f090061;
+		public static final int layout_addview = 0x7f090064;
+		public static final int message = 0x7f090065;
+		public static final int msg_btn_divider = 0x7f090066;
+		public static final int title = 0x7f090045;
+		public static final int title_msg_divider = 0x7f090063;
+		public static final int titlebar = 0x7f090062;
 	}
 	public static final class layout {
-		public static final int fynn_prompt_dialog_normal = 0x7f030009;
-		public static final int fynn_prompt_dialog_titlebar = 0x7f03000a;
-		public static final int fynn_prompt_dialog_titlebar_skyblue = 0x7f03000b;
+		public static final int fynn_prompt_dialog_normal = 0x7f03000b;
+		public static final int fynn_prompt_dialog_titlebar = 0x7f03000c;
+		public static final int fynn_prompt_dialog_titlebar_skyblue = 0x7f03000d;
 	}
 	public static final class style {
 		public static final int AppBaseTheme = 0x7f050000;

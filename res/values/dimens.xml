@@ -7,5 +7,14 @@
     <dimen name="dp26">12dip</dimen>
     <dimen name="scale42sp">20sp</dimen>
     <dimen name="scale40dip">19dip</dimen>
+    <dimen name="dp80">37dip</dimen>
+    <dimen name="dp98">46dip</dimen>
+    <dimen name="dp54">25dip</dimen>
+    <dimen name="sp_40">19sp</dimen>
+    <dimen name="dp94">44dip</dimen>
+    <dimen name="dp76">36dip</dimen>
+    <dimen name="dp48">23dip</dimen>
+    <dimen name="sp_48">22sp</dimen>
+    <dimen name="sp_30">16sp</dimen>
 
 </resources>
