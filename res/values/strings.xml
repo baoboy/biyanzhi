@@ -16,5 +16,14 @@
     <string name="xlistview_footer_hint_normal">查看更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
     <string name="viewpager_indicator">%1$d/%2$d</string>
+    <string name="next_step">下一步</string>
+    <string name="input_phone_num">请输入手机号</string>
+    <string name="inupt_user_name">请输入昵称</string>
+    <string name="inupt_telephone">请输入手机号码</string>
+    <string name="inupt_password">请输入密码</string>
+    <string name="inupt_again_password">请再一次输入密码</string>
+    <string name="take_photo">拍照</string>
+    <string name="from_photo_album">从相册选择</string>
+    <string name="finished">完成</string>
 
 </resources>

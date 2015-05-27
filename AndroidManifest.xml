@@ -68,6 +68,14 @@
             android:name=".activity.ImageDelPagerActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".activity.imagefactory.ImageFactoryActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".register.RegisterActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

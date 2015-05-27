@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.biyanzhi.R;
 import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
+import com.biyanzhi.register.RegisterActivity;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.Utils;
@@ -28,6 +29,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 	private MyEditTextDeleteImg edit_telphone;
 	private MyEditTextDeleteImg edit_password;
 	private Button btn_login;
+	private Button btn_register;
 	private Button btn_find_password;
 	private ImageView back;
 	private TextView txt_title;
@@ -71,6 +73,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 	}
 
 	private void initView() {
+		btn_register = (Button) findViewById(R.id.btn_regisiter);
 		back = (ImageView) findViewById(R.id.back);
 		txt_title = (TextView) findViewById(R.id.title_txt);
 		txt_title.setText("µÇÂ¼");
@@ -94,6 +97,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 		btn_login.setOnClickListener(this);
 		btn_find_password.setOnClickListener(this);
 		back.setOnClickListener(this);
+		btn_register.setOnClickListener(this);
 	}
 
 	@Override
@@ -133,6 +137,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 			break;
 		case R.id.btn_findPasswrod:
 			// startActivity(new Intent(this, FindPasswordActivity.class));
+			Utils.leftOutRightIn(this);
+			break;
+		case R.id.btn_regisiter:
+			startActivity(new Intent(this, RegisterActivity.class));
 			Utils.leftOutRightIn(this);
 			break;
 		case R.id.back:

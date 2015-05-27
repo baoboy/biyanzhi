@@ -6,9 +6,15 @@
     <color name="bg_color">#e8eef3</color>
     <color name="black">#000000</color>
     <color name="color_d5">#d5d5d5</color>
+    <color name="text_desc">#ffbebbb4</color>
     <color name="gray">#ff7f7f7f</color>
     <color name="self_comment_color">#37b669</color>
     <color name="editTextClolor">#c0c0c2</color>
     <color name="bg_line">#c7c7c9</color>
-
-</resources>
+    <color name="unberlineview_dividingline">#ffd9d3c5</color>
+    <color name="unberlineview_bottomline">#ffd1cdc0</color>
+    <color name="unberlineview_text">#ff888271</color>
+    <color name="reg_desc_text">#ffcac6c0</color>
+    <color name="city_select_color">#37b669</color>
+    <color name="city_nomal_color">#6f6f6f</color>
+</resources>
