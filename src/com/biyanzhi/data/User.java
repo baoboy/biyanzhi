@@ -4,23 +4,25 @@ import java.io.File;
 import java.util.HashMap;
 
 import com.biyanzhi.data.result.ApiRequest;
+import com.biyanzhi.data.result.MapResult;
 import com.biyanzhi.data.result.Result;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.enums.RetStatus;
 import com.biyanzhi.parser.IParser;
+import com.biyanzhi.parser.MapParser;
 import com.biyanzhi.parser.SimpleParser;
 import com.biyanzhi.parser.UserSelfPaser;
 import com.biyanzhi.utils.BitmapUtils;
 import com.biyanzhi.utils.SharedUtils;
 
 public class User {
-	private static final String VERIFY_CELLPHONE_API = "VerifyCellPhoneServlet";
-	private static final String USER_REGISTER_API = "UserRegisterServlet";
+	private static final String VERIFY_CELLPHONE_API = "getVerifyCode.do";
+	private static final String USER_REGISTER_API = "userRegister.do";
 	private static final String USER_LOGIN_API = "UserLoginServlet";
 	private static final String GET_USER_INFO = "GetUserInfoServlet";
-	private static final String FIND_PASSWORD_VERIFY_CODE = "FindPasswordGetVerifyCode";
+	private static final String FIND_PASSWORD_VERIFY_CODE = "getVerifyCode.do";
 	private static final String UPDATE_USER_LOGIN_PASSWORD = "UpdateUserLoginPassword";
-	private static final String CHECK_VERIFY_CODE = "CheckVerifyCodeServlet";
+	private static final String CHECK_VERIFY_CODE = "checkVerifyCode.do";
 
 	private String user_cellphone = "";// 用户注册电话
 	private String user_name = "";// 用户注册姓名
@@ -28,6 +30,8 @@ public class User {
 	private String user_gender = "";// 用户注册性别
 	private String user_birthday = "";// 用户注册生日
 	private String user_password = "";// 用户注册密码
+	private String user_address = "";
+	private String user_province = "";
 	private int user_id = 0;
 
 	public int getUser_id() {
@@ -86,6 +90,22 @@ public class User {
 		this.user_password = user_password;
 	}
 
+	public String getUser_address() {
+		return user_address;
+	}
+
+	public void setUser_address(String user_address) {
+		this.user_address = user_address;
+	}
+
+	public String getUser_province() {
+		return user_province;
+	}
+
+	public void setUser_province(String user_province) {
+		this.user_province = user_province;
+	}
+
 	/**
 	 * 验证手机号手机号是否已被注册
 	 * 
@@ -129,7 +149,8 @@ public class User {
 		params.put("user_password", user_password);
 		params.put("user_gender", user_gender);
 		params.put("user_birthday", user_birthday);
-
+		params.put("user_address", user_address);
+		params.put("user_province", user_province);
 		File file = BitmapUtils.getImageFile(user_avatar);
 		Result ret = ApiRequest.requestWithFile(USER_REGISTER_API, params,
 				file, parser);

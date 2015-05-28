@@ -133,31 +133,6 @@ public class SharedUtils {
 		editor.commit();
 	}
 
-	public static String getAPPUserRegisterTime() {
-		return sharedPreferences.getString("app_user_rigistertime", "");
-
-	}
-
-	public static void setAPPUserRegisterTime(String value) {
-		editor.putString("app_user_rigistertime", value);
-		editor.commit();
-	}
-
-	public static String getAPPUserDeclaration() {
-		return sharedPreferences.getString("app_user_declaration", "");
-
-	}
-
-	public static void setAPPUserDeclaration(String value) {
-		editor.putString("app_user_declaration", value);
-		editor.commit();
-	}
-
-	public static String getAPPUserDescription() {
-		return sharedPreferences.getString("app_user_description", "");
-
-	}
-
 	public static void setAPPUserAddress(String value) {
 		editor.putString("app_user_address", value);
 		editor.commit();
@@ -175,83 +150,6 @@ public class SharedUtils {
 
 	public static String getAPPUserProvince() {
 		return sharedPreferences.getString("app_user_province", "");
-
-	}
-
-	public static void setAPPUserProvinceKey(String value) {
-		editor.putString("app_user_province_key", value);
-		editor.commit();
-	}
-
-	public static String getAPPUserProvinceKey() {
-		return sharedPreferences.getString("app_user_province_key", "");
-
-	}
-
-	public static void setAPPUserChatID(String value) {
-		editor.putString("app_user_chat_id", value);
-		editor.commit();
-	}
-
-	public static String getAPPUserChatID() {
-		return sharedPreferences.getString("app_user_chat_id", "");
-
-	}
-
-	public static void setAPPUserSortKey(String value) {
-		editor.putString("app_user_sortkey", value);
-		editor.commit();
-	}
-
-	public static String getAPPUserSortKey() {
-		return sharedPreferences.getString("app_user_sortkey", "");
-
-	}
-
-	public static void setAPPUserDescription(String value) {
-		editor.putString("app_user_description", value);
-		editor.commit();
-	}
-
-	public static void setCircleMemberLastReqTime(int cid, long lastReqTime) {
-		editor.putLong("circle_member_last_req_time" + cid, lastReqTime);
-		editor.commit();
-	}
-
-	public static long getCircleMemberLastReqTime(int cid) {
-		return sharedPreferences.getLong("circle_member_last_req_time" + cid,
-				0l);
-
-	}
-
-	public static void setCircleMemberLocalLastReqTime(int cid, long lastReqTime) {
-		editor.putLong("circle_member_local_last_req_time" + cid, lastReqTime);
-		editor.commit();
-	}
-
-	public static long getCircleMemberLocalLastReqTime(int cid) {
-		return sharedPreferences.getLong("circle_member_local_last_req_time"
-				+ cid, 0l);
-
-	}
-
-	public static void setCircleLastRequestTime(long lastReqTime) {
-		editor.putLong("circle_last_request_time", lastReqTime);
-		editor.commit();
-	}
-
-	public static long getCircleLastRequestTime() {
-		return sharedPreferences.getLong("circle_last_request_time", 0l);
-
-	}
-
-	public static void setGrowthLastRequestTime(String lastReqTime) {
-		editor.putString("growth_last_request_time", lastReqTime);
-		editor.commit();
-	}
-
-	public static String getGrowthLastRequestTime() {
-		return sharedPreferences.getString("growth_last_request_time", "0");
 
 	}
 
