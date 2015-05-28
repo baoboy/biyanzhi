@@ -29,6 +29,7 @@ import com.biyanzhi.task.PublishPictureTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.FileUtils;
+import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.view.RoundAngleImageView;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
@@ -163,6 +164,9 @@ public class PublicshPictureActivity extends BaseActivity implements
 			Picture picture = new Picture();
 			picture.setContent(str_content);
 			picture.setPicture_image_url(image_path);
+			picture.setPublisher_avatar(SharedUtils.getAPPUserAvatar());
+			picture.setPublisher_id(SharedUtils.getIntUid());
+			picture.setPublisher_name(SharedUtils.getAPPUserName());
 			publishPic(picture);
 			break;
 		default:

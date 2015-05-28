@@ -151,6 +151,9 @@ public class PictureCommentActivity extends BaseActivity implements
 		} else {
 			autoChange = true;
 		}
+		txt_user_name.setText(picture.getPublisher_name());
+		UniversalImageLoadTool.disPlay(picture.getPublisher_avatar(),
+				img_avatar, R.drawable.default_avatar);
 	}
 
 	private void viewLineVisible() {
@@ -173,7 +176,7 @@ public class PictureCommentActivity extends BaseActivity implements
 			if (content.length() == 0) {
 				return;
 			}
-			sendComment(content);
+			sendComment(content.replace("@" + replaySomeOneName, ""));
 			break;
 		case R.id.img:
 			List<String> imgUrl = new ArrayList<String>();
@@ -303,6 +306,7 @@ public class PictureCommentActivity extends BaseActivity implements
 		switch (id) {
 		case R.id.txt_reply:
 			reply(position);
+
 			break;
 		case R.id.txt_del:
 			break;

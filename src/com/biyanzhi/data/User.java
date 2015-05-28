@@ -4,21 +4,19 @@ import java.io.File;
 import java.util.HashMap;
 
 import com.biyanzhi.data.result.ApiRequest;
-import com.biyanzhi.data.result.MapResult;
 import com.biyanzhi.data.result.Result;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.enums.RetStatus;
 import com.biyanzhi.parser.IParser;
-import com.biyanzhi.parser.MapParser;
 import com.biyanzhi.parser.SimpleParser;
-import com.biyanzhi.parser.UserSelfPaser;
+import com.biyanzhi.parser.UserLoginPaser;
 import com.biyanzhi.utils.BitmapUtils;
 import com.biyanzhi.utils.SharedUtils;
 
 public class User {
 	private static final String VERIFY_CELLPHONE_API = "getVerifyCode.do";
 	private static final String USER_REGISTER_API = "userRegister.do";
-	private static final String USER_LOGIN_API = "UserLoginServlet";
+	private static final String USER_LOGIN_API = "userLogin.do";
 	private static final String GET_USER_INFO = "GetUserInfoServlet";
 	private static final String FIND_PASSWORD_VERIFY_CODE = "getVerifyCode.do";
 	private static final String UPDATE_USER_LOGIN_PASSWORD = "UpdateUserLoginPassword";
@@ -182,18 +180,21 @@ public class User {
 	 * @return
 	 */
 	public RetError userLogin() {
-		IParser parser = new UserSelfPaser();
+		IParser parser = new UserLoginPaser();
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("user_cellphone", user_cellphone);
 		params.put("user_password", user_password);
 		Result ret = ApiRequest.request(USER_LOGIN_API, params, parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
-			User member = (User) ret.getData();
-			SharedUtils.setAPPUserName(member.getUser_name());
-			SharedUtils.setAPPUserAvatar(member.getUser_avatar());
-			SharedUtils.setAPPUserBirthday(member.getUser_birthday());
-			SharedUtils.setUid(member.getUser_id() + "");
-			this.user_id = member.getUser_id();
+			User user = (User) ret.getData();
+			SharedUtils.setAPPUserAddress(user.getUser_address());
+			SharedUtils.setAPPUserAvatar(user.getUser_avatar());
+			SharedUtils.setAPPUserBirthday(user.getUser_birthday());
+			SharedUtils.setAPPUserGender(user.getUser_gender());
+			SharedUtils.setAPPUserName(user.getUser_name());
+			SharedUtils.setAPPUserProvince(user.getUser_province());
+			SharedUtils.setUid(user.getUser_id() + "");
+			this.user_id = user.getUser_id();
 			return RetError.NONE;
 		} else {
 			return ret.getErr();
@@ -201,19 +202,19 @@ public class User {
 
 	}
 
-	public RetError getUserInfo() {
-		IParser parser = new UserSelfPaser();
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		Result ret = ApiRequest.request(GET_USER_INFO, params, parser);
-		if (ret.getStatus() == RetStatus.SUCC) {
-			User member = (User) ret.getData();
-			user_avatar = member.getUser_avatar();
-			user_name = member.getUser_name();
-			return RetError.NONE;
-		} else {
-			return ret.getErr();
-		}
-	}
+	// public RetError getUserInfo() {
+	// IParser parser = new UserSelfPaser();
+	// HashMap<String, Object> params = new HashMap<String, Object>();
+	// Result ret = ApiRequest.request(GET_USER_INFO, params, parser);
+	// if (ret.getStatus() == RetStatus.SUCC) {
+	// User member = (User) ret.getData();
+	// user_avatar = member.getUser_avatar();
+	// user_name = member.getUser_name();
+	// return RetError.NONE;
+	// } else {
+	// return ret.getErr();
+	// }
+	// }
 
 	/**
 	 * 验证验证码是否正确

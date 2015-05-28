@@ -36,12 +36,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 
 	private Dialog dialog;
 
-	private int user_id;
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
+			if (dialog != null) {
+				dialog.dismiss();
+			}
 			switch (msg.what) {
 			case 1:
-				ToastUtil.showToast("登录成功", Toast.LENGTH_SHORT);
+				// ToastUtil.showToast("登录成功", Toast.LENGTH_SHORT);
 				startActivity(new Intent(LoginActivity.this, MainActivity.class));
 				finish();
 				break;
@@ -158,17 +160,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 				user.setUser_password(user_password);
 				RetError ret = user.userLogin();
 				if (ret == RetError.NONE) {
-					// MyApplation.initMemberSelf();
-					user_id = user.getUser_id();
-
+					mHandler.sendEmptyMessage(1);
 				} else if (ret == RetError.NOT_EXIST_USER) {
-					mHandler.sendEmptyMessage(2);
 					mHandler.sendEmptyMessage(-1);
 				} else if (ret == RetError.WRONG_PASSWORD) {
-					mHandler.sendEmptyMessage(2);
 					mHandler.sendEmptyMessage(-2);
 				} else {
-					mHandler.sendEmptyMessage(2);
 					mHandler.sendEmptyMessage(-3);
 				}
 			}

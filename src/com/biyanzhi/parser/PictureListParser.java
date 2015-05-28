@@ -57,7 +57,7 @@ public class PictureListParser implements IParser {
 				comment.setComment_content(comment_content);
 				comment.setComment_id(comment_id);
 				comment.setComment_time(comment_time);
-				comment.setPublisher_id(publisher_id);
+				comment.setPublisher_id(comment_publisher_id);
 				comment.setPicture_id(picture_id);
 				comment.setPublisher_avatar(comm_publisher_avatar);
 				comment.setPublisher_name(comm_publisher_name);

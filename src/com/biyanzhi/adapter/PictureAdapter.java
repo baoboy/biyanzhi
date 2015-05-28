@@ -3,11 +3,9 @@ package com.biyanzhi.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
@@ -15,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
-import com.biyanzhi.activity.PictureCommentActivity;
 import com.biyanzhi.data.Picture;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
@@ -55,7 +52,7 @@ public class PictureAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.txt_score.setText(Html.fromHtml("<font color=#F06617>"
-				+ picture.getScore_number() + "人</font>  参与评分 平均颜值"
+				+ picture.getScore_number() + "人</font> 评分 平均颜值"
 				+ "<font color=#F06617>(" + picture.getAverage_score()
 				+ "分)</font>"));
 		holder.contentView.setText(picture.getContent());
@@ -67,9 +64,9 @@ public class PictureAdapter extends BaseAdapter {
 		if (!path.startsWith("http")) {
 			path = "file://" + path;
 		}
+
 		UniversalImageLoadTool.disPlay(path, holder.imageView,
 				R.drawable.empty_photo);
-		holder.imageView.setOnClickListener(new OnClick(position));
 		return convertView;
 	}
 
@@ -96,20 +93,4 @@ public class PictureAdapter extends BaseAdapter {
 		TextView txt_score;
 	}
 
-	class OnClick implements OnClickListener {
-		private int position;
-
-		public OnClick(int position) {
-			this.position = position;
-		}
-
-		@Override
-		public void onClick(View v) {
-			mContext.startActivity(new Intent(mContext,
-					PictureCommentActivity.class).putExtra("picture",
-					mLists.get(position)));
-			Utils.leftOutRightIn(mContext);
-		}
-
-	}
 }

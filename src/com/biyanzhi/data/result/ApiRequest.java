@@ -50,7 +50,7 @@ public class ApiRequest {
 		Logger.out("ApiRequest.request.result", result, Level.DEBUG);
 		return parse(parser, result, params);
 	}
-
+ 
 	public static Result<?> requestWithFile(String url,
 			Map<String, Object> params, File file, IParser parser) {
 		params.put("user_id", SharedUtils.getUid());

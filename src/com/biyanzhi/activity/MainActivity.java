@@ -10,8 +10,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.biyanzhi.R;
 import com.biyanzhi.adapter.PictureAdapter;
@@ -36,6 +39,7 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 	// private StaggeredGridView mGridView;
 	private GridView mGridView;
 	private PictureAdapter adapter;
+	private TextView txt_title;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +51,28 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 	}
 
 	private void initView() {
+		txt_title = (TextView) findViewById(R.id.title_txt);
 		img_select = (ImageView) findViewById(R.id.img_create);
 		img_select.setOnClickListener(this);
 		// mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
 		mGridView = (GridView) findViewById(R.id.gridView1);
+		mGridView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				startActivity(new Intent(MainActivity.this,
+						PictureCommentActivity.class).putExtra("picture",
+						mLists.get(position)));
+				Utils.leftOutRightIn(MainActivity.this);
+			}
+		});
 	}
 
 	private void setValue() {
 		// mAdapter = new StaggeredAdapter(this, mLists);
 		// mGridView.setAdapter(mAdapter);
+		txt_title.setText("±»—’÷µ");
 		adapter = new PictureAdapter(this, mLists);
 		mGridView.setAdapter(adapter);
 
