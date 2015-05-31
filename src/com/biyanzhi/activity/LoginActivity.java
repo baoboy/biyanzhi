@@ -17,6 +17,7 @@ import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.register.RegisterActivity;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.MyEditTextDeleteImg;
@@ -70,6 +71,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (SharedUtils.getIntUid() != 0) {
+			startActivity(new Intent(this, MainActivity.class));
+			finish();
+			return;
+		}
 		setContentView(R.layout.activity_login);
 		initView();
 	}

@@ -46,6 +46,7 @@ import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 import com.biyianzhi.interfaces.ConfirmDialog;
+import com.biyianzhi.interfaces.OnAvatarClick;
 
 import fynn.app.PromptDialog;
 
@@ -129,6 +130,8 @@ public class PictureCommentActivity extends BaseActivity implements
 			}
 		});
 		mListView.setOnItemClickListener(this);
+		img_avatar.setOnClickListener(new OnAvatarClick(picture
+				.getPublisher_id(), this));
 	}
 
 	private void setValue() {

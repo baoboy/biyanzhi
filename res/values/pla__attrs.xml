@@ -19,14 +19,13 @@
 
     <attr name="absListViewStyle" format="reference" />
     <attr name="listViewStyle" format="reference" />
-    
+
     <declare-styleable name="PinterestLikeAdapterView">
         <attr name="plaColumnNumber" format="integer" />
         <attr name="plaLandscapeColumnNumber" format="integer" />
         <attr name="plaColumnPaddingLeft" format="dimension" />
         <attr name="plaColumnPaddingRight" format="dimension" />
-    </declare-styleable>    
-
+    </declare-styleable>
     <declare-styleable name="View">
 
         <!--
@@ -87,9 +86,10 @@
         <!-- Sets the padding, in pixels, of the bottom edge; see {@link android.R.attr#padding}. -->
         <attr name="paddingBottom" format="dimension" />
         <!-- Sets the padding, in pixels, of the start edge; see {@link android.R.attr#padding}. -->
-        <attr name="paddingStart" format="dimension" />
+        <!-- <attr name="paddingStart" format="dimension" /> -->
         <!-- Sets the padding, in pixels, of the end edge; see {@link android.R.attr#padding}. -->
-        <attr name="paddingEnd" format="dimension" />
+        <!-- <attr name="paddingEnd" format="dimension" /> -->
+
 
         <!--
              Boolean that controls whether a view can take focus.  By default the user can not
@@ -805,11 +805,10 @@
         -->
         <attr name="fastScrollAlwaysVisible" format="boolean" />
     </declare-styleable>
-    
     <declare-styleable name="ListView">
 
         <!-- Drawable or color to draw between list items. -->
-		<!-- <attr name="divider" format="reference|color" /> -->
+        <!-- <attr name="divider" format="reference|color" /> -->
         <!--
              Height of the divider. Will use the intrinsic height of the divider if this
              is not specified.
@@ -828,7 +827,7 @@
         <!-- Drawable to draw above list content. -->
         <attr name="overScrollHeader" format="reference|color" />
         <!-- Drawable to draw below list content. -->
-        
+
         <attr name="overScrollFooter" format="reference|color" />
     </declare-styleable>
 

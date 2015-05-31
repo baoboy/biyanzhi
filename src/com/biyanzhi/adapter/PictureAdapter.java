@@ -66,7 +66,7 @@ public class PictureAdapter extends BaseAdapter {
 		}
 
 		UniversalImageLoadTool.disPlay(path, holder.imageView,
-				R.drawable.empty_photo);
+				R.drawable.default_avatar);
 		return convertView;
 	}
 
