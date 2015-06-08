@@ -17,4 +17,7 @@
     <color name="reg_desc_text">#ffcac6c0</color>
     <color name="city_select_color">#37b669</color>
     <color name="city_nomal_color">#6f6f6f</color>
-</resources>
+    <color name="pciture_text">#666666</color>
+    <color name="pciture_blue">#009eff</color>
+
+</resources>

@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/img_avatar_bg"
+                android:layout_width="match_parent"
+                android:layout_height="230dip"
+                android:scaleType="centerCrop"
+                android:src="@drawable/picture_default_head" />
+
+            <LinearLayout
+                android:id="@+id/layout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_avatar_bg" >
+
+                <Button
+                    android:id="@+id/btn_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:text="个人信息"
+                    android:textColor="#666666"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:id="@+id/btn_yanzhi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:text="颜值"
+                    android:textColor="@color/pciture_blue"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dip"
+                android:layout_below="@+id/layout1"
+                android:background="#d5d5d5" />
+
+            <ViewFlipper
+                android:id="@+id/viewflipper"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/line"
+                android:flipInterval="1000"
+                android:persistentDrawingCache="animation" >
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    layout="@layout/user_info_info" />
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    layout="@layout/user_info_yanzhi" />
+            </ViewFlipper>
+
+            <com.biyanzhi.view.CircularImage
+                android:id="@+id/img_avatar"
+                android:layout_width="90dip"
+                android:layout_height="90dip"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dp"
+                android:src="@drawable/default_avatar" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        layout="@layout/title_bar" />
+
+</RelativeLayout>

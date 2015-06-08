@@ -25,5 +25,6 @@
     <string name="take_photo">拍照</string>
     <string name="from_photo_album">从相册选择</string>
     <string name="finished">完成</string>
+    <string name="title_activity_user_info">UserInfoActivity</string>
 
 </resources>
