@@ -1,11 +1,16 @@
 package com.biyanzhi.activity;
 
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -15,10 +20,13 @@ import com.biyanzhi.data.UserInfo;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.GetUserInfoTask;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.FastBlur;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.CircularImage;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 public class UserInfoActivity extends BaseActivity {
 	private RelativeLayout layout_title;
@@ -39,6 +47,8 @@ public class UserInfoActivity extends BaseActivity {
 	private UserInfoInfoView info_View;
 	private UserInfoYanZhiView yanzhi_View;
 
+	private ScrollView scrollView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,6 +61,8 @@ public class UserInfoActivity extends BaseActivity {
 
 	@SuppressWarnings("deprecation")
 	private void initView() {
+		scrollView = (ScrollView) findViewById(R.id.scrollView1);
+		scrollView.setVisibility(View.GONE);
 		img_avatar = (CircularImage) findViewById(R.id.img_avatar);
 		img_avatar_bg = (ImageView) findViewById(R.id.img_avatar_bg);
 		img_avatar_bg.setAlpha(100);
@@ -97,10 +109,38 @@ public class UserInfoActivity extends BaseActivity {
 						user.getUser_gender(), user.getUser_birthday());
 				txt_title.setText(user.getUser_name());
 				UniversalImageLoadTool.disPlay(user.getUser_avatar(),
-						img_avatar_bg, R.drawable.default_avatar);
-				UniversalImageLoadTool.disPlay(user.getUser_avatar(),
 						img_avatar, R.drawable.default_avatar);
 				yanzhi_View.setValue(info.getPictureList());
+				scrollView.setVisibility(View.VISIBLE);
+				UniversalImageLoadTool.disPlayListener(user.getUser_avatar(),
+						img_avatar_bg, R.drawable.default_avatar,
+						new ImageLoadingListener() {
+
+							@Override
+							public void onLoadingStarted(String arg0, View arg1) {
+
+							}
+
+							@Override
+							public void onLoadingFailed(String arg0, View arg1,
+									FailReason arg2) {
+
+							}
+
+							@Override
+							public void onLoadingComplete(String arg0,
+									View arg1, Bitmap bitmap) {
+								blur(bitmap);
+							}
+
+							@Override
+							public void onLoadingCancelled(String arg0,
+									View arg1) {
+								// TODO Auto-generated method stub
+
+							}
+						});
+
 			}
 		});
 		task.executeParallel(info);
@@ -125,5 +165,28 @@ public class UserInfoActivity extends BaseActivity {
 		default:
 			break;
 		}
+	}
+
+	private void blur(Bitmap bkg) {
+		float radius = 2;
+		float scaleFactor = 8;
+		int width = (int) (img_avatar_bg.getMeasuredWidth() / scaleFactor);
+		int height = (int) (img_avatar_bg.getMeasuredHeight() / scaleFactor);
+		if (width <= 0 && height <= 0) {
+			return;
+		}
+		Bitmap overlay = Bitmap.createBitmap(width, height,
+				Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(overlay);
+		canvas.translate(-img_avatar_bg.getLeft() / scaleFactor,
+				-img_avatar_bg.getTop() / scaleFactor);
+		canvas.scale(1 / scaleFactor, 1 / scaleFactor);
+		Paint paint = new Paint();
+		paint.setFlags(Paint.FILTER_BITMAP_FLAG);
+		canvas.drawBitmap(bkg, 0, 0, paint);
+		overlay = FastBlur.doBlur(overlay, (int) radius, true);
+		img_avatar_bg.setImageBitmap(overlay);
+		// img_avatar_bg
+		// .setBackground(new BitmapDrawable(getResources(), overlay));
 	}
 }

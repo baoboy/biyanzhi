@@ -2,10 +2,17 @@ package com.biyanzhi.activity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -30,7 +37,6 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qq.QQ.ShareParams;
 import cn.sharesdk.tencent.qzone.QZone;
-import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.biyanzhi.R;
 import com.biyanzhi.adapter.CommentAdapter;
@@ -48,6 +54,7 @@ import com.biyanzhi.task.SendPictureScoreTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DateUtils;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.FastBlur;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.UniversalImageLoadTool;
@@ -102,9 +109,14 @@ public class PictureCommentActivity extends BaseActivity implements
 		setValue();
 		viewLineVisible();
 		ShareSDK.initSDK(this);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("BypassApproval", false);
+		ShareSDK.setPlatformDevInfo("Wechat", map);
+		ShareSDK.setPlatformDevInfo("WechatMoments", map);
 	}
 
 	private void initView() {
+
 		txt_share = (TextView) findViewById(R.id.btn_share);
 		layout_title = (RelativeLayout) findViewById(R.id.layout_title);
 		back = (ImageView) findViewById(R.id.back);
@@ -139,7 +151,7 @@ public class PictureCommentActivity extends BaseActivity implements
 					autoChange = true;
 					return;
 				}
-				txt_score.setText((int) (arg1 * 20) + "(·Ö)");
+				txt_score.setText((int) (arg1 * 20) + "(åˆ†)");
 				showScore((int) (arg1 * 20));
 			}
 		});
@@ -164,7 +176,7 @@ public class PictureCommentActivity extends BaseActivity implements
 		if (picture.getAverage_score() != 0) {
 			autoChange = false;
 			ratingBar.setRating((float) picture.getAverage_score() / 20);
-			txt_score.setText(picture.getAverage_score() + "(·Ö)");
+			txt_score.setText(picture.getAverage_score() + "(åˆ†)");
 		} else {
 			autoChange = true;
 		}
@@ -217,7 +229,7 @@ public class PictureCommentActivity extends BaseActivity implements
 	}
 
 	private void sendComment(String content) {
-		dialog = DialogUtil.createLoadingDialog(this, "ÇëÉÔºò");
+		dialog = DialogUtil.createLoadingDialog(this, "è¯·ç¨å€™");
 		dialog.show();
 		final Comment comment = new Comment();
 		comment.setComment_content(content);
@@ -241,7 +253,7 @@ public class PictureCommentActivity extends BaseActivity implements
 					return;
 				}
 				edit_comment.setText("");
-				ToastUtil.showToast("»Ø¸´³É¹¦", Toast.LENGTH_SHORT);
+				ToastUtil.showToast("å›å¤æˆåŠŸ", Toast.LENGTH_SHORT);
 				comments.add(0, comment);
 				adapter.notifyDataSetChanged();
 				viewLineVisible();
@@ -281,12 +293,12 @@ public class PictureCommentActivity extends BaseActivity implements
 	private void showScore(final int score) {
 		String str = "";
 		if (score >= 80) {
-			str = score + "·Ö Äã¸øTA´òµÄ·ÖÊıºÜ¸ßÅ¶,ÎÒ²ÂTAÊÇ¸öÃÀÅ®(Ë§¸ç)";
+			str = score + "åˆ† ä½ ç»™TAæ‰“çš„åˆ†æ•°å¾ˆé«˜å“¦,æˆ‘çŒœTAæ˜¯ä¸ªç¾å¥³(å¸…å“¥)";
 		} else {
-			str = score + "·Ö ¿´À´TA²»ÊÇÄãµÄ²Ë,·ÖÊı²»¹»¸ßÅ¶";
+			str = score + "åˆ† çœ‹æ¥TAä¸æ˜¯ä½ çš„èœ,åˆ†æ•°ä¸å¤Ÿé«˜å“¦";
 
 		}
-		PromptDialog.Builder dialog = DialogUtil.confirmDialog(this, str, "È·¶¨",
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(this, str, "ç¡®å®š",
 				null, new ConfirmDialog() {
 
 					@Override
@@ -356,6 +368,12 @@ public class PictureCommentActivity extends BaseActivity implements
 			break;
 		case 1:
 			shareQQZone();
+			break;
+		case 2:
+			shareWechat();
+			break;
+		case 3:
+			shareWechatMoments();
 		default:
 			break;
 		}
@@ -364,28 +382,56 @@ public class PictureCommentActivity extends BaseActivity implements
 	private void shareQQ() {
 		Platform plat = ShareSDK.getPlatform(QQ.NAME);
 		ShareParams sp = new ShareParams();
-		sp.setTitle("±ÈÑÕÖµ");
-		sp.setTitleUrl("http://www.baidu.com"); // ±êÌâµÄ³¬Á´½Ó
-		sp.setText("×Ü¹²ÓĞ " + picture.getScore_number() + " ¸öÈË¸øÎÒÆÀ·Ö ,Æ½¾ù·Ö "
-				+ picture.getAverage_score() + " ·Ö,¿ìÀ´²â²âÄãµÄÑÕÖµÄÜµÃÉÙ·Ö°É");
-		sp.setSite("±ÈÑÕÖµ");
+		sp.setTitle("æ¯”é¢œå€¼");
+		sp.setTitleUrl("http://www.baidu.com"); // æ ‡é¢˜çš„è¶…é“¾æ¥
+		sp.setText("æ€»å…±æœ‰ " + picture.getScore_number() + " ä¸ªäººç»™æˆ‘è¯„åˆ† ,å¹³å‡åˆ† "
+				+ picture.getAverage_score() + " åˆ†,å¿«æ¥æµ‹æµ‹ä½ çš„é¢œå€¼èƒ½å¾—å°‘åˆ†å§");
+		sp.setSite("æ¯”é¢œå€¼");
 		sp.setSiteUrl("http://www.baidu.com");
 		sp.setImageUrl(picture.getPicture_image_url());
 		sp.setShareType(Platform.SHARE_WEBPAGE);
 		plat.share(sp);
 	}
- 
+
 	private void shareQQZone() {
 		Platform plat = ShareSDK.getPlatform(QZone.NAME);
 		ShareParams sp = new ShareParams();
-		sp.setTitle("±ÈÑÕÖµ");
-		sp.setTitleUrl("http://www.baidu.com"); // ±êÌâµÄ³¬Á´½Ó
-		sp.setText("×Ü¹²ÓĞ " + picture.getScore_number() + " ¸öÈË¸øÎÒÆÀ·Ö ,Æ½¾ù·Ö "
-				+ picture.getAverage_score() + " ·Ö,¿ìÀ´²â²âÄãµÄÑÕÖµÄÜµÃÉÙ·Ö°É");
+		sp.setTitle("æ¯”é¢œå€¼");
+		sp.setTitleUrl("http://www.baidu.com"); // æ ‡é¢˜çš„è¶…é“¾æ¥
+		sp.setText("æ€»å…±æœ‰ " + picture.getScore_number() + " ä¸ªäººç»™æˆ‘è¯„åˆ† ,å¹³å‡åˆ† "
+				+ picture.getAverage_score() + " åˆ†,å¿«æ¥æµ‹æµ‹ä½ çš„é¢œå€¼èƒ½å¾—å°‘åˆ†å§");
 		sp.setImageUrl(picture.getPicture_image_url());
-		sp.setSite("±ÈÑÕÖµ");
+		sp.setSite("æ¯”é¢œå€¼");
 		sp.setSiteUrl("http://www.baidu.com");
 		// sp.setShareType(Platform.SHARE_WEBPAGE);
 		plat.share(sp);
 	}
+
+	private void shareWechat() {
+		Platform plat = ShareSDK.getPlatform("Wechat");
+		ShareParams sp = new ShareParams();
+		sp.setTitle("æ¯”é¢œå€¼");
+		sp.setText("æ€»å…±æœ‰ " + picture.getScore_number() + " ä¸ªäººç»™æˆ‘è¯„åˆ† ,å¹³å‡åˆ† "
+				+ picture.getAverage_score() + " åˆ†,å¿«æ¥æµ‹æµ‹ä½ çš„é¢œå€¼èƒ½å¾—å°‘åˆ†å§");
+		sp.setShareType(Platform.SHARE_WEBPAGE);
+		sp.setUrl("http://www.baidu.com");
+		sp.setImageUrl(picture.getPicture_image_url());
+		plat.share(sp);
+
+	}
+
+	private void shareWechatMoments() {
+		Platform plat = ShareSDK.getPlatform("WechatMoments");
+		ShareParams sp = new ShareParams();
+		sp.setTitle("æ€»å…±æœ‰ " + picture.getScore_number() + " ä¸ªäººç»™æˆ‘è¯„åˆ† ,å¹³å‡åˆ† "
+				+ picture.getAverage_score() + " åˆ†,å¿«æ¥æµ‹æµ‹ä½ çš„é¢œå€¼èƒ½å¾—å°‘åˆ†å§");
+		sp.setText("æ€»å…±æœ‰ " + picture.getScore_number() + " ä¸ªäººç»™æˆ‘è¯„åˆ† ,å¹³å‡åˆ† "
+				+ picture.getAverage_score() + " åˆ†,å¿«æ¥æµ‹æµ‹ä½ çš„é¢œå€¼èƒ½å¾—å°‘åˆ†å§");
+		sp.setShareType(Platform.SHARE_WEBPAGE);
+		sp.setUrl("http://www.baidu.com");
+		sp.setImageUrl(picture.getPicture_image_url());
+		plat.share(sp);
+
+	}
+
 }
