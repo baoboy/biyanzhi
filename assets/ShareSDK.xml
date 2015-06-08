@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DevInfor>
+
+    <ShareSDK AppKey="7d0a72f673d1" />
+    <!-- 修改成你在sharesdk后台注册的应用的appkey" -->
+
+    <QZone
+        AppId="1104603545"
+        AppKey="x5blIRKUK7fe7R8k"
+        Enable="true"
+        Id="3"
+        ShareByAppClient="true"
+        SortId="3" />
+
+    <Wechat
+        AppId="wx5c900f17e4d91e82"
+        AppSecret="8f00c524276678b70e59326df528cd43"
+        BypassApproval="true"
+        Enable="true"
+        Id="4"
+        SortId="4" />
+
+    <WechatMoments
+        AppId="wx5c900f17e4d91e82"
+        AppSecret="8f00c524276678b70e59326df528cd43"
+        BypassApproval="true"
+        Enable="true"
+        Id="5"
+        SortId="5" />
+
+    <QQ
+        AppId="1104603545"
+        AppKey="x5blIRKUK7fe7R8k"
+        Enable="true"
+        Id="7"
+        ShareByAppClient="true"
+        SortId="7" />
+
+    <SinaWeibo
+        AppKey="4281890456"
+        AppSecret="c6a40030c72c5c696d05b7e48ae3a502"
+        Enable="true"
+        Id="1"
+        RedirectUrl="http://www.baidu.com"
+        ShareByAppClient="true"
+        SortId="1" />
+
+</DevInfor>

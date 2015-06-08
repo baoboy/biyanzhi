@@ -18,6 +18,7 @@ import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.RoundAngleImageView;
+import com.biyianzhi.interfaces.OnAvatarClick;
 
 public class CommentAdapter extends BaseAdapter {
 	private List<Comment> list = new ArrayList<Comment>();
@@ -102,6 +103,8 @@ public class CommentAdapter extends BaseAdapter {
 		} else {
 			holder.txt_comment_content.setTextColor(Color.BLACK);
 		}
+		holder.img_user_avatar.setOnClickListener(new OnAvatarClick(list.get(
+				position).getPublisher_id(), mContext));
 		return contentView;
 	}
 

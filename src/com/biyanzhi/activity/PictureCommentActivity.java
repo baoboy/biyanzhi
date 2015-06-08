@@ -25,6 +25,12 @@ import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qq.QQ.ShareParams;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.biyanzhi.R;
 import com.biyanzhi.adapter.CommentAdapter;
@@ -34,6 +40,8 @@ import com.biyanzhi.data.PictureScore;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.popwindow.CommentPopwindow;
 import com.biyanzhi.popwindow.CommentPopwindow.OnCommentOnClick;
+import com.biyanzhi.popwindow.SharePopwindow;
+import com.biyanzhi.popwindow.SharePopwindow.SelectMenuOnclick;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
 import com.biyanzhi.task.SendCommentTask;
 import com.biyanzhi.task.SendPictureScoreTask;
@@ -51,7 +59,8 @@ import com.biyianzhi.interfaces.OnAvatarClick;
 import fynn.app.PromptDialog;
 
 public class PictureCommentActivity extends BaseActivity implements
-		OnClickListener, TextWatcher, OnItemClickListener, OnCommentOnClick {
+		OnClickListener, TextWatcher, OnItemClickListener, OnCommentOnClick,
+		SelectMenuOnclick {
 	private ImageView img_avatar;
 	private TextView txt_user_name;
 	private TextView txt_time;
@@ -77,10 +86,12 @@ public class PictureCommentActivity extends BaseActivity implements
 
 	private RatingBar ratingBar;
 	private TextView txt_score;
+	private TextView txt_share;
 
 	private boolean autoChange;
 	private CommentAdapter adapter;
 	private CommentPopwindow pop;
+	private SharePopwindow share_pop;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +101,11 @@ public class PictureCommentActivity extends BaseActivity implements
 		initView();
 		setValue();
 		viewLineVisible();
+		ShareSDK.initSDK(this);
 	}
 
 	private void initView() {
+		txt_share = (TextView) findViewById(R.id.btn_share);
 		layout_title = (RelativeLayout) findViewById(R.id.layout_title);
 		back = (ImageView) findViewById(R.id.back);
 		img = (ImageView) findViewById(R.id.img);
@@ -113,6 +126,7 @@ public class PictureCommentActivity extends BaseActivity implements
 	}
 
 	private void setListener() {
+		txt_share.setOnClickListener(this);
 		img.setOnClickListener(this);
 		back.setOnClickListener(this);
 		btnComment.setOnClickListener(this);
@@ -191,6 +205,11 @@ public class PictureCommentActivity extends BaseActivity implements
 			intent.putExtras(bundle);
 			intent.putExtra(Constants.EXTRA_IMAGE_INDEX, 1);
 			startActivity(intent);
+			break;
+		case R.id.btn_share:
+			share_pop = new SharePopwindow(this, v);
+			share_pop.setmSelectOnclick(this);
+			share_pop.show();
 			break;
 		default:
 			break;
@@ -327,5 +346,46 @@ public class PictureCommentActivity extends BaseActivity implements
 		isReplaySomeOne = true;
 		replaySomeOneID = comment.getPublisher_id();
 		replaySomeOneName = comment.getPublisher_name();
+	}
+
+	@Override
+	public void onClickPosition(int position) {
+		switch (position) {
+		case 0:
+			shareQQ();
+			break;
+		case 1:
+			shareQQZone();
+		default:
+			break;
+		}
+	}
+
+	private void shareQQ() {
+		Platform plat = ShareSDK.getPlatform(QQ.NAME);
+		ShareParams sp = new ShareParams();
+		sp.setTitle("比颜值");
+		sp.setTitleUrl("http://www.baidu.com"); // 标题的超链接
+		sp.setText("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
+				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
+		sp.setSite("比颜值");
+		sp.setSiteUrl("http://www.baidu.com");
+		sp.setImageUrl(picture.getPicture_image_url());
+		sp.setShareType(Platform.SHARE_WEBPAGE);
+		plat.share(sp);
+	}
+ 
+	private void shareQQZone() {
+		Platform plat = ShareSDK.getPlatform(QZone.NAME);
+		ShareParams sp = new ShareParams();
+		sp.setTitle("比颜值");
+		sp.setTitleUrl("http://www.baidu.com"); // 标题的超链接
+		sp.setText("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
+				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
+		sp.setImageUrl(picture.getPicture_image_url());
+		sp.setSite("比颜值");
+		sp.setSiteUrl("http://www.baidu.com");
+		// sp.setShareType(Platform.SHARE_WEBPAGE);
+		plat.share(sp);
 	}
 }

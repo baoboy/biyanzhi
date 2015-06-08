@@ -19,5 +19,7 @@
     <color name="city_nomal_color">#6f6f6f</color>
     <color name="pciture_text">#666666</color>
     <color name="pciture_blue">#009eff</color>
+    <!-- <color name="text_color_select">#F86442</color> -->
+    <color name="text_color_nomal">#3F434C</color>
 
 </resources>
