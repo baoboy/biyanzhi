@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,12 +15,15 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.biyanzhi.R;
+import com.biyanzhi.data.GuanZhu;
 import com.biyanzhi.data.User;
 import com.biyanzhi.data.UserInfo;
 import com.biyanzhi.enums.RetError;
+import com.biyanzhi.task.AddGuanZhuTask;
 import com.biyanzhi.task.GetUserInfoTask;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.FastBlur;
+import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.CircularImage;
@@ -51,6 +53,9 @@ public class UserInfoActivity extends BaseActivity {
 	private ScrollView scrollView;
 	private LinearLayout layout_bottom;
 	private View bottom_line;
+	private TextView txt_renqi;
+	private TextView txt_guanzhu;
+	private Button btn_add_guanzhu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,9 @@ public class UserInfoActivity extends BaseActivity {
 
 	@SuppressWarnings("deprecation")
 	private void initView() {
+		btn_add_guanzhu = (Button) findViewById(R.id.btn_add_guanzhu);
+		txt_guanzhu = (TextView) findViewById(R.id.txt_guanzhu);
+		txt_renqi = (TextView) findViewById(R.id.txt_renqi);
 		layout_bottom = (LinearLayout) findViewById(R.id.layout_bottom);
 		bottom_line = (View) findViewById(R.id.line_bottom);
 		scrollView = (ScrollView) findViewById(R.id.scrollView1);
@@ -94,6 +102,7 @@ public class UserInfoActivity extends BaseActivity {
 	private void setListener() {
 		btn_info.setOnClickListener(this);
 		btn_yanzhi.setOnClickListener(this);
+		btn_add_guanzhu.setOnClickListener(this);
 	}
 
 	private void getValue() {
@@ -109,7 +118,10 @@ public class UserInfoActivity extends BaseActivity {
 				if (result != RetError.NONE) {
 					return;
 				}
+
 				user = info.getUser();
+				txt_guanzhu.setText(user.getGuanzhu_count() + "\n关注");
+				txt_renqi.setText("99\n人气");
 				info_View.setValue(user.getUser_address(),
 						user.getUser_gender(), user.getUser_birthday());
 				txt_title.setText(user.getUser_name());
@@ -169,9 +181,33 @@ public class UserInfoActivity extends BaseActivity {
 			btn_info.setTextColor(getResources().getColor(R.color.pciture_text));
 			mVfFlipper.setDisplayedChild(1);
 			break;
+		case R.id.btn_add_guanzhu:
+			addGuanZhu();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void addGuanZhu() {
+		dialog = DialogUtil.createLoadingDialog(this);
+		dialog.show();
+		GuanZhu guanzhu = new GuanZhu();
+		guanzhu.setGuanzhu_user_id(user.getUser_id());
+		AddGuanZhuTask task = new AddGuanZhuTask();
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				if (dialog != null) {
+					dialog.dismiss();
+				}
+				if (result != RetError.NONE) {
+					return;
+				}
+				ToastUtil.showToast("关注成功");
+			}
+		});
+		task.executeParallel(guanzhu);
 	}
 
 	private void blur(Bitmap bkg) {
@@ -195,5 +231,7 @@ public class UserInfoActivity extends BaseActivity {
 		img_avatar_bg.setImageBitmap(overlay);
 		// img_avatar_bg
 		// .setBackground(new BitmapDrawable(getResources(), overlay));
+		// img_avatar_bg.getBackground().setAlpha(120);
+		img_avatar_bg.setAlpha(190);
 	}
 }

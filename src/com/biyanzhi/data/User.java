@@ -31,6 +31,15 @@ public class User {
 	private String user_address = "";
 	private String user_province = "";
 	private int user_id = 0;
+	private int guanzhu_count;
+
+	public int getGuanzhu_count() {
+		return guanzhu_count;
+	}
+
+	public void setGuanzhu_count(int guanzhu_count) {
+		this.guanzhu_count = guanzhu_count;
+	}
 
 	public int getUser_id() {
 		return user_id;
