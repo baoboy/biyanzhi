@@ -403,7 +403,7 @@ public class PictureCommentActivity extends BaseActivity implements
 		sp.setImageUrl(picture.getPicture_image_url());
 		sp.setSite("比颜值");
 		sp.setSiteUrl("http://www.baidu.com");
-		// sp.setShareType(Platform.SHARE_WEBPAGE);
+		sp.setShareType(Platform.SHARE_WEBPAGE);
 		plat.share(sp);
 	}
 

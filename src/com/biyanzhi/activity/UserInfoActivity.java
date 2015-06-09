@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -48,6 +49,8 @@ public class UserInfoActivity extends BaseActivity {
 	private UserInfoYanZhiView yanzhi_View;
 
 	private ScrollView scrollView;
+	private LinearLayout layout_bottom;
+	private View bottom_line;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,8 @@ public class UserInfoActivity extends BaseActivity {
 
 	@SuppressWarnings("deprecation")
 	private void initView() {
+		layout_bottom = (LinearLayout) findViewById(R.id.layout_bottom);
+		bottom_line = (View) findViewById(R.id.line_bottom);
 		scrollView = (ScrollView) findViewById(R.id.scrollView1);
 		scrollView.setVisibility(View.GONE);
 		img_avatar = (CircularImage) findViewById(R.id.img_avatar);
@@ -112,6 +117,8 @@ public class UserInfoActivity extends BaseActivity {
 						img_avatar, R.drawable.default_avatar);
 				yanzhi_View.setValue(info.getPictureList());
 				scrollView.setVisibility(View.VISIBLE);
+				layout_bottom.setVisibility(View.VISIBLE);
+				bottom_line.setVisibility(View.VISIBLE);
 				UniversalImageLoadTool.disPlayListener(user.getUser_avatar(),
 						img_avatar_bg, R.drawable.default_avatar,
 						new ImageLoadingListener() {

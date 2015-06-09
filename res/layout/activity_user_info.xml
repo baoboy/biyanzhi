@@ -7,6 +7,7 @@
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/line_bottom"
         android:fillViewport="true"
         android:scrollbars="none" >
 
@@ -89,5 +90,48 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         layout="@layout/title_bar" />
+
+    <View
+        android:id="@+id/line_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:layout_above="@+id/layout_bottom"
+        android:background="#d5d5d5"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:visibility="gone" >
+
+        <Button
+            android:id="@+id/btn_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="发私信"
+            android:textColor="#8ec700"
+            android:textSize="13sp" />
+
+        <View
+            android:id="@+id/line_bottom"
+            android:layout_width="0.5dip"
+            android:layout_height="fill_parent"
+            android:background="#d5d5d5" />
+
+        <Button
+            android:id="@+id/btn_yanzhi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="加关注"
+            android:textColor="@color/pciture_blue"
+            android:textSize="13sp" />
+    </LinearLayout>
 
 </RelativeLayout>

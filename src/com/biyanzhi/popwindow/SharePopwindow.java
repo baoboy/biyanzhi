@@ -1,6 +1,7 @@
 package com.biyanzhi.popwindow;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,13 +71,14 @@ public class SharePopwindow implements OnClickListener, OnItemClickListener {
 	/**
 	 * 初始化popwindow
 	 */
-	@SuppressWarnings("deprecation")
 	private void initPopwindow() {
 		popupWindow = new PopupWindow(view, LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT);
 		// 这个是为了点击�?返回Back”也能使其消失，并且并不会影响你的背景（很神奇的�?
 		// popupWindow.setBackgroundDrawable(new BitmapDrawable());
 		// popupWindow.setAnimationStyle(R.style.AnimBottom);
+		popupWindow.setBackgroundDrawable(new BitmapDrawable());
+
 	}
 
 	/**
