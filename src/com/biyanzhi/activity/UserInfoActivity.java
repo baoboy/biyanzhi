@@ -232,6 +232,6 @@ public class UserInfoActivity extends BaseActivity {
 		// img_avatar_bg
 		// .setBackground(new BitmapDrawable(getResources(), overlay));
 		// img_avatar_bg.getBackground().setAlpha(120);
-		img_avatar_bg.setAlpha(190);
+		// img_avatar_bg.setAlpha(190);
 	}
 }

@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/line_bottom"
         android:fillViewport="true"
+        android:scrollbars="none"
         android:visibility="gone" >
 
         <RelativeLayout
