@@ -153,7 +153,6 @@ public class RegisterBasicInfo extends RegisterStep implements OnClickListener,
 					txt_address.setText(province + " " + city);
 					mActivity.getmRegister().setUser_address(
 							province + " " + city);
-					mActivity.getmRegister().setUser_province(province);
 					setNextEnbale();
 				}
 			});

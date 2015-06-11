@@ -143,13 +143,13 @@ public class SharedUtils {
 
 	}
 
-	public static void setAPPUserProvince(String value) {
-		editor.putString("app_user_province", value);
+	public static void setAPPUserGuanZhuCount(int count) {
+		editor.putInt("guanzhu_count", count);
 		editor.commit();
 	}
 
-	public static String getAPPUserProvince() {
-		return sharedPreferences.getString("app_user_province", "");
+	public static int getAPPUserGuanZhuCount() {
+		return sharedPreferences.getInt("guanzhu_count", 0);
 
 	}
 

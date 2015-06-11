@@ -24,7 +24,7 @@ public class UserLoginPaser implements IParser {
 		String userGender = obj.getString("user_gender");
 		String userBirthday = obj.getString("user_birthday");
 		String user_address = obj.getString("user_address");
-		String user_province = obj.getString("user_province");
+		int guanzhu_count = obj.getInt("guanzhu_count");
 
 		User member = new User();
 		member.setUser_id(userID);
@@ -33,7 +33,7 @@ public class UserLoginPaser implements IParser {
 		member.setUser_birthday(userBirthday);
 		member.setUser_gender(userGender);
 		member.setUser_address(user_address);
-		member.setUser_province(user_province);
+		member.setGuanzhu_count(guanzhu_count);
 		Result ret = new Result();
 		ret.setData(member);
 		return ret;

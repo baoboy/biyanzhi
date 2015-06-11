@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -52,6 +55,7 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 		initView();
 		setValue();
 		getPictureList();
+		registerBoradcastReceiver();
 	}
 
 	private void initView() {
@@ -89,7 +93,7 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-
+		unregisterReceiver(mBroadcastReceiver);
 	}
 
 	@Override
@@ -145,6 +149,31 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 		});
 		task.executeParallel(list);
 	}
+
+	/**
+	 * 注册该广播
+	 */
+	public void registerBoradcastReceiver() {
+		IntentFilter myIntentFilter = new IntentFilter();
+		myIntentFilter.addAction(Constants.UPDATE_USER_AVATAR);
+		// 注册广播
+		registerReceiver(mBroadcastReceiver, myIntentFilter);
+	}
+
+	/**
+	 * 定义广播
+	 */
+	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (action.equals(Constants.UPDATE_USER_AVATAR)) {
+				UniversalImageLoadTool.disPlay(SharedUtils.getAPPUserAvatar(),
+						img_avatar, R.drawable.default_avatar);
+			}
+		}
+	};
+
 }
 
 // end of class

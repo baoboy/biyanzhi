@@ -28,5 +28,6 @@
     <string name="title_activity_user_info">UserInfoActivity</string>
     <string name="title_activity_personal_center">PersonalCenterActivity</string>
     <string name="title_activity_self_info">SelfInfoActivity</string>
+    <string name="title_activity_up_date_user_name">UpDateUserNameActivity</string>
 
 </resources>

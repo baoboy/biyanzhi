@@ -5,10 +5,12 @@ import java.util.HashMap;
 
 import com.biyanzhi.data.result.ApiRequest;
 import com.biyanzhi.data.result.Result;
+import com.biyanzhi.data.result.StringResult;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.enums.RetStatus;
 import com.biyanzhi.parser.IParser;
 import com.biyanzhi.parser.SimpleParser;
+import com.biyanzhi.parser.StringParser;
 import com.biyanzhi.parser.UserLoginPaser;
 import com.biyanzhi.utils.BitmapUtils;
 import com.biyanzhi.utils.SharedUtils;
@@ -17,10 +19,12 @@ public class User {
 	private static final String VERIFY_CELLPHONE_API = "getVerifyCode.do";
 	private static final String USER_REGISTER_API = "userRegister.do";
 	private static final String USER_LOGIN_API = "userLogin.do";
-	private static final String GET_USER_INFO = "GetUserInfoServlet";
 	private static final String FIND_PASSWORD_VERIFY_CODE = "getVerifyCode.do";
 	private static final String UPDATE_USER_LOGIN_PASSWORD = "UpdateUserLoginPassword";
 	private static final String CHECK_VERIFY_CODE = "checkVerifyCode.do";
+	private static final String UPLOAD_USER_AVATAR = "upLoadUserAvatar.do";
+	private static final String UPDATE_USER_NAME = "upDateUserName.do";
+	private static final String UPDATE_USER_ADDRESS = "upDateUserAddress.do";
 
 	private String user_cellphone = "";// 用户注册电话
 	private String user_name = "";// 用户注册姓名
@@ -29,7 +33,6 @@ public class User {
 	private String user_birthday = "";// 用户注册生日
 	private String user_password = "";// 用户注册密码
 	private String user_address = "";
-	private String user_province = "";
 	private int user_id = 0;
 	private int guanzhu_count;
 
@@ -105,12 +108,19 @@ public class User {
 		this.user_address = user_address;
 	}
 
-	public String getUser_province() {
-		return user_province;
-	}
-
-	public void setUser_province(String user_province) {
-		this.user_province = user_province;
+	public RetError upLoadAvatar() {
+		IParser parser = new StringParser("user_avatar");
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		File file = BitmapUtils.getImageFile(user_avatar);
+		Result ret = ApiRequest.requestWithFile(UPLOAD_USER_AVATAR, params,
+				file, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			StringResult sr = (StringResult) ret;
+			this.user_avatar = sr.getStr();
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
 	}
 
 	/**
@@ -157,7 +167,6 @@ public class User {
 		params.put("user_gender", user_gender);
 		params.put("user_birthday", user_birthday);
 		params.put("user_address", user_address);
-		params.put("user_province", user_province);
 		File file = BitmapUtils.getImageFile(user_avatar);
 		Result ret = ApiRequest.requestWithFile(USER_REGISTER_API, params,
 				file, parser);
@@ -183,6 +192,30 @@ public class User {
 		}
 	}
 
+	public RetError updateUserName() {
+		IParser parser = new SimpleParser();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("user_name", user_name);
+		Result ret = ApiRequest.request(UPDATE_USER_NAME, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError updateUserAddress() {
+		IParser parser = new SimpleParser();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("user_address", user_address);
+		Result ret = ApiRequest.request(UPDATE_USER_ADDRESS, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
 	/**
 	 * 用户 登录
 	 * 
@@ -201,8 +234,8 @@ public class User {
 			SharedUtils.setAPPUserBirthday(user.getUser_birthday());
 			SharedUtils.setAPPUserGender(user.getUser_gender());
 			SharedUtils.setAPPUserName(user.getUser_name());
-			SharedUtils.setAPPUserProvince(user.getUser_province());
 			SharedUtils.setUid(user.getUser_id() + "");
+			SharedUtils.setAPPUserGuanZhuCount(user.getGuanzhu_count());
 			this.user_id = user.getUser_id();
 			return RetError.NONE;
 		} else {

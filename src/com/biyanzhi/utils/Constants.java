@@ -8,4 +8,10 @@ public class Constants {
 	public static final String STATE_POSITION = "STATE_POSITION";
 	public static final String EXTRA_IMAGE_INDEX = "image_index";
 	public static final String EXTRA_IMAGE_URLS = "image_urls";
+
+	// �㲥ֵ
+	public static final String UPDATE_USER_AVATAR = "com.biyanzhi.update.user.avatar";
+	public static final String UPDATE_USER_NAME = "com.biyanzhi.update.user.name";
+	public static final String UPDATE_USER_ADDRESS = "com.biyanzhi.update.user.address";
+
 }

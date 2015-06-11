@@ -1,6 +1,9 @@
 package com.biyanzhi.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -9,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
+import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
@@ -26,6 +30,7 @@ public class PersonalCenterActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_personal_center);
 		initView();
+		registerBoradcastReceiver();
 	}
 
 	private void initView() {
@@ -57,4 +62,33 @@ public class PersonalCenterActivity extends BaseActivity {
 			break;
 		}
 	}
+
+	/**
+	 * 注册该广播
+	 */
+	public void registerBoradcastReceiver() {
+		IntentFilter myIntentFilter = new IntentFilter();
+		myIntentFilter.addAction(Constants.UPDATE_USER_AVATAR);
+		// 注册广播
+		registerReceiver(mBroadcastReceiver, myIntentFilter);
+	}
+
+	/**
+	 * 定义广播
+	 */
+	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (action.equals(Constants.UPDATE_USER_AVATAR)) {
+				UniversalImageLoadTool.disPlay(SharedUtils.getAPPUserAvatar(),
+						img_avatar, R.drawable.default_avatar);
+			}
+		}
+	};
+
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(mBroadcastReceiver);
+	};
 }
