@@ -50,7 +50,7 @@ public class HttpUrlHelper {
 	// 192.168.1.101家
 	public static final int CONNECTION_TIMEOUT = 30 * 1000;
 	public static final int SO_TIMEOUT = 30 * 1000;
-	public static final String DEFAULT_HOST = "http://192.168.1.102:8080/biyanzhi/"; // 服务器地址
+	public static final String DEFAULT_HOST = "http://192.168.1.108:8080/biyanzhi/"; // 服务器地址
 
 	/**
 	 * get 提交方式 // *
@@ -126,8 +126,7 @@ public class HttpUrlHelper {
 				httpPost.setEntity(httpentity);
 			}
 			HttpResponse httpResponse = httpclient.execute(httpPost);
-			System.out.println("code:::::::::::::::::"
-					+ httpResponse.getStatusLine().getStatusCode());
+
 			// 判断是否成功
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				return EntityUtils.toString(httpResponse.getEntity());

@@ -26,7 +26,10 @@ import com.biyanzhi.task.GetPictureListTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.FileUtils;
+import com.biyanzhi.utils.SharedUtils;
+import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
+import com.biyanzhi.view.CircularImage;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 
 public class MainActivity extends BaseActivity implements SelectOnclick {
@@ -40,6 +43,7 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 	private GridView mGridView;
 	private PictureAdapter adapter;
 	private TextView txt_title;
+	private CircularImage img_avatar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,9 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 	}
 
 	private void initView() {
+		img_avatar = (CircularImage) findViewById(R.id.img_avatar);
+		UniversalImageLoadTool.disPlay(SharedUtils.getAPPUserAvatar(),
+				img_avatar, R.drawable.default_avatar);
 		txt_title = (TextView) findViewById(R.id.title_txt);
 		img_select = (ImageView) findViewById(R.id.img_create);
 		img_select.setOnClickListener(this);
@@ -67,6 +74,7 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 				Utils.leftOutRightIn(MainActivity.this);
 			}
 		});
+		img_avatar.setOnClickListener(this);
 	}
 
 	private void setValue() {
@@ -92,7 +100,10 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 			startActivity(new Intent(this, PublicshPictureActivity.class));
 			Utils.leftOutRightIn(this);
 			break;
-
+		case R.id.img_avatar:
+			startActivity(new Intent(this, PersonalCenterActivity.class));
+			Utils.leftOutRightIn(this);
+			break;
 		default:
 			break;
 		}
@@ -134,7 +145,6 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 		});
 		task.executeParallel(list);
 	}
-
 }
 
 // end of class

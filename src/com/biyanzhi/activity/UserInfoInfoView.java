@@ -1,19 +1,20 @@
 package com.biyanzhi.activity;
 
-import com.biyanzhi.R;
-
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import com.biyanzhi.R;
+
 public class UserInfoInfoView {
-	private UserInfoActivity mActivity;
+	private Context mActivity;
 	private View mContentRootView;
 	private TextView txt_gender;
 	private TextView txt_birthday;
 	private TextView txt_address;
 	private TextView txt_guanzhu;
 
-	public UserInfoInfoView(UserInfoActivity activity, View contentRootView) {
+	public UserInfoInfoView(Context activity, View contentRootView) {
 		this.mActivity = activity;
 		this.mContentRootView = contentRootView;
 		initView();
