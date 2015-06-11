@@ -3,6 +3,7 @@ package com.biyanzhi.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,13 +16,13 @@ import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.ExpandGridView;
 
 public class UserInfoYanZhiView {
-	private UserInfoActivity mActivity;
+	private Context mActivity;
 	private View mContentRootView;
 	private ExpandGridView mGridView;
 	private PictureAdapter adapter;
 	private List<Picture> mLists = new ArrayList<Picture>();
 
-	public UserInfoYanZhiView(UserInfoActivity activity, View contentRootView) {
+	public UserInfoYanZhiView(Context activity, View contentRootView) {
 		this.mActivity = activity;
 		this.mContentRootView = contentRootView;
 		initView();

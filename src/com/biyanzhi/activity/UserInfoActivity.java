@@ -1,7 +1,8 @@
 package com.biyanzhi.activity;
 
 import android.app.Dialog;
-import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,11 +24,8 @@ import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
-import com.biyanzhi.view.CircularImage;
 import com.biyanzhi.view.DampView;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 public class UserInfoActivity extends BaseActivity {
 	private RelativeLayout layout_title;
@@ -84,7 +82,7 @@ public class UserInfoActivity extends BaseActivity {
 		mVfFlipper.setDisplayedChild(1);
 		layout_title = (RelativeLayout) findViewById(R.id.title);
 		layout_title.setBackgroundResource(R.color.black);
-		layout_title.getBackground().setAlpha(100);
+		layout_title.getBackground().setAlpha(60);
 		btn_info = (Button) findViewById(R.id.btn_info);
 		btn_yanzhi = (Button) findViewById(R.id.btn_yanzhi);
 		line1 = (View) findViewById(R.id.line1);
@@ -121,15 +119,14 @@ public class UserInfoActivity extends BaseActivity {
 				}
 
 				user = info.getUser();
-				// txt_guanzhu.setText(user.getGuanzhu_count() + "\n¹Ø×¢");
-				// txt_renqi.setText("99\nÈËÆø");
 				info_View.setValue(user.getUser_address(),
 						user.getUser_gender(), user.getUser_birthday(),
 						user.getGuanzhu_count());
 				txt_title.setText(user.getUser_name());
 				UniversalImageLoadTool.disPlay(user.getUser_avatar(),
 						img_avatar_bg, R.drawable.default_avatar);
-				img_avatar_bg.setImageAlpha(150);
+				img_avatar_bg.setColorFilter(Color.GRAY,
+						PorterDuff.Mode.MULTIPLY);
 				yanzhi_View.setValue(info.getPictureList());
 				scrollView.setVisibility(View.VISIBLE);
 				layout_bottom.setVisibility(View.VISIBLE);
