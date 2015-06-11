@@ -2,8 +2,6 @@ package com.biyanzhi.activity;
 
 import android.app.Dialog;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,11 +20,11 @@ import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.AddGuanZhuTask;
 import com.biyanzhi.task.GetUserInfoTask;
 import com.biyanzhi.utils.DialogUtil;
-import com.biyanzhi.utils.FastBlur;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.CircularImage;
+import com.biyanzhi.view.DampView;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
@@ -35,11 +33,11 @@ public class UserInfoActivity extends BaseActivity {
 	private RelativeLayout layout_title;
 	private Button btn_info;
 	private Button btn_yanzhi;
-	private View line1, line2, line3;
+	private View line1, line2, line3, line4;
 	private ViewFlipper mVfFlipper;
 	private TextView txt_title;
 	private ImageView img_avatar_bg;
-	private CircularImage img_avatar;
+	// private CircularImage img_avatar;
 	private int user_id;
 
 	private UserInfo info = new UserInfo();
@@ -53,9 +51,10 @@ public class UserInfoActivity extends BaseActivity {
 	private ScrollView scrollView;
 	private LinearLayout layout_bottom;
 	private View bottom_line;
-	private TextView txt_renqi;
-	private TextView txt_guanzhu;
+	// private TextView txt_renqi;
+	// private TextView txt_guanzhu;
 	private Button btn_add_guanzhu;
+	private DampView view;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,18 +66,18 @@ public class UserInfoActivity extends BaseActivity {
 		getValue();
 	}
 
-	@SuppressWarnings("deprecation")
 	private void initView() {
 		btn_add_guanzhu = (Button) findViewById(R.id.btn_add_guanzhu);
-		txt_guanzhu = (TextView) findViewById(R.id.txt_guanzhu);
-		txt_renqi = (TextView) findViewById(R.id.txt_renqi);
+		// txt_guanzhu = (TextView) findViewById(R.id.txt_guanzhu);
+		// txt_renqi = (TextView) findViewById(R.id.txt_renqi);
 		layout_bottom = (LinearLayout) findViewById(R.id.layout_bottom);
 		bottom_line = (View) findViewById(R.id.line_bottom);
 		scrollView = (ScrollView) findViewById(R.id.scrollView1);
 		scrollView.setVisibility(View.GONE);
-		img_avatar = (CircularImage) findViewById(R.id.img_avatar);
+		// img_avatar = (CircularImage) findViewById(R.id.img_avatar);
 		img_avatar_bg = (ImageView) findViewById(R.id.img_avatar_bg);
-		img_avatar_bg.setAlpha(100);
+		view = (DampView) findViewById(R.id.scrollView1);
+		view.setImageView(img_avatar_bg);
 		txt_title = (TextView) findViewById(R.id.title_txt);
 		Utils.getFocus(txt_title);
 		mVfFlipper = (ViewFlipper) findViewById(R.id.viewflipper);
@@ -91,9 +90,11 @@ public class UserInfoActivity extends BaseActivity {
 		line1 = (View) findViewById(R.id.line1);
 		line2 = (View) findViewById(R.id.line2);
 		line3 = (View) findViewById(R.id.line3);
+		line4 = (View) findViewById(R.id.line4);
 		line2.getBackground().setAlpha(120);
 		line1.getBackground().setAlpha(120);
 		line3.getBackground().setAlpha(120);
+		line4.getBackground().setAlpha(120);
 		info_View = new UserInfoInfoView(this, mVfFlipper.getChildAt(0));
 		yanzhi_View = new UserInfoYanZhiView(this, mVfFlipper.getChildAt(1));
 		setListener();
@@ -120,45 +121,19 @@ public class UserInfoActivity extends BaseActivity {
 				}
 
 				user = info.getUser();
-				txt_guanzhu.setText(user.getGuanzhu_count() + "\n关注");
-				txt_renqi.setText("99\n人气");
+				// txt_guanzhu.setText(user.getGuanzhu_count() + "\n关注");
+				// txt_renqi.setText("99\n人气");
 				info_View.setValue(user.getUser_address(),
-						user.getUser_gender(), user.getUser_birthday());
+						user.getUser_gender(), user.getUser_birthday(),
+						user.getGuanzhu_count());
 				txt_title.setText(user.getUser_name());
 				UniversalImageLoadTool.disPlay(user.getUser_avatar(),
-						img_avatar, R.drawable.default_avatar);
+						img_avatar_bg, R.drawable.default_avatar);
+				img_avatar_bg.setImageAlpha(150);
 				yanzhi_View.setValue(info.getPictureList());
 				scrollView.setVisibility(View.VISIBLE);
 				layout_bottom.setVisibility(View.VISIBLE);
 				bottom_line.setVisibility(View.VISIBLE);
-				UniversalImageLoadTool.disPlayListener(user.getUser_avatar(),
-						img_avatar_bg, R.drawable.default_avatar,
-						new ImageLoadingListener() {
-
-							@Override
-							public void onLoadingStarted(String arg0, View arg1) {
-
-							}
-
-							@Override
-							public void onLoadingFailed(String arg0, View arg1,
-									FailReason arg2) {
-
-							}
-
-							@Override
-							public void onLoadingComplete(String arg0,
-									View arg1, Bitmap bitmap) {
-								blur(bitmap);
-							}
-
-							@Override
-							public void onLoadingCancelled(String arg0,
-									View arg1) {
-								// TODO Auto-generated method stub
-
-							}
-						});
 
 			}
 		});
@@ -210,28 +185,4 @@ public class UserInfoActivity extends BaseActivity {
 		task.executeParallel(guanzhu);
 	}
 
-	private void blur(Bitmap bkg) {
-		float radius = 2;
-		float scaleFactor = 8;
-		int width = (int) (img_avatar_bg.getMeasuredWidth() / scaleFactor);
-		int height = (int) (img_avatar_bg.getMeasuredHeight() / scaleFactor);
-		if (width <= 0 && height <= 0) {
-			return;
-		}
-		Bitmap overlay = Bitmap.createBitmap(width, height,
-				Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas(overlay);
-		canvas.translate(-img_avatar_bg.getLeft() / scaleFactor,
-				-img_avatar_bg.getTop() / scaleFactor);
-		canvas.scale(1 / scaleFactor, 1 / scaleFactor);
-		Paint paint = new Paint();
-		paint.setFlags(Paint.FILTER_BITMAP_FLAG);
-		canvas.drawBitmap(bkg, 0, 0, paint);
-		overlay = FastBlur.doBlur(overlay, (int) radius, true);
-		img_avatar_bg.setImageBitmap(overlay);
-		// img_avatar_bg
-		// .setBackground(new BitmapDrawable(getResources(), overlay));
-		// img_avatar_bg.getBackground().setAlpha(120);
-		// img_avatar_bg.setAlpha(190);
-	}
 }

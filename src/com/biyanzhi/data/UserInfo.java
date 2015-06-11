@@ -44,7 +44,7 @@ public class UserInfo {
 	public RetError getUserInfo() {
 		IParser parser = new UserInfoPaser();
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("user_id", user_id);
+		params.put("publicsher_user_id", user_id);
 		Result ret = ApiRequest.request(GET_USER_INFO_API, params, parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			UserInfo info = (UserInfo) ret.getData();
