@@ -35,6 +35,15 @@ public class User {
 	private String user_address = "";
 	private int user_id = 0;
 	private int guanzhu_count;
+	private boolean isGuanZhu;
+
+	public boolean isGuanZhu() {
+		return isGuanZhu;
+	}
+
+	public void setGuanZhu(boolean isGuanZhu) {
+		this.isGuanZhu = isGuanZhu;
+	}
 
 	public int getGuanzhu_count() {
 		return guanzhu_count;

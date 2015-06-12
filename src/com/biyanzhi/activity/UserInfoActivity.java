@@ -1,6 +1,11 @@
 package com.biyanzhi.activity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -18,13 +23,14 @@ import com.biyanzhi.data.GuanZhu;
 import com.biyanzhi.data.User;
 import com.biyanzhi.data.UserInfo;
 import com.biyanzhi.enums.RetError;
+import com.biyanzhi.showbigimage.ImagePagerActivity;
 import com.biyanzhi.task.AddGuanZhuTask;
 import com.biyanzhi.task.GetUserInfoTask;
+import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
-import com.biyanzhi.view.DampView;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 
 public class UserInfoActivity extends BaseActivity {
@@ -52,7 +58,9 @@ public class UserInfoActivity extends BaseActivity {
 	// private TextView txt_renqi;
 	// private TextView txt_guanzhu;
 	private Button btn_add_guanzhu;
-	private DampView view;
+	private Button btn_send_message;
+
+	// private DampView view;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,17 +73,15 @@ public class UserInfoActivity extends BaseActivity {
 	}
 
 	private void initView() {
+		btn_send_message = (Button) findViewById(R.id.btn_send_message);
 		btn_add_guanzhu = (Button) findViewById(R.id.btn_add_guanzhu);
-		// txt_guanzhu = (TextView) findViewById(R.id.txt_guanzhu);
-		// txt_renqi = (TextView) findViewById(R.id.txt_renqi);
 		layout_bottom = (LinearLayout) findViewById(R.id.layout_bottom);
 		bottom_line = (View) findViewById(R.id.line_bottom);
 		scrollView = (ScrollView) findViewById(R.id.scrollView1);
 		scrollView.setVisibility(View.GONE);
-		// img_avatar = (CircularImage) findViewById(R.id.img_avatar);
 		img_avatar_bg = (ImageView) findViewById(R.id.img_avatar_bg);
-		view = (DampView) findViewById(R.id.scrollView1);
-		view.setImageView(img_avatar_bg);
+		// view = (DampView) findViewById(R.id.scrollView1);
+		// view.setImageView(img_avatar_bg);
 		txt_title = (TextView) findViewById(R.id.title_txt);
 		Utils.getFocus(txt_title);
 		mVfFlipper = (ViewFlipper) findViewById(R.id.viewflipper);
@@ -102,6 +108,8 @@ public class UserInfoActivity extends BaseActivity {
 		btn_info.setOnClickListener(this);
 		btn_yanzhi.setOnClickListener(this);
 		btn_add_guanzhu.setOnClickListener(this);
+		img_avatar_bg.setOnClickListener(this);
+		btn_send_message.setOnClickListener(this);
 	}
 
 	private void getValue() {
@@ -156,6 +164,29 @@ public class UserInfoActivity extends BaseActivity {
 		case R.id.btn_add_guanzhu:
 			addGuanZhu();
 			break;
+		case R.id.img_avatar_bg:
+			if (user == null) {
+				return;
+			}
+			List<String> imgUrl = new ArrayList<String>();
+			imgUrl.add(user.getUser_avatar());
+			Intent intent = new Intent(this, ImagePagerActivity.class);
+			Bundle bundle = new Bundle();
+			bundle.putSerializable(Constants.EXTRA_IMAGE_URLS,
+					(Serializable) imgUrl);
+			intent.putExtras(bundle);
+			intent.putExtra(Constants.EXTRA_IMAGE_INDEX, 1);
+			startActivity(intent);
+			break;
+		case R.id.btn_send_message:
+			if (user == null) {
+				return;
+			}
+			if (!user.isGuanZhu()) {
+				ToastUtil.showToast("关注以后才能发私信");
+				return;
+			}
+			break;
 		default:
 			break;
 		}
@@ -177,6 +208,7 @@ public class UserInfoActivity extends BaseActivity {
 					return;
 				}
 				ToastUtil.showToast("关注成功");
+				user.setGuanZhu(true);
 			}
 		});
 		task.executeParallel(guanzhu);

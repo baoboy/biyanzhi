@@ -131,6 +131,7 @@
         android:background="#50d5d5d5" />
 
     <RelativeLayout
+        android:id="@+id/layout_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="13dip"
@@ -150,10 +151,20 @@
             android:id="@+id/txt_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imageView1"
             android:layout_toRightOf="@+id/adre"
             android:gravity="right"
+            android:paddingRight="15dip"
             android:textColor="@color/pciture_text" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_right" />
     </RelativeLayout>
 
     <View
