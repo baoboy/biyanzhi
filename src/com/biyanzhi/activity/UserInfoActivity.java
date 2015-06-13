@@ -214,4 +214,8 @@ public class UserInfoActivity extends BaseActivity {
 		task.executeParallel(guanzhu);
 	}
 
+	public int getUserID() {
+		return user_id;
+
+	}
 }

@@ -29,5 +29,6 @@
     <string name="title_activity_personal_center">PersonalCenterActivity</string>
     <string name="title_activity_self_info">SelfInfoActivity</string>
     <string name="title_activity_up_date_user_name">UpDateUserNameActivity</string>
+    <string name="title_activity_guan_zhu">GuanZhuActivity</string>
 
 </resources>

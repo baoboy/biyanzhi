@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/item_bg"
+        android:padding="7dip" >
+
+        <!-- com.interestfriend.view.RoundAngleImageView -->
+
+        <com.biyanzhi.view.RoundAngleImageView
+            android:id="@+id/img_avatar"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_marginRight="4dip"
+            android:src="@drawable/picture_default_head" />
+
+        <TextView
+            android:id="@+id/txt_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="4dip"
+            android:layout_toRightOf="@+id/img_avatar"
+            android:singleLine="true"
+            android:text="TextView"
+            android:textColor="@color/pciture_text"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_user_name"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="3dip"
+            android:layout_toRightOf="@+id/img_avatar"
+            android:paddingRight="10dip"
+            android:singleLine="true"
+            android:text="TextView"
+            android:textColor="@color/pciture_text"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+</LinearLayout> 

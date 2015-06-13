@@ -1,26 +1,32 @@
 package com.biyanzhi.activity;
 
-import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
+import com.biyanzhi.utils.Utils;
 
-public class UserInfoInfoView {
-	private Context mActivity;
+public class UserInfoInfoView implements OnClickListener {
+	private UserInfoActivity mActivity;
 	private View mContentRootView;
 	private TextView txt_gender;
 	private TextView txt_birthday;
 	private TextView txt_address;
 	private TextView txt_guanzhu;
+	private RelativeLayout layout_guanzhu;
 
-	public UserInfoInfoView(Context activity, View contentRootView) {
+	public UserInfoInfoView(UserInfoActivity activity, View contentRootView) {
 		this.mActivity = activity;
 		this.mContentRootView = contentRootView;
 		initView();
 	}
 
 	private void initView() {
+		layout_guanzhu = (RelativeLayout) mContentRootView
+				.findViewById(R.id.layout_guanzhu);
 		txt_guanzhu = (TextView) mContentRootView
 				.findViewById(R.id.txt_guanzhu);
 		txt_address = (TextView) mContentRootView
@@ -28,7 +34,7 @@ public class UserInfoInfoView {
 		txt_birthday = (TextView) mContentRootView
 				.findViewById(R.id.txt_birthday);
 		txt_gender = (TextView) mContentRootView.findViewById(R.id.txt_gender);
-
+		layout_guanzhu.setOnClickListener(this);
 	}
 
 	public void setValue(String str_address, String str_gender,
@@ -37,5 +43,19 @@ public class UserInfoInfoView {
 		txt_birthday.setText(str_birthday);
 		txt_gender.setText(str_gender);
 		txt_guanzhu.setText(guanzhu_count + "»À");
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.layout_guanzhu:
+			mActivity
+					.startActivity(new Intent(mActivity, GuanZhuActivity.class)
+							.putExtra("user_id", mActivity.getUserID()));
+			Utils.leftOutRightIn(mActivity);
+			break;
+		default:
+			break;
+		}
 	}
 }
