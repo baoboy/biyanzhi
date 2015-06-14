@@ -30,7 +30,7 @@ public class MyEditTextWatcher implements TextWatcher {
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		String str = s.toString();
+		String str = s.toString().trim();
 		if (str.length() > 0) {
 			Drawable del = mContext.getResources().getDrawable(R.drawable.del);
 			del.setBounds(0, 0, del.getMinimumWidth(), del.getMinimumHeight());

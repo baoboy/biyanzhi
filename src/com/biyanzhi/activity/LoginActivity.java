@@ -17,6 +17,7 @@ import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.register.RegisterActivity;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.MD5;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.Utils;
@@ -24,6 +25,8 @@ import com.biyanzhi.view.MyEditTextDeleteImg;
 import com.biyianzhi.interfaces.MyEditTextWatcher;
 import com.biyianzhi.interfaces.MyEditTextWatcher.OnTextLengthChange;
 import com.biyianzhi.interfaces.OnEditFocusChangeListener;
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
 
 public class LoginActivity extends BaseActivity implements OnClickListener,
 		OnTextLengthChange {
@@ -37,6 +40,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 
 	private Dialog dialog;
 
+	public static final int CHATTYPE_SINGLE = 1;
+	public static final int CHATTYPE_GROUP = 2;
+	public static final int CHATTYPE_CHATROOM = 3;
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			if (dialog != null) {
@@ -166,7 +172,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 				user.setUser_password(user_password);
 				RetError ret = user.userLogin();
 				if (ret == RetError.NONE) {
-					mHandler.sendEmptyMessage(1);
+					// mHandler.sendEmptyMessage(1);
+					loginHuanXin(MD5.Md5_16(user_cellphone),
+							MD5.Md5_16(user_cellphone));
 				} else if (ret == RetError.NOT_EXIST_USER) {
 					mHandler.sendEmptyMessage(-1);
 				} else if (ret == RetError.WRONG_PASSWORD) {
@@ -176,6 +184,38 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 				}
 			}
 		}.start();
+	}
+
+	private void loginHuanXin(final String username, final String password) {
+		// 调用sdk登陆方法登陆聊天服务器
+		EMChatManager.getInstance().login(username, password, new EMCallBack() {
+
+			@Override
+			public void onSuccess() {
+				mHandler.sendEmptyMessage(1);
+			}
+
+			@Override
+			public void onProgress(int progress, String status) {
+
+			}
+
+			@Override
+			public void onError(int code, final String message) {
+
+				runOnUiThread(new Runnable() {
+					public void run() {
+						Toast.makeText(getApplicationContext(),
+								"登录失败: " + message, 0).show();
+						Utils.print("logion:::::::::::::" + message);
+						if (dialog != null) {
+							dialog.dismiss();
+						}
+
+					}
+				});
+			}
+		});
 	}
 
 	@Override

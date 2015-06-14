@@ -21,6 +21,22 @@ import com.biyanzhi.R;
 import com.biyanzhi.applation.MyApplation;
 
 public class Utils {
+	public static boolean isSystemUser(String user_id) {
+		if (Constants.JOIN_CIRCLE_USER_ID.equals(user_id)
+				|| Constants.RECEIVE_JOIN_CIRCLE_USER_ID.equals(user_id)
+				|| Constants.REFUSE_JON_CIRCLE_USER_ID.equals(user_id)
+				|| Constants.DISSOLVE_CIRCLE_USER_ID.equals(user_id)
+				|| Constants.FEEDBACK_USER_ID.equals(user_id)
+				|| Constants.PRAISE_USER_ID.equals(user_id)
+				|| Constants.GROWTH_USER_ID.equals(user_id)
+				|| Constants.KICK_OUT_USER_ID.equals(user_id)
+				|| Constants.ADD_USER_FRIEND_INVITE.equals(user_id)
+				|| Constants.XINQING_PRAISE_AND_COMMENT_USER_ID.equals(user_id)) {
+			return true;
+		}
+		return false;
+	}
+
 	public static int dip2px(Context context, float dipValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (dipValue * scale + 0.5f);
@@ -209,6 +225,19 @@ public class Utils {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * ºÏ≤‚Sdcard «∑Ò¥Ê‘⁄
+	 * 
+	 * @return
+	 */
+	public static boolean isExitsSdcard() {
+		if (android.os.Environment.getExternalStorageState().equals(
+				android.os.Environment.MEDIA_MOUNTED))
+			return true;
+		else
+			return false;
 	}
 
 }

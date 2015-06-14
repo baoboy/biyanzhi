@@ -21,5 +21,9 @@
     <color name="pciture_blue">#009eff</color>
     <!-- <color name="text_color_select">#F86442</color> -->
     <color name="text_color_nomal">#3F434C</color>
+    <color name="btn_gray_normal">#c0c0c0</color>
+    <color name="common_bg">#fcfcfc</color>
+    <color name="qq_bg_chat_color">#ebeceb</color>
+    <color name="qq_bg_chat_bottom_color">#ebecee</color>
 
 </resources>

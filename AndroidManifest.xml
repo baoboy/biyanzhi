@@ -8,6 +8,7 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
 
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -54,13 +55,13 @@
             	Adapter表示一个继承自cn.sharesdk.framework.authorize.AuthorizeAdapter的类，
             	这个类可以监听到页面的生命周期，也可以获取授权页面的各种UI控件。 
             	开发者可以通过继承AuthorizeAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
-            <meta-data android:name="Adapter" android:value="cn.sharesdk.demo.MyAdapter" />            
+            <meta-data android:name="Adapter" android:value="cn.sharesdk.demo.MyAdapter" />              
             -->
 
 
             <!--
             	Dropbox的SSO功能需要在此处添加一个对ACTION_VIEW事件的过滤器，其中的scheme是
-            	“db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权
+            	“db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权 
             -->
             <intent-filter>
                 <data android:scheme="db-7janx53ilz11gbs" />
@@ -74,7 +75,7 @@
             <!--
             	如果集成QQ分享，或者使用QQ客户端来进行QQ空间的分享，须要在此处添加一个对ACTION_VIEW
             	事件的过滤器，其中的scheme是“tencent”前缀再开发者应用的加上appId。如果此过滤器不设置，
-            	则分享结束以后不能得到正确的回调
+            	则分享结束以后不能得到正确的回调   
             -->
             <intent-filter>
                 <data android:scheme="tencent1104603545" />
@@ -91,6 +92,34 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- 开机自启动服务 -->
+        <receiver android:name="com.easemob.chat.StartServiceReceiver" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 设置环信应用的appkey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="774663576#biyanzhi" />
+        <!-- 声明sdk所需的service -->
+        <service android:name="com.easemob.chat.EMChatService" />
+
+        <!-- 百度地图所需的service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="3ecea51f560650b1ed8a4b99808f52e8" />
+
         <activity
             android:name="com.biyanzhi.chooseimage.SelectPhotoActivity"
             android:screenOrientation="portrait" >
@@ -146,6 +175,22 @@
         <activity
             android:name="com.biyanzhi.activity.GuanZhuActivity"
             android:label="@string/title_activity_guan_zhu"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.biyanzhi.activity.ChatActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.biyanzhi.activity.BaiduMapActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.biyanzhi.activity.ShowBigImage"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.biyanzhi.activity.ShowNormalFileActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

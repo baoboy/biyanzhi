@@ -3,22 +3,24 @@ package com.biyanzhi.applation;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.biyanzhi.utils.CheckImageLoaderConfiguration;
-
 import android.app.Activity;
 import android.app.Application;
+
+import com.biyanzhi.utils.CheckImageLoaderConfiguration;
+import com.huanxin.helper.QuYouHXSDKHelper;
 
 public class MyApplation extends Application {
 	private static MyApplation instance;
 
 	private static List<Activity> activityList = new ArrayList<Activity>();
+	public static QuYouHXSDKHelper hxSDKHelper = new QuYouHXSDKHelper();
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
 		CheckImageLoaderConfiguration.checkImageLoaderConfiguration(this);
-
+		System.out.println("huanx::::::::;" + hxSDKHelper.onInit(this));
 	}
 
 	public static MyApplation getInstance() {

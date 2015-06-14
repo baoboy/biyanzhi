@@ -33,9 +33,18 @@ public class User {
 	private String user_birthday = "";// 用户注册生日
 	private String user_password = "";// 用户注册密码
 	private String user_address = "";
+	private String user_chat_id = "";
 	private int user_id = 0;
 	private int guanzhu_count;
 	private boolean isGuanZhu;
+
+	public String getUser_chat_id() {
+		return user_chat_id;
+	}
+
+	public void setUser_chat_id(String user_chat_id) {
+		this.user_chat_id = user_chat_id;
+	}
 
 	public boolean isGuanZhu() {
 		return isGuanZhu;

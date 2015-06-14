@@ -186,6 +186,12 @@ public class UserInfoActivity extends BaseActivity {
 				ToastUtil.showToast("关注以后才能发私信");
 				return;
 			}
+			startActivity(new Intent(this, ChatActivity.class)
+					.putExtra("user_chat_id", user.getUser_chat_id())
+					.putExtra("user_id", user.getUser_id())
+					.putExtra("user_name", user.getUser_name())
+					.putExtra("user_avatar", user.getUser_avatar()));
+			Utils.leftOutRightIn(this);
 			break;
 		default:
 			break;

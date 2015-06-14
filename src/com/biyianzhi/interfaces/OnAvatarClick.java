@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.biyanzhi.activity.SelfInfoActivity;
 import com.biyanzhi.activity.UserInfoActivity;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.Utils;
@@ -26,7 +27,7 @@ public class OnAvatarClick implements OnClickListener {
 
 		Intent intent = new Intent();
 		if (user_id == SharedUtils.getIntUid()) {
-			intent.setClass(mContext, UserInfoActivity.class).putExtra(
+			intent.setClass(mContext, SelfInfoActivity.class).putExtra(
 					"user_id", user_id);
 		} else {
 			intent.setClass(mContext, UserInfoActivity.class).putExtra(
