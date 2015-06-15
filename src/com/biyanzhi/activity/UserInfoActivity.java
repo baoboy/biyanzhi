@@ -41,11 +41,8 @@ public class UserInfoActivity extends BaseActivity {
 	private ViewFlipper mVfFlipper;
 	private TextView txt_title;
 	private ImageView img_avatar_bg;
-	// private CircularImage img_avatar;
 	private int user_id;
-
 	private UserInfo info = new UserInfo();
-
 	private User user;
 	private Dialog dialog;
 
@@ -55,12 +52,8 @@ public class UserInfoActivity extends BaseActivity {
 	private ScrollView scrollView;
 	private LinearLayout layout_bottom;
 	private View bottom_line;
-	// private TextView txt_renqi;
-	// private TextView txt_guanzhu;
 	private Button btn_add_guanzhu;
 	private Button btn_send_message;
-
-	// private DampView view;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +73,6 @@ public class UserInfoActivity extends BaseActivity {
 		scrollView = (ScrollView) findViewById(R.id.scrollView1);
 		scrollView.setVisibility(View.GONE);
 		img_avatar_bg = (ImageView) findViewById(R.id.img_avatar_bg);
-		// view = (DampView) findViewById(R.id.scrollView1);
-		// view.setImageView(img_avatar_bg);
 		txt_title = (TextView) findViewById(R.id.title_txt);
 		Utils.getFocus(txt_title);
 		mVfFlipper = (ViewFlipper) findViewById(R.id.viewflipper);

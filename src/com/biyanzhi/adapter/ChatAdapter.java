@@ -373,7 +373,6 @@ public class ChatAdapter extends BaseAdapter {
 
 			convertView.setTag(holder);
 		} else {
-			Utils.print("otnulLLLLLLLLLLLLL");
 			holder = (ViewHolder) convertView.getTag();
 		}
 		// 如果是发送的消息并且不是群聊消息，显示已读textview
@@ -443,7 +442,7 @@ public class ChatAdapter extends BaseAdapter {
 			handleVoiceMessage(message, holder, position, convertView);
 			break;
 		case VIDEO: // 视频
- 			break;
+			break;
 		case FILE: // 一般文件
 			handleFileMessage(message, holder, position, convertView);
 			break;

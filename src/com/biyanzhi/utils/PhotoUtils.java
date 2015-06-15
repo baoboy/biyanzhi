@@ -42,7 +42,7 @@ public class PhotoUtils {
 	private static final String IMAGE_PATH = Environment
 			.getExternalStorageDirectory().toString()
 			+ File.separator
-			+ "quyou" + File.separator + "Images" + File.separator;
+			+ "biyanzhi" + File.separator + "avatar_images" + File.separator;
 	// 相册的RequestCode
 	public static final int INTENT_REQUEST_CODE_ALBUM = 0;
 	// 照相的RequestCode

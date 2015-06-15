@@ -20,7 +20,6 @@ import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.GetGuanZhuListTask;
 import com.biyanzhi.utils.DialogUtil;
-import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 

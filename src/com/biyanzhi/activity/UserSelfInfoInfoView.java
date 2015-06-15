@@ -54,6 +54,8 @@ public class UserSelfInfoInfoView implements OnClickListener {
 		layout_nick_name.setOnClickListener(this);
 		mContentRootView.findViewById(R.id.layout_address).setOnClickListener(
 				this);
+		mContentRootView.findViewById(R.id.layout_guanzhu).setOnClickListener(
+				this);
 		setValue();
 	}
 
@@ -97,6 +99,12 @@ public class UserSelfInfoInfoView implements OnClickListener {
 				}
 			});
 			city_pop.show();
+			break;
+		case R.id.layout_guanzhu:
+			mActivity
+					.startActivity(new Intent(mActivity, GuanZhuActivity.class)
+							.putExtra("user_id", SharedUtils.getIntUid()));
+			Utils.leftOutRightIn(mActivity);
 			break;
 		default:
 			break;

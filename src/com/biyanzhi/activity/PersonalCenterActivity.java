@@ -9,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
@@ -24,16 +25,26 @@ public class PersonalCenterActivity extends BaseActivity {
 	private TextView txt_title;
 	private TextView txt_version;
 	private TextView txt_name;
+	private int unReadCount;
+	private ImageView img_prompt;
+	private RelativeLayout layout_message;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_personal_center);
+		unReadCount = getIntent().getIntExtra("unReadCount", 0);
 		initView();
 		registerBoradcastReceiver();
 	}
 
 	private void initView() {
+		img_prompt = (ImageView) findViewById(R.id.img_prompt);
+		if (unReadCount > 0) {
+			img_prompt.setVisibility(View.VISIBLE);
+		} else {
+			img_prompt.setVisibility(View.GONE);
+		}
 		img_avatar = (ImageView) findViewById(R.id.img_avatar_bg);
 		view = (DampView) findViewById(R.id.scrollView1);
 		view.setImageView(img_avatar);
@@ -47,6 +58,8 @@ public class PersonalCenterActivity extends BaseActivity {
 		txt_name = (TextView) findViewById(R.id.txt_name);
 		txt_name.setText(SharedUtils.getAPPUserName());
 		img_avatar.setOnClickListener(this);
+		layout_message = (RelativeLayout) findViewById(R.id.layout_message);
+		layout_message.setOnClickListener(this);
 	}
 
 	@Override
@@ -57,7 +70,10 @@ public class PersonalCenterActivity extends BaseActivity {
 					"user_id", SharedUtils.getIntUid()));
 			Utils.leftOutRightIn(this);
 			break;
-
+		case R.id.layout_message:
+			startActivity(new Intent(this, ChatAllHistoryActivity.class));
+			Utils.leftOutRightIn(this);
+			break;
 		default:
 			break;
 		}

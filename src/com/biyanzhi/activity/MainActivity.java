@@ -1,7 +1,13 @@
 package com.biyanzhi.activity;
 
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import android.app.Dialog;
@@ -34,19 +40,23 @@ import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.CircularImage;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMMessage;
+import com.easemob.chat.EMMessage.ChatType;
 
 public class MainActivity extends BaseActivity implements SelectOnclick {
-	// private StaggeredAdapter mAdapter = null;
 	private ImageView img_select;
 	private String cameraPath = "";
 	private Dialog dialog;
 	private List<Picture> mLists = new ArrayList<Picture>();
 	private PictureList list = new PictureList();
-	// private StaggeredGridView mGridView;
 	private GridView mGridView;
 	private PictureAdapter adapter;
 	private TextView txt_title;
 	private CircularImage img_avatar;
+	private ImageView img_prompt;
+	private PtrClassicFrameLayout mPtrFrame;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +66,19 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 		setValue();
 		getPictureList();
 		registerBoradcastReceiver();
+		updateUnreadLabel();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		updateUnreadLabel();
+		EMChatManager.getInstance().activityResumed();
 	}
 
 	private void initView() {
+		initFefushView();
+		img_prompt = (ImageView) findViewById(R.id.img_prompt);
 		img_avatar = (CircularImage) findViewById(R.id.img_avatar);
 		UniversalImageLoadTool.disPlay(SharedUtils.getAPPUserAvatar(),
 				img_avatar, R.drawable.default_avatar);
@@ -105,7 +125,8 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 			Utils.leftOutRightIn(this);
 			break;
 		case R.id.img_avatar:
-			startActivity(new Intent(this, PersonalCenterActivity.class));
+			startActivity(new Intent(this, PersonalCenterActivity.class)
+					.putExtra("unReadCount", unReadCount));
 			Utils.leftOutRightIn(this);
 			break;
 		default:
@@ -154,7 +175,8 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 	 * 注册该广播
 	 */
 	public void registerBoradcastReceiver() {
-		IntentFilter myIntentFilter = new IntentFilter();
+		IntentFilter myIntentFilter = new IntentFilter(EMChatManager
+				.getInstance().getNewMessageBroadcastAction());
 		myIntentFilter.addAction(Constants.UPDATE_USER_AVATAR);
 		// 注册广播
 		registerReceiver(mBroadcastReceiver, myIntentFilter);
@@ -170,12 +192,88 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 			if (action.equals(Constants.UPDATE_USER_AVATAR)) {
 				UniversalImageLoadTool.disPlay(SharedUtils.getAPPUserAvatar(),
 						img_avatar, R.drawable.default_avatar);
+			} else {
+				// 主页面收到消息后，主要为了提示未读，实际消息内容需要到chat页面查看
+				String msgId = intent.getStringExtra("msgid");
+				EMMessage message = EMChatManager.getInstance().getMessage(
+						msgId);
+				if (message.getChatType() == ChatType.Chat) {
+					updateUnreadLabel();
+				}
 			}
 		}
 	};
+	private int unReadCount;
 
+	/**
+	 * 刷新未读消息数
+	 */
+	public void updateUnreadLabel() {
+		unReadCount = getUnreadMsgCountTotal();
+		if (unReadCount > 0) {
+			img_prompt.setVisibility(View.VISIBLE);
+		} else {
+			img_prompt.setVisibility(View.GONE);
+
+		}
+	}
+
+	/**
+	 * 获取未读消息数
+	 * 
+	 * @return
+	 */
+	public int getUnreadMsgCountTotal() {
+		int unreadMsgCountTotal = 0;
+		Hashtable<String, EMConversation> conversations = EMChatManager
+				.getInstance().getAllConversations();
+		for (EMConversation conversation : conversations.values()) {
+			if (conversation.getIsGroup()) {
+				continue;
+			}
+			unreadMsgCountTotal += conversation.getUnreadMsgCount();
+		}
+		return unreadMsgCountTotal;
+	}
+
+	@Override
+	public void onBackPressed() {
+		moveTaskToBack(true);
+	}
+
+	private void initFefushView() {
+		mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.rotate_header_grid_view_frame);
+		mPtrFrame.setLastUpdateTimeRelateObject(this);
+		mPtrFrame.setPtrHandler(new PtrHandler() {
+			@Override
+			public void onRefreshBegin(PtrFrameLayout frame) {
+				mPtrFrame.refreshComplete();
+			}
+
+			@Override
+			public boolean checkCanDoRefresh(PtrFrameLayout frame,
+					View content, View header) {
+				return PtrDefaultHandler.checkContentCanBePulledDown(frame,
+						content, header);
+			}
+		});
+		// the following are default settings
+		mPtrFrame.setResistance(1.7f);
+		mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
+		mPtrFrame.setDurationToClose(200);
+		mPtrFrame.setDurationToCloseHeader(1000);
+		// default is false
+		mPtrFrame.setPullToRefresh(false);
+		// default is true
+		mPtrFrame.setKeepHeaderWhenRefresh(true);
+		// mPtrFrame.postDelayed(new Runnable() {
+		// @Override
+		// public void run() {
+		// mPtrFrame.autoRefresh();
+		// }
+		// }, 100);
+	}
 }
-
 // end of class
 // public class MainActivity extends BaseActivity {
 // private PtrClassicFrameLayout mPtrFrame;

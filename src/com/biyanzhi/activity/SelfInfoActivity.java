@@ -282,4 +282,5 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 		super.onDestroy();
 		unregisterReceiver(mBroadcastReceiver);
 	};
+
 }
