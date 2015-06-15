@@ -4,6 +4,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
+import in.srain.cube.views.ptr.header.StoreHouseHeader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ import com.biyanzhi.task.GetPictureListTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.FileUtils;
+import com.biyanzhi.utils.LocalDisplay;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
@@ -257,6 +259,14 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 						content, header);
 			}
 		});
+		StoreHouseHeader header = new StoreHouseHeader(this);
+		// header.setPadding(0, LocalDisplay.dp2px(20), 0,
+		// LocalDisplay.dp2px(20));
+		header.setPadding(0, 40, 0, 40);
+		header.initWithString("Loading...");
+		mPtrFrame.setDurationToCloseHeader(1500);
+		mPtrFrame.setHeaderView(header);
+		mPtrFrame.addPtrUIHandler(header);
 		// the following are default settings
 		mPtrFrame.setResistance(1.7f);
 		mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);

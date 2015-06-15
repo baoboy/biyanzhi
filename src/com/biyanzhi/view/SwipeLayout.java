@@ -595,7 +595,7 @@ public class SwipeLayout extends FrameLayout {
 	public void computeScroll() {
 		super.computeScroll();
 		if (mDragHelper.continueSettling(true)) {
-			ViewCompat.postInvalidateOnAnimation(this);
+			// ViewCompat.postInvalidateOnAnimation(this);
 		}
 	}
 
