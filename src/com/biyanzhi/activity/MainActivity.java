@@ -264,14 +264,13 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 		// LocalDisplay.dp2px(20));
 		header.setPadding(0, 40, 0, 40);
 		header.initWithString("Loading...");
-		mPtrFrame.setDurationToCloseHeader(1500);
-		mPtrFrame.setHeaderView(header);
+ 		mPtrFrame.setHeaderView(header);
 		mPtrFrame.addPtrUIHandler(header);
 		// the following are default settings
 		mPtrFrame.setResistance(1.7f);
 		mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
 		mPtrFrame.setDurationToClose(200);
-		mPtrFrame.setDurationToCloseHeader(1000);
+		mPtrFrame.setDurationToCloseHeader(5000);
 		// default is false
 		mPtrFrame.setPullToRefresh(false);
 		// default is true
