@@ -20,6 +20,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -33,10 +35,10 @@ import com.biyanzhi.data.PictureList;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.popwindow.SelectPicPopwindow.SelectOnclick;
 import com.biyanzhi.task.GetPictureListTask;
+import com.biyanzhi.task.LoadMorePictureListTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.FileUtils;
-import com.biyanzhi.utils.LocalDisplay;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
@@ -59,6 +61,7 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 	private CircularImage img_avatar;
 	private ImageView img_prompt;
 	private PtrClassicFrameLayout mPtrFrame;
+	private boolean isLoading = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,8 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 		setContentView(R.layout.activity_main);
 		initView();
 		setValue();
+		dialog = DialogUtil.createLoadingDialog(this);
+		dialog.show();
 		getPictureList();
 		registerBoradcastReceiver();
 		updateUnreadLabel();
@@ -101,6 +106,28 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 			}
 		});
 		img_avatar.setOnClickListener(this);
+		mGridView.setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+				if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+					// 滚动到底,请求下一页数据
+					if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
+						if (isLoading) {
+							return;
+						}
+						loadMorePictureList();
+					}
+				}
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+
+			}
+		});
 	}
 
 	private void setValue() {
@@ -157,9 +184,28 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 	}
 
 	private void getPictureList() {
-		dialog = DialogUtil.createLoadingDialog(this);
-		dialog.show();
 		GetPictureListTask task = new GetPictureListTask();
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				if (dialog != null) {
+					dialog.dismiss();
+				}
+				mPtrFrame.refreshComplete();
+				mLists.addAll(0, list.getPictureList());
+				adapter.notifyDataSetChanged();
+			}
+		});
+		task.executeParallel(list);
+	}
+
+	private void loadMorePictureList() {
+		if (mLists.size() == 0) {
+			return;
+		}
+		isLoading = true;
+		list.setPublish_time(mLists.get(mLists.size() - 1).getPublish_time());
+		LoadMorePictureListTask task = new LoadMorePictureListTask();
 		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
 			@Override
 			public void taskFinish(RetError result) {
@@ -168,6 +214,8 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 				}
 				mLists.addAll(list.getPictureList());
 				adapter.notifyDataSetChanged();
+				isLoading = false;
+
 			}
 		});
 		task.executeParallel(list);
@@ -249,7 +297,13 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 		mPtrFrame.setPtrHandler(new PtrHandler() {
 			@Override
 			public void onRefreshBegin(PtrFrameLayout frame) {
+				if (mLists.size() > 0) {
+					list.setPublish_time(mLists.get(0).getPublish_time());
+					getPictureList();
+					return;
+				}
 				mPtrFrame.refreshComplete();
+
 			}
 
 			@Override
@@ -264,15 +318,15 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 		// LocalDisplay.dp2px(20));
 		header.setPadding(0, 40, 0, 40);
 		header.initWithString("Loading...");
- 		mPtrFrame.setHeaderView(header);
+		mPtrFrame.setHeaderView(header);
 		mPtrFrame.addPtrUIHandler(header);
 		// the following are default settings
 		mPtrFrame.setResistance(1.7f);
 		mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
-		mPtrFrame.setDurationToClose(200);
-		mPtrFrame.setDurationToCloseHeader(5000);
+		mPtrFrame.setDurationToClose(500);
+		mPtrFrame.setDurationToCloseHeader(2000);
 		// default is false
-		mPtrFrame.setPullToRefresh(false);
+		mPtrFrame.setPullToRefresh(true);
 		// default is true
 		mPtrFrame.setKeepHeaderWhenRefresh(true);
 		// mPtrFrame.postDelayed(new Runnable() {

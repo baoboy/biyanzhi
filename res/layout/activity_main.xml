@@ -68,58 +68,6 @@
             android:scrollbars="none" >
         </GridView>
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
-    <!-- <com.etsy.android.grid.StaggeredGridView -->
-    <!-- android:id="@+id/grid_view" -->
-    <!-- android:layout_width="match_parent" -->
-    <!-- android:layout_height="match_parent" -->
-    <!-- app:column_count_landscape="3" -->
-    <!-- app:column_count_portrait="2" -->
-    <!-- app:item_margin="8dp" > -->
-    <!-- </com.etsy.android.grid.StaggeredGridView> -->
-
-
-    <!-- <me.maxwin.view.XListView -->
-    <!-- android:id="@+id/list" -->
-    <!-- android:layout_width="match_parent" -->
-    <!-- android:layout_height="match_parent" -->
-    <!-- android:fastScrollEnabled="true" -->
-    <!-- android:scrollbars="none" /> -->
-    <!-- <include -->
-    <!-- android:id="@+id/titlebar" -->
-    <!-- android:layout_width="fill_parent" -->
-    <!-- layout="@layout/title_bar" /> -->
-
-
-    <!-- <in.srain.cube.views.ptr.PtrClassicFrameLayout -->
-    <!-- xmlns:cube_ptr="http://schemas.android.com/apk/res-auto" -->
-    <!-- android:id="@+id/rotate_header_grid_view_frame" -->
-    <!-- android:layout_width="match_parent" -->
-    <!-- android:layout_height="match_parent" -->
-    <!-- android:layout_below="@+id/titlebar" -->
-    <!-- cube_ptr:ptr_duration_to_close="200" -->
-    <!-- cube_ptr:ptr_duration_to_close_header="1000" -->
-    <!-- cube_ptr:ptr_keep_header_when_refresh="true" -->
-    <!-- cube_ptr:ptr_pull_to_fresh="false" -->
-    <!-- cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2" -->
-    <!-- cube_ptr:ptr_resistance="1.7" > -->
-
-
-    <!-- <GridView -->
-    <!-- android:id="@+id/rotate_header_grid_view" -->
-    <!-- android:layout_width="match_parent" -->
-    <!-- android:layout_height="match_parent" -->
-    <!-- android:fadingEdge="none" -->
-    <!-- android:focusable="false" -->
-    <!-- android:horizontalSpacing="5dip" -->
-    <!-- android:listSelector="@android:color/transparent" -->
-    <!-- android:numColumns="2" -->
-    <!-- android:paddingBottom="12dp" -->
-    <!-- android:paddingLeft="12dp" -->
-    <!-- android:paddingRight="12dp" -->
-    <!-- android:scrollbars="none" -->
-    <!-- android:stretchMode="columnWidth" -->
-    <!-- android:verticalSpacing="5dip" /> -->
-    <!-- </in.srain.cube.views.ptr.PtrClassicFrameLayout> -->
 
     <ImageView
         android:id="@+id/img_create"
@@ -129,5 +77,29 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
         android:src="@drawable/icon_create_scene" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:id="@+id/pulldown_footer_loading"
+            android:layout_width="25dip"
+            android:layout_height="25dip"
+            android:indeterminateDrawable="@drawable/iamge_progress" />
+
+        <TextView
+            android:id="@+id/pulldown_footer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="加载更多中"
+            android:textColor="#c8313131"
+            android:textSize="16dp" />
+    </LinearLayout>
 
 </RelativeLayout>
