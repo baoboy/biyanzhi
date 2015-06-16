@@ -1803,19 +1803,20 @@ containing a value of this type.
         public static final int slidetab_bg_press=0x7f0200bb;
         public static final int star_nomal=0x7f0200bc;
         public static final int star_select=0x7f0200bd;
-        public static final int trash=0x7f0200be;
-        public static final int type_select_btn=0x7f0200bf;
-        public static final int type_select_btn_nor=0x7f0200c0;
-        public static final int type_select_btn_pressed=0x7f0200c1;
-        public static final int video_download_btn_nor=0x7f0200c2;
-        public static final int viewpager_dot_normal=0x7f0200c3;
-        public static final int viewpager_dot_select=0x7f0200c4;
-        public static final int viewpager_normal_circle=0x7f0200c5;
-        public static final int viewpager_select_circle=0x7f0200c6;
-        public static final int voice_unread=0x7f0200c7;
-        public static final int xlistview_arrow=0x7f0200c8;
-        public static final int zan_nomal=0x7f0200c9;
-        public static final int zan_select=0x7f0200ca;
+        public static final int tab_bg=0x7f0200be;
+        public static final int trash=0x7f0200bf;
+        public static final int type_select_btn=0x7f0200c0;
+        public static final int type_select_btn_nor=0x7f0200c1;
+        public static final int type_select_btn_pressed=0x7f0200c2;
+        public static final int video_download_btn_nor=0x7f0200c3;
+        public static final int viewpager_dot_normal=0x7f0200c4;
+        public static final int viewpager_dot_select=0x7f0200c5;
+        public static final int viewpager_normal_circle=0x7f0200c6;
+        public static final int viewpager_select_circle=0x7f0200c7;
+        public static final int voice_unread=0x7f0200c8;
+        public static final int xlistview_arrow=0x7f0200c9;
+        public static final int zan_nomal=0x7f0200ca;
+        public static final int zan_select=0x7f0200cb;
     }
     public static final class id {
         public static final int Layparent=0x7f0900c7;

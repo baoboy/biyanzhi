@@ -19,12 +19,12 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +39,7 @@ import com.biyanzhi.task.LoadMorePictureListTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.FileUtils;
+import com.biyanzhi.utils.GridViewWithHeaderAndFooter;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
@@ -55,13 +56,14 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 	private Dialog dialog;
 	private List<Picture> mLists = new ArrayList<Picture>();
 	private PictureList list = new PictureList();
-	private GridView mGridView;
+	private GridViewWithHeaderAndFooter mGridView;
 	private PictureAdapter adapter;
 	private TextView txt_title;
 	private CircularImage img_avatar;
 	private ImageView img_prompt;
 	private PtrClassicFrameLayout mPtrFrame;
 	private boolean isLoading = false;
+	private View footerView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,9 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 
 	private void initView() {
 		initFefushView();
+		LayoutInflater layoutInflater = LayoutInflater.from(this);
+		View footerView = layoutInflater
+				.inflate(R.layout.pulldown_footer, null);
 		img_prompt = (ImageView) findViewById(R.id.img_prompt);
 		img_avatar = (CircularImage) findViewById(R.id.img_avatar);
 		UniversalImageLoadTool.disPlay(SharedUtils.getAPPUserAvatar(),
@@ -93,7 +98,9 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 		img_select = (ImageView) findViewById(R.id.img_create);
 		img_select.setOnClickListener(this);
 		// mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
-		mGridView = (GridView) findViewById(R.id.gridView1);
+		mGridView = (GridViewWithHeaderAndFooter) findViewById(R.id.gridView1);
+		mGridView.addFooterView(footerView);
+		mGridView.hideFootView();
 		mGridView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -194,6 +201,7 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 				mPtrFrame.refreshComplete();
 				mLists.addAll(0, list.getPictureList());
 				adapter.notifyDataSetChanged();
+
 			}
 		});
 		task.executeParallel(list);
@@ -203,6 +211,7 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 		if (mLists.size() == 0) {
 			return;
 		}
+		mGridView.showFootView();
 		isLoading = true;
 		list.setPublish_time(mLists.get(mLists.size() - 1).getPublish_time());
 		LoadMorePictureListTask task = new LoadMorePictureListTask();
@@ -215,7 +224,7 @@ public class MainActivity extends BaseActivity implements SelectOnclick {
 				mLists.addAll(list.getPictureList());
 				adapter.notifyDataSetChanged();
 				isLoading = false;
-
+				mGridView.hideFootView();
 			}
 		});
 		task.executeParallel(list);
