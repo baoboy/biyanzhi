@@ -11,8 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.biyanzhi.R;
-import com.biyanzhi.R.id;
-import com.biyanzhi.R.layout;
 import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.UpDateUserNameTask;

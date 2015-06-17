@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
+import com.biyanzhi.applation.MyApplation;
 import com.biyanzhi.popwindow.SelectPicPopwindow.SelectOnclick;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.FileUtils;
@@ -50,6 +51,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+		MyApplation.addActivity(this);
 		initView();
 		initFragment();
 		registerBoradcastReceiver();

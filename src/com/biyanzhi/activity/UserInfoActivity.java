@@ -101,6 +101,8 @@ public class UserInfoActivity extends BaseActivity {
 		btn_add_guanzhu.setOnClickListener(this);
 		img_avatar_bg.setOnClickListener(this);
 		btn_send_message.setOnClickListener(this);
+		findViewById(R.id.back).setOnClickListener(this);
+
 	}
 
 	private void getValue() {
@@ -183,6 +185,9 @@ public class UserInfoActivity extends BaseActivity {
 					.putExtra("user_name", user.getUser_name())
 					.putExtra("user_avatar", user.getUser_avatar()));
 			Utils.leftOutRightIn(this);
+			break;
+		case R.id.back:
+			finishThisActivity();
 			break;
 		default:
 			break;

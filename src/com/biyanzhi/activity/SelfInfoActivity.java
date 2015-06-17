@@ -37,7 +37,6 @@ import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
-import com.biyanzhi.view.DampView;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 
 public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
@@ -53,7 +52,6 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 
 	private UserInfoYanZhiView yanzhi_View;
 	private UserSelfInfoInfoView info_view;
-	private DampView view;
 
 	private String mTakePicturePath = "";
 	private String imgPath = "";
@@ -75,8 +73,8 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 
 	private void initView() {
 		img_avatar_bg = (ImageView) findViewById(R.id.img_avatar_bg);
-		view = (DampView) findViewById(R.id.scrollView1);
-		view.setImageView(img_avatar_bg);
+		// view = (DampView) findViewById(R.id.scrollView1);
+		// view.setImageView(img_avatar_bg);
 		txt_title = (TextView) findViewById(R.id.title_txt);
 		Utils.getFocus(txt_title);
 		mVfFlipper = (ViewFlipper) findViewById(R.id.viewflipper);
@@ -100,6 +98,8 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 		btn_info.setOnClickListener(this);
 		btn_yanzhi.setOnClickListener(this);
 		img_avatar_bg.setOnClickListener(this);
+		findViewById(R.id.back).setOnClickListener(this);
+
 	}
 
 	private void getValue() {
@@ -137,6 +137,10 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 			pop = new SelectPicPopwindow(this, v, "≈ƒ’’", "¥”œ‡≤·—°‘Ò");
 			pop.setmSelectOnclick(this);
 			pop.show();
+			break;
+		case R.id.back:
+			finishThisActivity();
+			break;
 		default:
 			break;
 		}

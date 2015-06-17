@@ -16,6 +16,8 @@ import com.biyanzhi.parser.PictureListParser;
 public class PictureList {
 	private static final String GET_PICTURELIST_URL = "getpicturelists.do";
 	private static final String LOAD_MORE_PICTURELIST_URL = "loadMorePictureList.do";
+	private static final String GET_GIRL_PICTURE_LIST_URL = "getGirlBangPictureList.do";
+	private static final String GET_BOY_PICTURE_LIST_URL = "getBoyBangPictureList.do";
 
 	private List<Picture> pictureList = new ArrayList<Picture>();
 	private String publish_time = "";
@@ -55,6 +57,34 @@ public class PictureList {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("publish_time", publish_time);
 		Result ret = ApiRequest.request(LOAD_MORE_PICTURELIST_URL, params,
+				parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			PictureList lists = (PictureList) ret.getData();
+			this.pictureList = lists.getPictureList();
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError getGirlBangPictureList() {
+		IParser parser = new PictureListParser();
+		Map<String, Object> params = new HashMap<String, Object>();
+		Result ret = ApiRequest.request(GET_GIRL_PICTURE_LIST_URL, params,
+				parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			PictureList lists = (PictureList) ret.getData();
+			this.pictureList = lists.getPictureList();
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError getBoyBangPictureList() {
+		IParser parser = new PictureListParser();
+		Map<String, Object> params = new HashMap<String, Object>();
+		Result ret = ApiRequest.request(GET_BOY_PICTURE_LIST_URL, params,
 				parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			PictureList lists = (PictureList) ret.getData();

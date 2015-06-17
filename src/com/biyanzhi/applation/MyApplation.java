@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.biyanzhi.utils.CheckImageLoaderConfiguration;
+import com.easemob.EMCallBack;
 import com.huanxin.helper.QuYouHXSDKHelper;
 
 public class MyApplation extends Application {
@@ -20,7 +21,7 @@ public class MyApplation extends Application {
 		super.onCreate();
 		instance = this;
 		CheckImageLoaderConfiguration.checkImageLoaderConfiguration(this);
-		System.out.println("huanx::::::::;" + hxSDKHelper.onInit(this));
+		hxSDKHelper.onInit(this);
 	}
 
 	public static MyApplation getInstance() {
@@ -47,4 +48,12 @@ public class MyApplation extends Application {
 
 	}
 
+	/**
+	 * 退出登录,清空数据
+	 */
+	public static void logoutHuanXin(final EMCallBack emCallBack) {
+		// 先调用sdk logout，在清理app中自己的数据
+		hxSDKHelper.logout(emCallBack);
+
+	}
 }

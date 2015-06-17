@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ public class ShowNormalFileActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_file);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
+		findViewById(R.id.back).setOnClickListener(this);
 		final FileMessageBody messageBody = getIntent().getParcelableExtra(
 				"msgbody");
 		file = new File(messageBody.getLocalUrl());
@@ -88,5 +89,10 @@ public class ShowNormalFileActivity extends BaseActivity {
 			}
 		}).start();
 
+	}
+
+	@Override
+	public void onClick(View v) {
+		finishThisActivity();
 	}
 }

@@ -3,7 +3,9 @@
     android:layout_height="match_parent"
     android:background="@color/white" >
 
-    <com.biyanzhi.view.DampView
+    <!-- com.biyanzhi.view.DampView -->
+
+    <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,7 +77,7 @@
                     layout="@layout/user_info_yanzhi" />
             </ViewFlipper>
         </RelativeLayout>
-    </com.biyanzhi.view.DampView>
+    </ScrollView>
 
     <include
         android:id="@+id/title"

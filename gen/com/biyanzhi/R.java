@@ -1853,6 +1853,7 @@ containing a value of this type.
         public static final int btn_cancel=0x7f090115;
         public static final int btn_divider1=0x7f0900c1;
         public static final int btn_divider2=0x7f0900c3;
+        public static final int btn_exit=0x7f090086;
         public static final int btn_fiish=0x7f0900e9;
         public static final int btn_findPasswrod=0x7f090079;
         public static final int btn_get_code=0x7f0900b4;
@@ -1864,7 +1865,6 @@ containing a value of this type.
         public static final int btn_menu_2=0x7f090117;
         public static final int btn_more=0x7f09004b;
         public static final int btn_press_to_speak=0x7f090046;
-        public static final int btn_quit=0x7f090086;
         public static final int btn_regisiter=0x7f09007a;
         public static final int btn_save=0x7f090097;
         public static final int btn_send=0x7f09004c;

@@ -463,6 +463,7 @@ int id btn_boy 0x7f09013b
 int id btn_cancel 0x7f090115
 int id btn_divider1 0x7f0900c1
 int id btn_divider2 0x7f0900c3
+int id btn_exit 0x7f090086
 int id btn_fiish 0x7f0900e9
 int id btn_findPasswrod 0x7f090079
 int id btn_get_code 0x7f0900b4
@@ -474,7 +475,6 @@ int id btn_menu_1 0x7f090116
 int id btn_menu_2 0x7f090117
 int id btn_more 0x7f09004b
 int id btn_press_to_speak 0x7f090046
-int id btn_quit 0x7f090086
 int id btn_regisiter 0x7f09007a
 int id btn_save 0x7f090097
 int id btn_send 0x7f09004c

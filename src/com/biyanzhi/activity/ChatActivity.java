@@ -104,8 +104,8 @@ import com.huanxin.helper.HXSDKHelper;
  * ¡ƒÃÏ“≥√Ê
  * 
  */
-public class ChatActivity extends BaseActivity implements OnClickListener,
-		OnItemClickListener, MessageOnLongClick {
+public class ChatActivity extends BaseActivity implements OnItemClickListener,
+		MessageOnLongClick {
 
 	private static final int REQUEST_CODE_EMPTY_HISTORY = 2;
 	public static final int REQUEST_CODE_CONTEXT_MENU = 3;

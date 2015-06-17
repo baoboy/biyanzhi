@@ -128,6 +128,8 @@ public class BaiduMapActivity extends BaseActivity {
 		iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
 		mBaiduReceiver = new BaiduSDKReceiver();
 		registerReceiver(mBaiduReceiver, iFilter);
+		findViewById(R.id.back).setOnClickListener(this);
+
 	}
 
 	private void showMap(double latitude, double longtitude, String address) {
@@ -271,8 +273,15 @@ public class BaiduMapActivity extends BaseActivity {
 		}
 	}
 
-	public void back(View v) {
-		finish();
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.back:
+			finishThisActivity();
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void sendLocation(View view) {
