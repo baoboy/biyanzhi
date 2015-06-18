@@ -16,11 +16,12 @@ import com.biyanzhi.utils.BitmapUtils;
 import com.biyanzhi.utils.SharedUtils;
 
 public class User {
+	private static final String VERIFY_FINDPASSWORD_CELLPHONE_API = "getFindPassWordVerifyCode.do";
 	private static final String VERIFY_CELLPHONE_API = "getVerifyCode.do";
 	private static final String USER_REGISTER_API = "userRegister.do";
 	private static final String USER_LOGIN_API = "userLogin.do";
 	private static final String FIND_PASSWORD_VERIFY_CODE = "getVerifyCode.do";
-	private static final String UPDATE_USER_LOGIN_PASSWORD = "UpdateUserLoginPassword";
+	private static final String CHANGE_USER_LOGIN_PASSWORD = "changePassword.do";
 	private static final String CHECK_VERIFY_CODE = "checkVerifyCode.do";
 	private static final String UPLOAD_USER_AVATAR = "upLoadUserAvatar.do";
 	private static final String UPDATE_USER_NAME = "upDateUserName.do";
@@ -158,6 +159,19 @@ public class User {
 		}
 	}
 
+	public RetError vefifyFindPasswordCellPhone() {
+		IParser parser = new SimpleParser();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("user_cellphone", user_cellphone);
+		Result ret = ApiRequest.request(VERIFY_FINDPASSWORD_CELLPHONE_API,
+				params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
 	public RetError getFindPasswordVerifyCode() {
 		IParser parser = new SimpleParser();
 		HashMap<String, Object> params = new HashMap<String, Object>();
@@ -196,12 +210,12 @@ public class User {
 
 	}
 
-	public RetError updateUserLoginPassword() {
+	public RetError changeUserLoginPassword() {
 		IParser parser = new SimpleParser();
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("user_password", user_password);
 		params.put("cell_phone", user_cellphone);
-		Result ret = ApiRequest.request(UPDATE_USER_LOGIN_PASSWORD, params,
+		Result ret = ApiRequest.request(CHANGE_USER_LOGIN_PASSWORD, params,
 				parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			return RetError.NONE;
