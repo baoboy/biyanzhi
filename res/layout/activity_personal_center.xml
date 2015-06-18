@@ -85,6 +85,7 @@
                     android:background="#d5d5d5" />
 
                 <RelativeLayout
+                    android:id="@+id/layout_version"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -129,6 +130,7 @@
                     android:background="#32d5d5d5" />
 
                 <RelativeLayout
+                    android:id="@+id/layout_about"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"

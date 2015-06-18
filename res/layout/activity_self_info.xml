@@ -36,6 +36,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:paddingBottom="12dip"
+                    android:paddingTop="12dip"
                     android:text="个人信息"
                     android:textColor="@color/pciture_blue"
                     android:textSize="15sp" />
@@ -46,6 +48,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:paddingBottom="12dip"
+                    android:paddingTop="12dip"
                     android:text="颜值"
                     android:textColor="@color/pciture_text"
                     android:textSize="15sp" />

@@ -2,6 +2,7 @@ package com.biyanzhi.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
+import com.biyanzhi.service.UpdateService;
 import com.biyianzhi.interfaces.ConfirmDialog;
 
 import fynn.app.PromptDialog;
@@ -84,6 +86,41 @@ public class DialogUtil {
 
 		return dialog;
 
+	}
+
+	/**
+	 * 新版本提示
+	 * 
+	 * @param context
+	 * @param versionCode
+	 * @param link
+	 */
+	public static void newVewsionDialog(final Context context,
+			String versionCode, final String link, String version_info) {
+		PromptDialog.Builder dialog = new PromptDialog.Builder(context);
+		dialog.setTitle("新版本提示");
+		dialog.setViewStyle(PromptDialog.VIEW_STYLE_TITLEBAR);
+		dialog.setMessage(versionCode + "\n\n" + version_info);
+		dialog.setMessageGravityIsCenter(true);
+		dialog.setButton1("立即下载", new PromptDialog.OnClickListener() {
+
+			@Override
+			public void onClick(Dialog dialog, int which) {
+				dialog.dismiss();
+				Intent intent = new Intent();
+				intent.setClass(context, UpdateService.class);
+				intent.putExtra("url", link);
+				context.startService(intent);
+			}
+		});
+		dialog.setButton2("暂不下载", new PromptDialog.OnClickListener() {
+
+			@Override
+			public void onClick(Dialog dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		dialog.show();
 	}
 
 }

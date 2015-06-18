@@ -10,6 +10,7 @@ import com.biyanzhi.R;
 import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.CheckVerifyCodeTask;
+import com.biyanzhi.task.VerifyCellPhoneTask;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.view.MyEditTextDeleteImg;
@@ -78,10 +79,32 @@ public class RegisterCheckVerifyCode extends RegisterStep implements
 			btn_get_code.setEnabled(false);
 			btn_get_code.setBackgroundResource(R.drawable.btn_disenable_bg);
 			mActivity.postHandler();
+			getCodeAgain();
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void getCodeAgain() {
+		dialog = DialogUtil.createLoadingDialog(mActivity);
+		dialog.show();
+		User re = new User();
+		re.setUser_cellphone(mActivity.getmRegister().getUser_cellphone());
+		VerifyCellPhoneTask task = new VerifyCellPhoneTask();
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				if (dialog != null) {
+					dialog.dismiss();
+
+				}
+				if (result != RetError.NONE) {
+					return;
+				}
+			}
+		});
+		task.executeParallel(re);
 	}
 
 	private void checkCode(String code) {

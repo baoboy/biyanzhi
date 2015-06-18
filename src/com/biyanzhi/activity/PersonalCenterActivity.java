@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.biyanzhi.R;
 import com.biyanzhi.applation.MyApplation;
+import com.biyanzhi.task.GetVersionTask;
+import com.biyanzhi.task.GetVersionTask.UpDateVersion;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.SharedUtils;
@@ -36,7 +38,6 @@ public class PersonalCenterActivity extends BaseActivity {
 	private int unReadCount;
 	private ImageView img_prompt;
 	private RelativeLayout layout_message;
-
 	private Dialog dialog;
 
 	@Override
@@ -72,6 +73,9 @@ public class PersonalCenterActivity extends BaseActivity {
 		layout_message.setOnClickListener(this);
 		findViewById(R.id.btn_exit).setOnClickListener(this);
 		findViewById(R.id.back).setOnClickListener(this);
+		findViewById(R.id.layout_about).setOnClickListener(this);
+		findViewById(R.id.layout_version).setOnClickListener(this);
+
 	}
 
 	@Override
@@ -91,6 +95,13 @@ public class PersonalCenterActivity extends BaseActivity {
 			break;
 		case R.id.back:
 			finishThisActivity();
+			break;
+		case R.id.layout_about:
+			startActivity(new Intent(this, AboutActivity.class));
+			Utils.leftOutRightIn(this);
+			break;
+		case R.id.layout_version:
+			getNewVersion();
 			break;
 		default:
 			break;
@@ -168,4 +179,25 @@ public class PersonalCenterActivity extends BaseActivity {
 		super.onDestroy();
 		unregisterReceiver(mBroadcastReceiver);
 	};
+
+	private void getNewVersion() {
+		final Dialog dialog = DialogUtil.createLoadingDialog(this, "«Î…‘∫Ú");
+		dialog.show();
+		GetVersionTask task = new GetVersionTask(this, true);
+		task.setCallBack(new UpDateVersion() {
+			@Override
+			public void getNewVersion(int rt, String versionCode, String link,
+					String version_info) {
+				if (dialog != null) {
+					dialog.dismiss();
+				}
+				if (rt == 0) {
+					return;
+				}
+				DialogUtil.newVewsionDialog(PersonalCenterActivity.this,
+						versionCode, link, version_info);
+			}
+		});
+		task.execute();
+	}
 }
