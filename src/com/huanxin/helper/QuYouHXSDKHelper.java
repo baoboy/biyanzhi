@@ -53,8 +53,8 @@ public class QuYouHXSDKHelper extends HXSDKHelper {
 
 			@Override
 			public String onNewMessageNotify(EMMessage message) {
-				if (Constants.GROWTH_USER_ID.equals(message.getFrom())) {
-					return "有人更新了动态快去看看吧";
+				if (Constants.COMMENT_USER_ID.equals(message.getFrom())) {
+					return "有人评论的你的照片";
 
 				}
 				if (Utils.isSystemUser(message.getFrom())) {
@@ -71,14 +71,14 @@ public class QuYouHXSDKHelper extends HXSDKHelper {
 					}
 					e.printStackTrace();
 				}
-				return "你的趣友 " + user_name + " 发来了一条消息";
+				return "你的好友 " + user_name + " 发来了一条消息";
 			}
 
 			@Override
 			public String onLatestMessageNotify(EMMessage message,
 					int fromUsersNum, int messageNum) {
-				if (Constants.GROWTH_USER_ID.equals(message.getFrom())) {
-					return "有人更新了动态快去看看吧";
+				if (Constants.COMMENT_USER_ID.equals(message.getFrom())) {
+					return "有人评论的你的照片";
 
 				}
 				if (Utils.isSystemUser(message.getFrom())) {
@@ -88,30 +88,27 @@ public class QuYouHXSDKHelper extends HXSDKHelper {
 				String circle_name = "";
 				try {
 					user_name = message.getStringAttribute("from_user_name");
-					circle_name = message.getStringAttribute("circle_name");
 				} catch (EaseMobException e) {
 					e.printStackTrace();
 					try {
 						user_name = message.getStringAttribute("user_name");
-						circle_name = message.getStringAttribute("circle_name");
 					} catch (EaseMobException e1) {
 						e1.printStackTrace();
 					}
 				}
-				return "'" + user_name + "' 发来了" + messageNum + "条消息。"
-						+ " 来自 '" + circle_name + "' 圈子";
+				return "'" + user_name + "' 发来了" + messageNum + "条消息。";
 
 			}
 
 			@Override
 			public String onSetNotificationTitle(EMMessage message) {
 				// 修改标题
-				return "趣友";
+				return "比颜值";
 			}
 
 			@Override
 			public int onSetSmallIcon(EMMessage arg0) {
-				return R.drawable.app_icon_small;
+				return R.drawable.default_avatar;
 			}
 		};
 	}

@@ -17,7 +17,6 @@ import com.biyanzhi.data.Picture;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.RoundAnglePictureImageView;
-import com.biyianzhi.interfaces.OnAvatarClick;
 
 public class PictureAdapter extends BaseAdapter {
 	private List<Picture> mLists;

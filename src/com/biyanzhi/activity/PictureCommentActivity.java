@@ -165,7 +165,7 @@ public class PictureCommentActivity extends BaseActivity implements
 		}
 		txt_time.setText(picture.getPublish_time());
 		UniversalImageLoadTool.disPlay(picture.getPicture_image_url(), img,
-				R.drawable.empty_photo);
+				R.drawable.default_avatar);
 		if (picture.getAverage_score() != 0) {
 			autoChange = false;
 			ratingBar.setRating((float) picture.getAverage_score() / 20);

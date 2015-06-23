@@ -63,7 +63,7 @@ public class StaggeredAdapter extends BaseAdapter {
 			path = "file://" + path;
 		}
 		UniversalImageLoadTool.disPlay(path, holder.imageView,
-				R.drawable.empty_photo);
+				R.drawable.default_avatar);
 		holder.imageView.setOnClickListener(new OnClick(position));
 		return convertView;
 	}

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.biyanzhi.R;
 import com.biyanzhi.adapter.ChatAllHistoryAdapter;
+import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.Utils;
 import com.easemob.chat.EMChatManager;
@@ -142,27 +143,31 @@ public class ChatAllHistoryActivity extends BaseActivity implements
 		EMConversation conversation = adapter.getItem(position);
 		String username = conversation.getUserName();
 		Intent intent = null;
-
-		intent = new Intent(this, ChatActivity.class);
-		EMMessage message = conversation.getLastMessage();
-		String user_name = "";
-		String user_avatar = "";
-		int user_id;
-		try {
-			user_id = message.getIntAttribute("user_id");
-			if (user_id == SharedUtils.getIntUid()) {
-				user_name = message.getStringAttribute("to_user_name");
-				user_avatar = message.getStringAttribute("to_user_avatar");
-				user_id = message.getIntAttribute("to_user_id");
-			} else {
-				user_name = message.getStringAttribute("from_user_name");
-				user_avatar = message.getStringAttribute("from_user_avatar");
+		if (Constants.COMMENT_USER_ID.equals(username)) {
+			intent = new Intent(this, PictureServerCommentActivity.class);
+		} else {
+			intent = new Intent(this, ChatActivity.class);
+			EMMessage message = conversation.getLastMessage();
+			String user_name = "";
+			String user_avatar = "";
+			int user_id;
+			try {
+				user_id = message.getIntAttribute("user_id");
+				if (user_id == SharedUtils.getIntUid()) {
+					user_name = message.getStringAttribute("to_user_name");
+					user_avatar = message.getStringAttribute("to_user_avatar");
+					user_id = message.getIntAttribute("to_user_id");
+				} else {
+					user_name = message.getStringAttribute("from_user_name");
+					user_avatar = message
+							.getStringAttribute("from_user_avatar");
+				}
+				intent.putExtra("user_name", user_name);
+				intent.putExtra("user_avatar", user_avatar);
+				intent.putExtra("user_id", user_id);
+			} catch (EaseMobException e) {
+				e.printStackTrace();
 			}
-			intent.putExtra("user_name", user_name);
-			intent.putExtra("user_avatar", user_avatar);
-			intent.putExtra("user_id", user_id);
-		} catch (EaseMobException e) {
-			e.printStackTrace();
 		}
 		intent.putExtra("user_chat_id", username);
 		startActivity(intent);

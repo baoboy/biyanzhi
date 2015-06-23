@@ -28,6 +28,7 @@ import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.GetBoyBangPictureListTask;
 import com.biyanzhi.task.GetGirlBangPictureListTask;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 
@@ -69,6 +70,11 @@ public class BoyFragment extends Fragment implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
+		if (SharedUtils.getIntUid() == 0) {
+			startActivity(new Intent(getActivity(), LoginActivity.class));
+			Utils.leftOutRightIn(getActivity());
+			return;
+		}
 		startActivity(new Intent(getActivity(), PictureCommentActivity.class)
 				.putExtra("picture", mLists.get(position)));
 		Utils.leftOutRightIn(getActivity());

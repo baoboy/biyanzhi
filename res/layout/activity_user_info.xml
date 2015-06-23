@@ -107,6 +107,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
+            android:paddingBottom="12dip"
+            android:paddingTop="12dip"
             android:text="发私信"
             android:textColor="#8ec700"
             android:textSize="13sp" />
@@ -123,6 +125,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
+            android:paddingBottom="12dip"
+            android:paddingTop="12dip"
             android:text="加关注"
             android:textColor="@color/pciture_blue"
             android:textSize="13sp" />

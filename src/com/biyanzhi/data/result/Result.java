@@ -51,7 +51,7 @@ public class Result<T> {
 	}
 
 	public static Result defContentErrorResult() {
-		return new Result(RetStatus.FAIL, RetError.NONE);
+		return new Result(RetStatus.FAIL, RetError.INVALID);
 	}
 
 }

@@ -639,14 +639,14 @@ public class ChatAdapter extends BaseAdapter {
 			// "it is receive msg";
 			if (message.status == EMMessage.Status.INPROGRESS) {
 				// "!!!! back receive";
-				holder.iv.setImageResource(R.drawable.empty_photo);
+				holder.iv.setImageResource(R.drawable.default_avatar);
 				showDownloadImageProgress(message, holder);
 				// downloadImage(message, holder);
 			} else {
 				// "!!!! not back receive, show image directly");
 				holder.pb.setVisibility(View.GONE);
 				holder.tv.setVisibility(View.GONE);
-				holder.iv.setImageResource(R.drawable.empty_photo);
+				holder.iv.setImageResource(R.drawable.default_avatar);
 				ImageMessageBody imgBody = (ImageMessageBody) message.getBody();
 				if (imgBody.getLocalUrl() != null) {
 					// String filePath = imgBody.getLocalUrl();

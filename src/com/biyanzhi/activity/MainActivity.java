@@ -99,10 +99,20 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.img_create:
+			if (SharedUtils.getIntUid() == 0) {
+				startActivity(new Intent(this, LoginActivity.class));
+				Utils.leftOutRightIn(this);
+				return;
+			}
 			startActivity(new Intent(this, PublicshPictureActivity.class));
 			Utils.leftOutRightIn(this);
 			break;
 		case R.id.img_avatar:
+			if (SharedUtils.getIntUid() == 0) {
+				startActivity(new Intent(this, LoginActivity.class));
+				Utils.leftOutRightIn(this);
+				return;
+			}
 			startActivity(new Intent(this, PersonalCenterActivity.class)
 					.putExtra("unReadCount", unReadCount));
 			Utils.leftOutRightIn(this);

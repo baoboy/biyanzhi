@@ -1,17 +1,7 @@
 package com.biyanzhi.utils;
 
 public class Constants {
-	public static final String JOIN_CIRCLE_USER_ID = "joincircle";
-	public static final String RECEIVE_JOIN_CIRCLE_USER_ID = "receivejoincircle";
-	public static final String REFUSE_JON_CIRCLE_USER_ID = "refusejoincircle";
-	public static final String DISSOLVE_CIRCLE_USER_ID = "dissolvecircle";
-	public static final String FEEDBACK_USER_ID = "feedback";
-	public static final String PRAISE_USER_ID = "praise";
-	public static final String GROWTH_USER_ID = "growth";
-	public static final String KICK_OUT_USER_ID = "kickout";
-	public static final String JONI_NOTIFY_USER_ID = "joinnotify";
-	public static final String ADD_USER_FRIEND_INVITE = "adduserfriendinvite";
-	public static final String XINQING_PRAISE_AND_COMMENT_USER_ID = "xinqing_praise_and_comment";
+	public static final String COMMENT_USER_ID = "comment";
 
 	public static final int REQUEST_CODE_GETIMAGE_BYSDCARD = 0;// —°‘ÒÕº∆¨
 	public static final int REQUEST_CODE_GETIMAGE_BYCAMERA = 1;// ≈ƒ’’

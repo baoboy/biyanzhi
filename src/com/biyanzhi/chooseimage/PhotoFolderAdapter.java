@@ -62,7 +62,7 @@ public class PhotoFolderAdapter extends BaseAdapter {
 				ThumbnailsUtil.MapgetHashValue(albumInfo.getImage_id(),
 						albumInfo.getPath_file()),
 				new RotateImageViewAware(viewHolder.image, albumInfo
-						.getPath_absolute()), R.drawable.empty_photo);
+						.getPath_absolute()), R.drawable.default_avatar);
 		viewHolder.text.setText(albumInfo.getName_album());
 		viewHolder.num.setText("(" + list.get(position).getList().size() + "张");
 		return convertView;
