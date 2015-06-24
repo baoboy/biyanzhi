@@ -3,20 +3,24 @@ package com.biyanzhi.data;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.biyanzhi.data.result.ApiRequest;
 import com.biyanzhi.data.result.Result;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.enums.RetStatus;
 import com.biyanzhi.parser.IParser;
+import com.biyanzhi.parser.PictureListParser;
+import com.biyanzhi.parser.PicturePaser;
 import com.biyanzhi.parser.SimpleParser;
 import com.biyanzhi.utils.BitmapUtils;
 
 public class Picture implements Serializable {
 	private static final String PUBLISH_PICTURE = "addpicture.do";
+	private static final String GET_PICTURE_BY_ID = "getPictureByID.do";
+
 	private int picture_id;
 	private int publisher_id = 0;
 	private String publish_time = "";
@@ -26,8 +30,6 @@ public class Picture implements Serializable {
 	private List<PictureImage> images = new ArrayList<PictureImage>();
 	private String picture_image_url = "";
 	private int average_score;
-	private int picture_image_height;
-	private int picture_image_width;
 	private int score_number;// 打分人数
 	private List<Comment> comments = new ArrayList<Comment>();
 
@@ -119,24 +121,7 @@ public class Picture implements Serializable {
 		this.average_score = average_score;
 	}
 
-	public int getPicture_image_height() {
-		return picture_image_height;
-	}
-
-	public void setPicture_image_height(int picture_image_height) {
-		this.picture_image_height = picture_image_height;
-	}
-
-	public int getPicture_image_width() {
-		return picture_image_width;
-	}
-
-	public void setPicture_image_width(int picture_image_width) {
-		this.picture_image_width = picture_image_width;
-	}
-
 	public RetError publishPicture() {
-		int wh[] = BitmapUtils.getBitmapHeightAndWidth(picture_image_url);
 		File file = BitmapUtils.getImageFile(picture_image_url);
 		IParser parser = new SimpleParser();
 		HashMap<String, Object> params = new HashMap<String, Object>();
@@ -145,15 +130,34 @@ public class Picture implements Serializable {
 		params.put("content", content);
 		params.put("publisher_name", publisher_name);
 		params.put("publisher_avatar", publisher_avatar);
-		params.put("picture_image_width", wh[1]);
-		params.put("picture_image_height", wh[0]);
-
 		Result ret = ApiRequest.requestWithFile(PUBLISH_PICTURE, params, file,
 				parser);
 		if (null != file & file.exists()) {
 			file.delete();
 		}
 		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError getPictureByID() {
+		IParser parser = new PicturePaser();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("picture_id", picture_id);
+		Result ret = ApiRequest.request(GET_PICTURE_BY_ID, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			Picture pic = (Picture) ret.getData();
+			this.average_score = pic.average_score;
+			this.comments = pic.comments;
+			this.content = pic.content;
+			this.picture_image_url = pic.picture_image_url;
+			this.publish_time = pic.publish_time;
+			this.publisher_avatar = pic.publisher_avatar;
+			this.publisher_name = pic.publisher_name;
+			this.publisher_id = pic.publisher_id;
+			this.score_number = pic.score_number;
 			return RetError.NONE;
 		} else {
 			return ret.getErr();

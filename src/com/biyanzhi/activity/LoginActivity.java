@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.biyanzhi.R;
 import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
+import com.biyanzhi.findpassword.FindPasswordActivity;
 import com.biyanzhi.register.RegisterActivity;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.MD5;
@@ -150,7 +151,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 			login(user_cellphone, user_password);
 			break;
 		case R.id.btn_findPasswrod:
-			// startActivity(new Intent(this, FindPasswordActivity.class));
+			startActivity(new Intent(this, FindPasswordActivity.class));
 			Utils.leftOutRightIn(this);
 			break;
 		case R.id.btn_regisiter:

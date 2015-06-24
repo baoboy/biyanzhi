@@ -289,5 +289,7 @@
     <string name="gorup_not_found">找不到这个群组</string>
     <string name="chatroom_allow_owner_leave"> 允许聊天室群主离开</string>
     <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_picture_server_comment">PictureServerCommentActivity</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
 
 </resources>

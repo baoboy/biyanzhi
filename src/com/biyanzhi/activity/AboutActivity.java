@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
-import com.biyanzhi.utils.Utils;
 
 public class AboutActivity extends BaseActivity {
 	private TextView txt_title;
@@ -19,7 +18,7 @@ public class AboutActivity extends BaseActivity {
 		txt_title.setText("关于");
 		findViewById(R.id.back).setOnClickListener(this);
 		txt_version = (TextView) findViewById(R.id.txt_version);
-		txt_version.setText("V:" + Utils.getVersionName(this));
+		txt_version.setText("比颜值");
 
 	}
 

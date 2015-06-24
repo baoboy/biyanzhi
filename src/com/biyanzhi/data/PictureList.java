@@ -10,7 +10,6 @@ import com.biyanzhi.data.result.Result;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.enums.RetStatus;
 import com.biyanzhi.parser.IParser;
-import com.biyanzhi.parser.MapParser;
 import com.biyanzhi.parser.PictureListParser;
 
 public class PictureList {

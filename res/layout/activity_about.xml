@@ -13,11 +13,11 @@
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="110dip"
+        android:layout_height="110dip"
         android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dip"
+        android:layout_marginTop="50dip"
         android:src="@drawable/app_logo" />
 
     <TextView
@@ -26,8 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dip"
-        android:textColor="@color/pciture_text" />
+        android:layout_marginTop="20dip"
+        android:textColor="@color/pciture_text"
+        android:textSize="23sp" />
 
     <TextView
         android:id="@+id/textView1"

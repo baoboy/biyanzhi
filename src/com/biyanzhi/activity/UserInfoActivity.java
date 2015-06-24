@@ -120,6 +120,10 @@ public class UserInfoActivity extends BaseActivity {
 				}
 
 				user = info.getUser();
+				if (user == null) {
+					ToastUtil.showToast("º”‘ÿ ß∞‹");
+					return;
+				}
 				info_View.setValue(user.getUser_address(),
 						user.getUser_gender(), user.getUser_birthday(),
 						user.getGuanzhu_count());

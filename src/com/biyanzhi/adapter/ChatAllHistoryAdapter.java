@@ -32,12 +32,8 @@ import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.SmileUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
-import com.biyanzhi.utils.Utils;
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
-import com.easemob.chat.EMGroup;
-import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
@@ -110,14 +106,12 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 									getMessageDigest(lastMessage,
 											(this.getContext()))),
 							BufferType.SPANNABLE);
-
 			holder.time.setText(DateUtils.getTimestampString(new Date(
 					lastMessage.getMsgTime())));
+			String user_name = "";
+			String user_avatar = "";
 			try {
-				String user_name = "";
-				String user_avatar = "";
 				int user_id = lastMessage.getIntAttribute("user_id");
-
 				if (user_id == SharedUtils.getIntUid()) {
 					user_name = lastMessage.getStringAttribute("to_user_name");
 					user_avatar = lastMessage
@@ -128,12 +122,19 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 					user_avatar = lastMessage
 							.getStringAttribute("from_user_avatar");
 				}
-				holder.name.setText(user_name);
-				UniversalImageLoadTool.disPlay(user_avatar, holder.avatar,
-						R.drawable.default_avatar);
 			} catch (EaseMobException e) {
 				e.printStackTrace();
+				try {
+					user_name = lastMessage.getStringAttribute("user_name");
+					user_avatar = lastMessage.getStringAttribute("user_avatar");
+				} catch (EaseMobException e1) {
+					e1.printStackTrace();
+				}
+
 			}
+			holder.name.setText(user_name);
+			UniversalImageLoadTool.disPlay(user_avatar, holder.avatar,
+					R.drawable.default_avatar);
 			if (lastMessage.direct == EMMessage.Direct.SEND
 					&& lastMessage.status == EMMessage.Status.FAIL) {
 				holder.msgState.setVisibility(View.VISIBLE);
@@ -150,7 +151,6 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 						conversation.getUserName(), conversation.isGroup());
 				remove(conversation);
 				notifyDataSetChanged();
-
 			}
 		});
 		return convertView;

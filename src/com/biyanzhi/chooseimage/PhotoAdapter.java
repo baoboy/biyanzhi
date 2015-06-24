@@ -15,7 +15,7 @@ import com.biyanzhi.R;
 import com.biyanzhi.utils.Utils;
 
 /**
- * 相片适配�? *
+ * 相片适配�? *
  * 
  * @author teeker_bin
  * 
@@ -96,7 +96,7 @@ public class PhotoAdapter extends BaseAdapter {
 					photoInfo.getPath_file(),
 					new RotateImageViewAware(viewHolder.image, photoInfo
 							.getPath_absolute()),
-					R.drawable.choose_image_delault);
+					R.drawable.picture_default_head);
 
 		}
 		return convertView;
