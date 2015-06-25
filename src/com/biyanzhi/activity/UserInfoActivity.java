@@ -136,7 +136,6 @@ public class UserInfoActivity extends BaseActivity {
 				scrollView.setVisibility(View.VISIBLE);
 				layout_bottom.setVisibility(View.VISIBLE);
 				bottom_line.setVisibility(View.VISIBLE);
-
 			}
 		});
 		task.executeParallel(info);

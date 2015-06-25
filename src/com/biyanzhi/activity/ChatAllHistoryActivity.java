@@ -157,6 +157,7 @@ public class ChatAllHistoryActivity extends BaseActivity implements
 					user_name = message.getStringAttribute("to_user_name");
 					user_avatar = message.getStringAttribute("to_user_avatar");
 					user_id = message.getIntAttribute("to_user_id");
+
 				} else {
 					user_name = message.getStringAttribute("from_user_name");
 					user_avatar = message
@@ -166,7 +167,17 @@ public class ChatAllHistoryActivity extends BaseActivity implements
 				intent.putExtra("user_avatar", user_avatar);
 				intent.putExtra("user_id", user_id);
 			} catch (EaseMobException e) {
-				e.printStackTrace();
+				try {
+					user_name = message.getStringAttribute("user_name");
+					user_avatar = message.getStringAttribute("user_avatar");
+					user_id = message.getIntAttribute("user_id");
+					intent.putExtra("user_name", user_name);
+					intent.putExtra("user_avatar", user_avatar);
+					intent.putExtra("user_id", user_id);
+				} catch (EaseMobException e1) {
+					e1.printStackTrace();
+				}
+
 			}
 		}
 		intent.putExtra("user_chat_id", username);

@@ -98,7 +98,6 @@ import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
 import com.easemob.util.VoiceRecorder;
-import com.huanxin.helper.HXSDKHelper;
 
 /**
  * 聊天页面
@@ -774,9 +773,13 @@ public class ChatActivity extends BaseActivity implements OnItemClickListener,
 			if (chatType == CHATTYPE_GROUP)
 				message.setChatType(ChatType.GroupChat);
 			message.setReceipt(toChatUsername);
-			message.setAttribute("user_name", SharedUtils.getAPPUserName());
-			message.setAttribute("user_avatar", SharedUtils.getAPPUserAvatar());
+			message.setAttribute("to_user_name", user_name);
+			message.setAttribute("to_user_avatar", user_avatar);
+			message.setAttribute("from_user_name", SharedUtils.getAPPUserName());
+			message.setAttribute("from_user_avatar",
+					SharedUtils.getAPPUserAvatar());
 			message.setAttribute("user_id", SharedUtils.getIntUid());
+			message.setAttribute("to_user_id", user_id);
 
 			int len = Integer.parseInt(length);
 			VoiceMessageBody body = new VoiceMessageBody(new File(filePath),
@@ -807,9 +810,12 @@ public class ChatActivity extends BaseActivity implements OnItemClickListener,
 		// 如果是群聊，设置chattype,默认是单聊
 		if (chatType == CHATTYPE_GROUP)
 			message.setChatType(ChatType.GroupChat);
-		message.setAttribute("user_name", SharedUtils.getAPPUserName());
-		message.setAttribute("user_avatar", SharedUtils.getAPPUserAvatar());
+		message.setAttribute("to_user_name", user_name);
+		message.setAttribute("to_user_avatar", user_avatar);
+		message.setAttribute("from_user_name", SharedUtils.getAPPUserName());
+		message.setAttribute("from_user_avatar", SharedUtils.getAPPUserAvatar());
 		message.setAttribute("user_id", SharedUtils.getIntUid());
+		message.setAttribute("to_user_id", user_id);
 
 		message.setReceipt(to);
 		ImageMessageBody body = new ImageMessageBody(new File(filePath));
@@ -842,9 +848,13 @@ public class ChatActivity extends BaseActivity implements OnItemClickListener,
 				message.setChatType(ChatType.GroupChat);
 			String to = toChatUsername;
 			message.setReceipt(to);
-			message.setAttribute("user_name", SharedUtils.getAPPUserName());
-			message.setAttribute("user_avatar", SharedUtils.getAPPUserAvatar());
+			message.setAttribute("to_user_name", user_name);
+			message.setAttribute("to_user_avatar", user_avatar);
+			message.setAttribute("from_user_name", SharedUtils.getAPPUserName());
+			message.setAttribute("from_user_avatar",
+					SharedUtils.getAPPUserAvatar());
 			message.setAttribute("user_id", SharedUtils.getIntUid());
+			message.setAttribute("to_user_id", user_id);
 
 			VideoMessageBody body = new VideoMessageBody(videoFile, thumbPath,
 					length, videoFile.length());
@@ -916,9 +926,12 @@ public class ChatActivity extends BaseActivity implements OnItemClickListener,
 				latitude, longitude);
 		message.addBody(locBody);
 		message.setReceipt(toChatUsername);
-		message.setAttribute("user_name", SharedUtils.getAPPUserName());
-		message.setAttribute("user_avatar", SharedUtils.getAPPUserAvatar());
+		message.setAttribute("to_user_name", user_name);
+		message.setAttribute("to_user_avatar", user_avatar);
+		message.setAttribute("from_user_name", SharedUtils.getAPPUserName());
+		message.setAttribute("from_user_avatar", SharedUtils.getAPPUserAvatar());
 		message.setAttribute("user_id", SharedUtils.getIntUid());
+		message.setAttribute("to_user_id", user_id);
 
 		conversation.addMessage(message);
 		listView.setAdapter(adapter);
@@ -967,9 +980,12 @@ public class ChatActivity extends BaseActivity implements OnItemClickListener,
 		// 如果是群聊，设置chattype,默认是单聊
 		if (chatType == CHATTYPE_GROUP)
 			message.setChatType(ChatType.GroupChat);
-		message.setAttribute("user_name", SharedUtils.getAPPUserName());
-		message.setAttribute("user_avatar", SharedUtils.getAPPUserAvatar());
+		message.setAttribute("to_user_name", user_name);
+		message.setAttribute("to_user_avatar", user_avatar);
+		message.setAttribute("from_user_name", SharedUtils.getAPPUserName());
+		message.setAttribute("from_user_avatar", SharedUtils.getAPPUserAvatar());
 		message.setAttribute("user_id", SharedUtils.getIntUid());
+		message.setAttribute("to_user_id", user_id);
 
 		message.setReceipt(toChatUsername);
 		// add message body
