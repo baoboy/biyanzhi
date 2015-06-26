@@ -187,7 +187,7 @@ public class PictureServerCommentActivity extends BaseActivity implements
 		} else {
 			txt_context.setText(picture.getContent());
 		}
-		txt_time.setText(picture.getPublish_time());
+		txt_time.setText(DateUtils.convertShowTIme(picture.getPublish_time()));
 		UniversalImageLoadTool.disPlay(picture.getPicture_image_url(), img,
 				R.drawable.default_avatar);
 		if (picture.getAverage_score() != 0) {

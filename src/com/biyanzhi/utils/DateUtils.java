@@ -96,6 +96,18 @@ public class DateUtils {
 		return strdate;
 	}
 
+	public static String convertShowTIme(String str) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String strdate = "";
+		try {
+			Date date = df.parse(str);
+			strdate = df.format(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return strdate;
+	}
+
 	public static String getShowTime() {
 		return format(new Date(), "yyyy-MM-dd HH:mm");
 	}

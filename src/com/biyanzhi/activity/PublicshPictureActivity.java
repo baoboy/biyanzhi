@@ -104,10 +104,15 @@ public class PublicshPictureActivity extends BaseActivity implements
 			}
 			File file = new File(cameraPath);
 			if (!file.exists()) {
-				// ToastUtil.showToast("图片获取失败，请重新获取", Toast.LENGTH_SHORT);
+				ToastUtil.showToast("拍照失败,请重新拍照");
 				return;
 			}
-
+			Bitmap bitmap = BitmapFactory.decodeFile(cameraPath);
+			if (null == bitmap) {
+				return;
+			}
+			image.setImageBitmap(bitmap);
+			image_path = cameraPath;
 			// photoPathLists.add(photoPathLists.size() - 1, cameraPath);
 		}
 	}

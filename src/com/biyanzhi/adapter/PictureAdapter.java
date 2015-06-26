@@ -56,6 +56,7 @@ public class PictureAdapter extends BaseAdapter {
 				+ "<font color=#F06617>(" + picture.getAverage_score()
 				+ "·Ö)</font>"));
 		holder.contentView.setText(picture.getContent());
+		// holder.contentView.setVisibility(View.GONE);
 		LayoutParams layoutParams = holder.imageView.getLayoutParams();
 		layoutParams.width = width;
 		layoutParams.height = width;

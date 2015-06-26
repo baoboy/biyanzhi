@@ -85,7 +85,6 @@ public class QuYouHXSDKHelper extends HXSDKHelper {
 					return "ϵͳ֪ͨ";
 				}
 				String user_name = "";
-				String circle_name = "";
 				try {
 					user_name = message.getStringAttribute("from_user_name");
 				} catch (EaseMobException e) {
@@ -108,7 +107,7 @@ public class QuYouHXSDKHelper extends HXSDKHelper {
 
 			@Override
 			public int onSetSmallIcon(EMMessage arg0) {
-				return R.drawable.default_avatar;
+				return R.drawable.message_icon;
 			}
 		};
 	}
