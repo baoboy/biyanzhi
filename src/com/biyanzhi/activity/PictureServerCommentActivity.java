@@ -426,11 +426,11 @@ public class PictureServerCommentActivity extends BaseActivity implements
 		Platform plat = ShareSDK.getPlatform(QQ.NAME);
 		ShareParams sp = new ShareParams();
 		sp.setTitle("比颜值");
-		sp.setTitleUrl("http://www.baidu.com"); // 标题的超链接
+		sp.setTitleUrl("http://123.56.46.254/biyanzhi/biyanzhi.html"); // 标题的超链接
 		sp.setText("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
 				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
 		sp.setSite("比颜值");
-		sp.setSiteUrl("http://www.baidu.com");
+		sp.setSiteUrl("http://123.56.46.254/biyanzhi/biyanzhi.html");
 		sp.setImageUrl(picture.getPicture_image_url());
 		sp.setShareType(Platform.SHARE_WEBPAGE);
 		plat.share(sp);
@@ -440,12 +440,12 @@ public class PictureServerCommentActivity extends BaseActivity implements
 		Platform plat = ShareSDK.getPlatform(QZone.NAME);
 		ShareParams sp = new ShareParams();
 		sp.setTitle("比颜值");
-		sp.setTitleUrl("http://www.baidu.com"); // 标题的超链接
+		sp.setTitleUrl("http://123.56.46.254/biyanzhi/biyanzhi.html"); // 标题的超链接
 		sp.setText("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
 				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
 		sp.setImageUrl(picture.getPicture_image_url());
 		sp.setSite("比颜值");
-		sp.setSiteUrl("http://www.baidu.com");
+		sp.setSiteUrl("http://123.56.46.254/biyanzhi/biyanzhi.html");
 		sp.setShareType(Platform.SHARE_WEBPAGE);
 		plat.share(sp);
 	}
@@ -457,7 +457,7 @@ public class PictureServerCommentActivity extends BaseActivity implements
 		sp.setText("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
 				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
 		sp.setShareType(Platform.SHARE_WEBPAGE);
-		sp.setUrl("http://www.baidu.com");
+		sp.setUrl("http://123.56.46.254/biyanzhi/biyanzhi.html");
 		sp.setImageUrl(picture.getPicture_image_url());
 		plat.share(sp);
 
@@ -471,7 +471,7 @@ public class PictureServerCommentActivity extends BaseActivity implements
 		sp.setText("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
 				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
 		sp.setShareType(Platform.SHARE_WEBPAGE);
-		sp.setUrl("http://www.baidu.com");
+		sp.setUrl("http://123.56.46.254/biyanzhi/biyanzhi.html");
 		sp.setImageUrl(picture.getPicture_image_url());
 		plat.share(sp);
 
