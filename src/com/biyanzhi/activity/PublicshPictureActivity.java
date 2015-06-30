@@ -162,10 +162,6 @@ public class PublicshPictureActivity extends BaseActivity implements
 			break;
 		case R.id.btnUpload:
 			String str_content = content.getText().toString().trim();
-			if (str_content.length() == 0) {
-				ToastUtil.showToast("ÀÊ±„Àµµ„…∂∞…");
-				return;
-			}
 			Picture picture = new Picture();
 			picture.setContent(str_content);
 			picture.setPicture_image_url(image_path);

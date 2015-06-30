@@ -37,6 +37,8 @@ public class PersonalCenterActivity extends BaseActivity {
 	private TextView txt_name;
 	private int unReadCount;
 	private ImageView img_prompt;
+	private ImageView img_version_prompt;
+
 	private RelativeLayout layout_message;
 	private Dialog dialog;
 
@@ -50,6 +52,10 @@ public class PersonalCenterActivity extends BaseActivity {
 	}
 
 	private void initView() {
+		img_version_prompt = (ImageView) findViewById(R.id.img_ver_verion_prompt);
+		if (SharedUtils.getNewVersion()) {
+			img_version_prompt.setVisibility(View.VISIBLE);
+		}
 		img_prompt = (ImageView) findViewById(R.id.img_prompt);
 		if (unReadCount > 0) {
 			img_prompt.setVisibility(View.VISIBLE);

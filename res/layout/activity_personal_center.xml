@@ -108,13 +108,22 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dip"
-                        android:layout_toLeftOf="@+id/imageView1"
+                        android:layout_toLeftOf="@+id/img_ver_verion_prompt"
                         android:text="当前版本"
                         android:textColor="#d1d0d0"
                         android:textSize="13sp" />
 
+                    <ImageView
+                        android:id="@+id/img_ver_verion_prompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/imageView1"
+                        android:paddingRight="20dip"
+                        android:src="@drawable/prompt"
+                        android:visibility="gone" />
+
                     <TextView
-                        android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"

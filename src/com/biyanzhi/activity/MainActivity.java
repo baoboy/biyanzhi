@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 import com.biyanzhi.R;
 import com.biyanzhi.applation.MyApplation;
 import com.biyanzhi.popwindow.SelectPicPopwindow.SelectOnclick;
+import com.biyanzhi.task.GetVersionTask;
+import com.biyanzhi.task.GetVersionTask.UpDateVersion;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.FileUtils;
 import com.biyanzhi.utils.SharedUtils;
@@ -56,6 +59,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 		initFragment();
 		registerBoradcastReceiver();
 		updateUnreadLabel();
+		checkVersion();
 	}
 
 	@Override
@@ -220,7 +224,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	 */
 	public void updateUnreadLabel() {
 		unReadCount = getUnreadMsgCountTotal();
-		if (unReadCount > 0) {
+		if (unReadCount > 0 || SharedUtils.getNewVersion()) {
 			img_prompt.setVisibility(View.VISIBLE);
 		} else {
 			img_prompt.setVisibility(View.GONE);
@@ -251,53 +255,28 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 		moveTaskToBack(true);
 	}
 
+	private void checkVersion() {
+		if (!Utils.isNetworkAvailable()) {
+			return;
+		}
+		GetVersionTask task = new GetVersionTask(this, false);
+		task.setCallBack(new UpDateVersion() {
+			@Override
+			public void getNewVersion(int rt, String versionCode, String link,
+					String version_info) {
+				if (rt == 0) {
+					SharedUtils.settingNewVersion(false);
+					return;
+				}
+				img_prompt.setVisibility(View.VISIBLE);
+				SharedUtils.settingNewVersion(true);
+			}
+		});
+		int sdk = android.os.Build.VERSION.SDK_INT;
+		if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+			task.execute();
+		} else {
+			task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		}
+	}
 }
-// end of class
-// public class MainActivity extends BaseActivity {
-// private PtrClassicFrameLayout mPtrFrame;
-//
-// @Override
-// protected void onCreate(Bundle savedInstanceState) {
-// super.onCreate(savedInstanceState);
-// setContentView(R.layout.activity_main);
-// initView();
-// }
-//
-// private void initView() {
-// initFefushView();
-// }
-//
-// private void initFefushView() {
-// mPtrFrame = (PtrClassicFrameLayout)
-// findViewById(R.id.rotate_header_grid_view_frame);
-// mPtrFrame.setLastUpdateTimeRelateObject(this);
-// mPtrFrame.setPtrHandler(new PtrHandler() {
-// @Override
-// public void onRefreshBegin(PtrFrameLayout frame) {
-// mPtrFrame.refreshComplete();
-// }
-//
-// @Override
-// public boolean checkCanDoRefresh(PtrFrameLayout frame,
-// View content, View header) {
-// return PtrDefaultHandler.checkContentCanBePulledDown(frame,
-// content, header);
-// }
-// });
-// // the following are default settings
-// mPtrFrame.setResistance(1.7f);
-// mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
-// mPtrFrame.setDurationToClose(200);
-// mPtrFrame.setDurationToCloseHeader(1000);
-// // default is false
-// mPtrFrame.setPullToRefresh(false);
-// // default is true
-// mPtrFrame.setKeepHeaderWhenRefresh(true);
-// mPtrFrame.postDelayed(new Runnable() {
-// @Override
-// public void run() {
-// // mPtrFrame.autoRefresh();
-// }
-// }, 100);
-// }
-// }
