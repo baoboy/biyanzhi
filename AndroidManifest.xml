@@ -202,6 +202,9 @@
             android:label="@string/title_activity_welcome"
             android:screenOrientation="portrait" >
         </activity>
+
+        <service android:name="com.biyanzhi.service.UpLoadErrorLogService" >
+        </service>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.biyanzhi.utils.CheckImageLoaderConfiguration;
+import com.biyanzhi.utils.CrashHandler;
 import com.easemob.EMCallBack;
 import com.huanxin.helper.QuYouHXSDKHelper;
 
@@ -22,6 +23,8 @@ public class MyApplation extends Application {
 		instance = this;
 		CheckImageLoaderConfiguration.checkImageLoaderConfiguration(this);
 		hxSDKHelper.onInit(this);
+		CrashHandler catchHandler = CrashHandler.getInstance();
+		catchHandler.init(this);
 	}
 
 	public static MyApplation getInstance() {
