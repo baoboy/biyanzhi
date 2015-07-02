@@ -7,18 +7,25 @@ import in.srain.cube.views.ptr.PtrHandler;
 import in.srain.cube.views.ptr.header.StoreHouseHeader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.biyanzhi.R;
@@ -28,6 +35,7 @@ import com.biyanzhi.data.PictureList;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.GetPictureListTask;
 import com.biyanzhi.task.LoadMorePictureListTask;
+import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.GridViewWithHeaderAndFooter;
 import com.biyanzhi.utils.SharedUtils;
@@ -57,7 +65,7 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 		dialog = DialogUtil.createLoadingDialog(getActivity());
 		dialog.show();
 		getPictureList();
-
+		registerBoradcastReceiver();
 	}
 
 	private void initView() {
@@ -108,7 +116,8 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 			return;
 		}
 		startActivity(new Intent(getActivity(), PictureCommentActivity.class)
-				.putExtra("picture", mLists.get(position)));
+				.putExtra("picture", mLists.get(position)).putExtra("position",
+						position));
 		Utils.leftOutRightIn(getActivity());
 	}
 
@@ -122,6 +131,11 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 				}
 				mPtrFrame.refreshComplete();
 				mLists.addAll(0, list.getPictureList());
+				// Set<Picture> picSet = new HashSet<Picture>();
+				// picSet.addAll(mLists);
+				// picSet.addAll(list.getPictureList());
+				// mLists.clear();
+				// mLists.addAll(0, picSet);
 				adapter.notifyDataSetChanged();
 
 			}
@@ -160,7 +174,8 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 			@Override
 			public void onRefreshBegin(PtrFrameLayout frame) {
 				if (mLists.size() > 0) {
-					list.setPublish_time(mLists.get(0).getPublish_time());
+					list.setPublish_time(mLists.get(0)
+							.getPublish_time_last_update());
 					getPictureList();
 					return;
 				}
@@ -198,4 +213,45 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 		// }
 		// }, 100);
 	}
+
+	/**
+	 * 注册该广播
+	 */
+	public void registerBoradcastReceiver() {
+		IntentFilter myIntentFilter = new IntentFilter();
+		myIntentFilter.addAction(Constants.PLAY_SCORE);
+		// 注册广播
+		getActivity().registerReceiver(mBroadcastReceiver, myIntentFilter);
+	}
+
+	/**
+	 * 定义广播
+	 */
+	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (action.equals(Constants.PLAY_SCORE)) {
+				int position = intent.getIntExtra("position", -1);
+				int score = intent.getIntExtra("score", 0);
+				if (position < 0) {
+					return;
+				}
+
+				int all_score = mLists.get(position).getAverage_score()
+						* mLists.get(position).getScore_number();
+				mLists.get(position).setScore_number(
+						mLists.get(position).getScore_number() + 1);
+				int new_avg_score = (all_score + score)
+						/ mLists.get(position).getScore_number();
+				mLists.get(position).setAverage_score(new_avg_score);
+				adapter.notifyDataSetChanged();
+			}
+		}
+	};
+
+	public void onDestroy() {
+		super.onDestroy();
+		getActivity().unregisterReceiver(mBroadcastReceiver);
+	};
 }

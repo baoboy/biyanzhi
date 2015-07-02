@@ -45,6 +45,7 @@ import com.biyanzhi.popwindow.SharePopwindow.SelectMenuOnclick;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
 import com.biyanzhi.task.SendCommentTask;
 import com.biyanzhi.task.SendPictureScoreTask;
+import com.biyanzhi.task.UpdatePicturePublishTimeTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DateUtils;
 import com.biyanzhi.utils.DialogUtil;
@@ -93,11 +94,14 @@ public class PictureCommentActivity extends BaseActivity implements
 	private CommentPopwindow pop;
 	private SharePopwindow share_pop;
 
+	private int position = -1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
 		picture = (Picture) getIntent().getSerializableExtra("picture");
+		position = getIntent().getIntExtra("position", -1);
 		initView();
 		setValue();
 		viewLineVisible();
@@ -306,17 +310,33 @@ public class PictureCommentActivity extends BaseActivity implements
 		dialog.show();
 	}
 
-	private void sendScore(int score) {
+	private void sendScore(final int score) {
 		SendPictureScoreTask task = new SendPictureScoreTask();
 		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
 			@Override
 			public void taskFinish(RetError result) {
+				if (result != RetError.NONE) {
+					return;
+				}
+				sendBroadcast(new Intent(Constants.PLAY_SCORE).putExtra(
+						"position", position).putExtra("score", score));
+				updatePicturePublishTime();
 			}
 		});
 		PictureScore picscore = new PictureScore();
 		picscore.setPicture_id(picture.getPicture_id());
 		picscore.setPicture_score(score);
 		task.executeParallel(picscore);
+	}
+
+	private void updatePicturePublishTime() {
+		UpdatePicturePublishTimeTask task = new UpdatePicturePublishTimeTask();
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+			}
+		});
+		task.executeParallel(picture);
 	}
 
 	@Override

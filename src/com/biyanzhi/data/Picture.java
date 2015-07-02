@@ -12,7 +12,6 @@ import com.biyanzhi.data.result.Result;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.enums.RetStatus;
 import com.biyanzhi.parser.IParser;
-import com.biyanzhi.parser.PictureListParser;
 import com.biyanzhi.parser.PicturePaser;
 import com.biyanzhi.parser.SimpleParser;
 import com.biyanzhi.utils.BitmapUtils;
@@ -20,10 +19,12 @@ import com.biyanzhi.utils.BitmapUtils;
 public class Picture implements Serializable {
 	private static final String PUBLISH_PICTURE = "addpicture.do";
 	private static final String GET_PICTURE_BY_ID = "getPictureByID.do";
+	private static final String UPDATE_PICTURE_TIME_API = "upDatePictureTime.do";
 
 	private int picture_id;
 	private int publisher_id = 0;
 	private String publish_time = "";
+	private String publish_time_last_update = "";
 	private String content = "";
 	private String publisher_name = "";
 	private String publisher_avatar = "";
@@ -71,6 +72,14 @@ public class Picture implements Serializable {
 
 	public void setPublish_time(String publish_time) {
 		this.publish_time = publish_time;
+	}
+
+	public String getPublish_time_last_update() {
+		return publish_time_last_update;
+	}
+
+	public void setPublish_time_last_update(String publish_time_last_update) {
+		this.publish_time_last_update = publish_time_last_update;
 	}
 
 	public String getContent() {
@@ -163,4 +172,44 @@ public class Picture implements Serializable {
 			return ret.getErr();
 		}
 	}
+
+	public RetError updatePicturePublishTime() {
+		IParser parser = new SimpleParser();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("picture_id", picture_id);
+		Result ret = ApiRequest
+				.request(UPDATE_PICTURE_TIME_API, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	/**
+	 * 如果对象类型是User 的话 则返回true 去比较hashCode值
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (this == obj)
+			return true;
+		if (obj instanceof User) {
+			Picture pic = (Picture) obj;
+			// if(picture.id = this.picture) return true; // 只比较picture_id
+			if (pic.picture_id == this.getPicture_id())
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 重写hashcode 方法，返回的hashCode 不一样才认定为不同的对象
+	 */
+	@Override
+	public int hashCode() {
+		return Integer.valueOf(picture_id).hashCode(); // 只比较id，id一样就不添加进集合
+	}
+
 }

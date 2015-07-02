@@ -18,7 +18,7 @@
             android:background="@null"
             android:paddingBottom="12dip"
             android:paddingTop="12dip"
-            android:text="美女榜"
+            android:text="美女榜  TOP10"
             android:textColor="@color/pciture_blue"
             android:textSize="15sp" />
 
@@ -36,7 +36,7 @@
             android:background="@null"
             android:paddingBottom="12dip"
             android:paddingTop="12dip"
-            android:text="帅哥榜"
+            android:text="帅哥榜  TOP10"
             android:textColor="@color/pciture_text"
             android:textSize="15sp" />
     </LinearLayout>
