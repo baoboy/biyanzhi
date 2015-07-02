@@ -32,8 +32,8 @@ public class PictureListParser implements IParser {
 			String publisher_name = obj.getString("publisher_name");
 			String publisher_avatar = obj.getString("publisher_avatar");
 			String publish_time = obj.getString("publish_time");
-			String publish_time_last_update = obj
-					.getString("publish_time_last_update");
+			// String publish_time_last_update = obj
+			// .getString("publish_time_last_update");
 			String content = obj.getString("content");
 			String picture_image_url = obj.getString("picture_image_url");
 			int average_score = obj.getInt("average_score");
@@ -70,7 +70,7 @@ public class PictureListParser implements IParser {
 			picture.setContent(content);
 			picture.setPicture_id(picture_id);
 			picture.setPublish_time(publish_time);
-			picture.setPublish_time_last_update(publish_time_last_update);
+			// picture.setPublish_time_last_update(publish_time_last_update);
 			picture.setPublisher_avatar(publisher_avatar);
 			picture.setPublisher_id(publisher_id);
 			picture.setPublisher_name(publisher_name);

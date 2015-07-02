@@ -131,11 +131,6 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 				}
 				mPtrFrame.refreshComplete();
 				mLists.addAll(0, list.getPictureList());
-				// Set<Picture> picSet = new HashSet<Picture>();
-				// picSet.addAll(mLists);
-				// picSet.addAll(list.getPictureList());
-				// mLists.clear();
-				// mLists.addAll(0, picSet);
 				adapter.notifyDataSetChanged();
 
 			}
@@ -174,8 +169,7 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 			@Override
 			public void onRefreshBegin(PtrFrameLayout frame) {
 				if (mLists.size() > 0) {
-					list.setPublish_time(mLists.get(0)
-							.getPublish_time_last_update());
+					list.setPublish_time(mLists.get(0).getPublish_time());
 					getPictureList();
 					return;
 				}

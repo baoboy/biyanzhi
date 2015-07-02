@@ -21,6 +21,17 @@ import com.biyanzhi.R;
 import com.biyanzhi.applation.MyApplation;
 
 public class Utils {
+	private static long lastClickTime;
+
+	public synchronized static boolean isFastClick() {
+		long time = System.currentTimeMillis();
+		if (time - lastClickTime < 500) {
+			return true;
+		}
+		lastClickTime = time;
+		return false;
+	}
+
 	public static boolean isSystemUser(String user_id) {
 		if (Constants.COMMENT_USER_ID.equals(user_id)) {
 			return true;
