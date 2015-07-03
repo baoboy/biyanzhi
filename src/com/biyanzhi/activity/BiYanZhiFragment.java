@@ -130,12 +130,12 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 					dialog.dismiss();
 				}
 				mPtrFrame.refreshComplete();
-				mLists.addAll(0, list.getPictureList());
-				// Set<Picture> picSet = new HashSet<Picture>();
-				// picSet.addAll(mLists);
-				// picSet.addAll(list.getPictureList());
-				// mLists.clear();
-				// mLists.addAll(0, picSet);
+				// mLists.addAll(0, list.getPictureList());
+				Set<Picture> picSet = new HashSet<Picture>();
+				picSet.addAll(list.getPictureList());
+				picSet.addAll(mLists);
+				mLists.clear();
+				mLists.addAll(0, picSet);
 				adapter.notifyDataSetChanged();
 
 			}

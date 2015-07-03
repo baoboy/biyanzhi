@@ -186,30 +186,16 @@ public class Picture implements Serializable {
 		}
 	}
 
-	/**
-	 * 如果对象类型是User 的话 则返回true 去比较hashCode值
-	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (this == obj)
-			return true;
-		if (obj instanceof User) {
-			Picture pic = (Picture) obj;
-			// if(picture.id = this.picture) return true; // 只比较picture_id
-			if (pic.picture_id == this.getPicture_id())
-				return true;
-		}
-		return false;
+		Picture s = (Picture) obj;
+		return String.valueOf(picture_id).equals(String.valueOf(s.picture_id));
 	}
 
-	/**
-	 * 重写hashcode 方法，返回的hashCode 不一样才认定为不同的对象
-	 */
 	@Override
 	public int hashCode() {
-		return Integer.valueOf(picture_id).hashCode(); // 只比较id，id一样就不添加进集合
+
+		return String.valueOf(picture_id).hashCode();
 	}
 
 }
