@@ -268,6 +268,7 @@ public class User {
 			SharedUtils.setAPPUserName(user.getUser_name());
 			SharedUtils.setUid(user.getUser_id() + "");
 			SharedUtils.setAPPUserGuanZhuCount(user.getGuanzhu_count());
+			SharedUtils.setAPPUserChatID(user.getUser_chat_id());
 			this.user_id = user.getUser_id();
 			return RetError.NONE;
 		} else {

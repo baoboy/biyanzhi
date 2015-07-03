@@ -47,7 +47,7 @@ import com.biyanzhi.utils.Logger.Level;
 public class HttpUrlHelper {
 	// 192.168.1.108公司
 	// 123.56.46.254线上
-	// 192.168.1.101家
+	// 192.168.1.102家
 	public static final int CONNECTION_TIMEOUT = 30 * 1000;
 	public static final int SO_TIMEOUT = 30 * 1000;
 	// public static final String DEFAULT_HOST =

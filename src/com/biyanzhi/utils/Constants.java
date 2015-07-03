@@ -2,6 +2,7 @@ package com.biyanzhi.utils;
 
 public class Constants {
 	public static final String COMMENT_USER_ID = "comment";
+	public static final String PLAY_SCORE_USER_ID = "playscore";
 
 	public static final int REQUEST_CODE_GETIMAGE_BYSDCARD = 0;// —°‘ÒÕº∆¨
 	public static final int REQUEST_CODE_GETIMAGE_BYCAMERA = 1;// ≈ƒ’’

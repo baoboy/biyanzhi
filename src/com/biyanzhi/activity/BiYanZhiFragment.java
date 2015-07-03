@@ -7,11 +7,7 @@ import in.srain.cube.views.ptr.PtrHandler;
 import in.srain.cube.views.ptr.header.StoreHouseHeader;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -130,18 +126,8 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 					dialog.dismiss();
 				}
 				mPtrFrame.refreshComplete();
-<<<<<<< HEAD
-				// mLists.addAll(0, list.getPictureList());
-				Set<Picture> picSet = new HashSet<Picture>();
-				picSet.addAll(list.getPictureList());
-				picSet.addAll(mLists);
-				mLists.clear();
-				mLists.addAll(0, picSet);
-=======
 				mLists.addAll(0, list.getPictureList());
->>>>>>> c34e870643ecd88afc9cbc000c06c37e837c2d95
 				adapter.notifyDataSetChanged();
-
 			}
 		});
 		task.executeParallel(list);

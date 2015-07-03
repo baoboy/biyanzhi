@@ -30,12 +30,14 @@
         <TextView
             android:id="@+id/txt_score"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dip"
+            android:gravity="center"
+            android:paddingRight="5dip"
+            android:text="查看详情"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </RelativeLayout>
 
     <RelativeLayout

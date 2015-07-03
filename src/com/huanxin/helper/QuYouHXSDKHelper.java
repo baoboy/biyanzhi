@@ -57,6 +57,10 @@ public class QuYouHXSDKHelper extends HXSDKHelper {
 					return "有人评论的你的照片";
 
 				}
+				if (Constants.PLAY_SCORE_USER_ID.equals(message.getFrom())) {
+					return "有人给你的照片打分了";
+
+				}
 				if (Utils.isSystemUser(message.getFrom())) {
 					return "系统通知";
 				}
@@ -79,6 +83,10 @@ public class QuYouHXSDKHelper extends HXSDKHelper {
 					int fromUsersNum, int messageNum) {
 				if (Constants.COMMENT_USER_ID.equals(message.getFrom())) {
 					return "有人评论的你的照片";
+
+				}
+				if (Constants.PLAY_SCORE_USER_ID.equals(message.getFrom())) {
+					return "有人给你的照片打分了";
 
 				}
 				if (Utils.isSystemUser(message.getFrom())) {

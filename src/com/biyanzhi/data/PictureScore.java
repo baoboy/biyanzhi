@@ -8,12 +8,22 @@ import com.biyanzhi.enums.RetError;
 import com.biyanzhi.enums.RetStatus;
 import com.biyanzhi.parser.IParser;
 import com.biyanzhi.parser.SimpleParser;
+import com.biyanzhi.utils.SharedUtils;
 
 public class PictureScore {
 	private static final String SEND_SCORE_API = "addpicturescore.do";
 	private int user_id;
 	private int picture_id;
 	private int picture_score;
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public int getUser_id() {
 		return user_id;
@@ -45,6 +55,8 @@ public class PictureScore {
 		params.put("user_id", user_id);
 		params.put("picture_score", picture_score);
 		params.put("picture_id", picture_id);
+		params.put("picture_publisher_id", user.getUser_id());
+		params.put("user_name", SharedUtils.getAPPUserName());
 		Result ret = ApiRequest.request(SEND_SCORE_API, params, parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			return RetError.NONE;

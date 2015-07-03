@@ -187,19 +187,4 @@ public class Picture implements Serializable {
 		}
 	}
 
-<<<<<<< HEAD
-	@Override
-	public boolean equals(Object obj) {
-		Picture s = (Picture) obj;
-		return String.valueOf(picture_id).equals(String.valueOf(s.picture_id));
-	}
-
-	@Override
-	public int hashCode() {
-
-		return String.valueOf(picture_id).hashCode();
-	}
-
-=======
->>>>>>> c34e870643ecd88afc9cbc000c06c37e837c2d95
 }

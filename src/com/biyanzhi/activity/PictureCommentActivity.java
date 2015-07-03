@@ -37,6 +37,7 @@ import com.biyanzhi.adapter.CommentAdapter;
 import com.biyanzhi.data.Comment;
 import com.biyanzhi.data.Picture;
 import com.biyanzhi.data.PictureScore;
+import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.popwindow.CommentPopwindow;
 import com.biyanzhi.popwindow.CommentPopwindow.OnCommentOnClick;
@@ -152,13 +153,14 @@ public class PictureCommentActivity extends BaseActivity implements
 					autoChange = true;
 					return;
 				}
-				txt_score.setText((int) (arg1 * 20) + "(分)");
+				// txt_score.setText((int) (arg1 * 20) + "(分)");
 				showScore((int) (arg1 * 20));
 			}
 		});
 		mListView.setOnItemClickListener(this);
 		img_avatar.setOnClickListener(new OnAvatarClick(picture
 				.getPublisher_id(), this));
+		txt_score.setOnClickListener(this);
 	}
 
 	private void setValue() {
@@ -177,7 +179,7 @@ public class PictureCommentActivity extends BaseActivity implements
 		if (picture.getAverage_score() != 0) {
 			autoChange = false;
 			ratingBar.setRating((float) picture.getAverage_score() / 20);
-			txt_score.setText(picture.getAverage_score() + "(分)");
+			// txt_score.setText(picture.getAverage_score() + "(分)");
 		} else {
 			autoChange = true;
 		}
@@ -223,6 +225,11 @@ public class PictureCommentActivity extends BaseActivity implements
 			share_pop = new SharePopwindow(this, v);
 			share_pop.setmSelectOnclick(this);
 			share_pop.show();
+			break;
+		case R.id.txt_score:
+			startActivity(new Intent(this, LookPlayScoreActivity.class)
+					.putExtra("picture_id", picture.getPicture_id()));
+			Utils.leftOutRightIn(this);
 			break;
 		default:
 			break;
@@ -330,6 +337,9 @@ public class PictureCommentActivity extends BaseActivity implements
 		PictureScore picscore = new PictureScore();
 		picscore.setPicture_id(picture.getPicture_id());
 		picscore.setPicture_score(score);
+		User user = new User();
+		user.setUser_id(picture.getPublisher_id());
+		picscore.setUser(user);
 		task.executeParallel(picscore);
 	}
 

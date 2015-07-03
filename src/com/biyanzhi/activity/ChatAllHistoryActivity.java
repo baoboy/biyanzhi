@@ -143,7 +143,8 @@ public class ChatAllHistoryActivity extends BaseActivity implements
 		EMConversation conversation = adapter.getItem(position);
 		String username = conversation.getUserName();
 		Intent intent = null;
-		if (Constants.COMMENT_USER_ID.equals(username)) {
+		if (Constants.COMMENT_USER_ID.equals(username)
+				|| Constants.PLAY_SCORE_USER_ID.equals(username)) {
 			intent = new Intent(this, PictureServerCommentActivity.class);
 		} else {
 			intent = new Intent(this, ChatActivity.class);
