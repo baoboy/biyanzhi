@@ -93,7 +93,7 @@ public class PictureCommentActivity extends BaseActivity implements
 	private CommentAdapter adapter;
 	private CommentPopwindow pop;
 	private SharePopwindow share_pop;
-
+	private View line_ratingbar;
 	private int position = -1;
 
 	@Override
@@ -113,7 +113,7 @@ public class PictureCommentActivity extends BaseActivity implements
 	}
 
 	private void initView() {
-
+		line_ratingbar = (View) findViewById(R.id.line_ratingbar);
 		txt_share = (TextView) findViewById(R.id.btn_share);
 		layout_title = (RelativeLayout) findViewById(R.id.layout_title);
 		back = (ImageView) findViewById(R.id.back);
@@ -126,6 +126,10 @@ public class PictureCommentActivity extends BaseActivity implements
 		edit_comment = (EditText) findViewById(R.id.edit_content);
 		comment_layout = (LinearLayout) findViewById(R.id.layout_comment);
 		ratingBar = (RatingBar) findViewById(R.id.ratingbar);
+		if (SharedUtils.getIntUid() != picture.getPublisher_id()) {
+			ratingBar.setVisibility(View.VISIBLE);
+			line_ratingbar.setVisibility(View.VISIBLE);
+		}
 		txt_score = (TextView) findViewById(R.id.txt_score);
 		LayoutParams layoutParams = img.getLayoutParams();
 		layoutParams.width = Utils.getSecreenWidth(this) - 100;
@@ -320,7 +324,7 @@ public class PictureCommentActivity extends BaseActivity implements
 				}
 				sendBroadcast(new Intent(Constants.PLAY_SCORE).putExtra(
 						"position", position).putExtra("score", score));
-				updatePicturePublishTime();
+				// updatePicturePublishTime();
 			}
 		});
 		PictureScore picscore = new PictureScore();

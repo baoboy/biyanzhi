@@ -117,13 +117,16 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:numStars="5"
-                        android:stepSize="0.1" >
+                        android:stepSize="0.1"
+                        android:visibility="gone" >
                     </RatingBar>
 
                     <View
+                        android:id="@+id/line_ratingbar"
                         android:layout_width="match_parent"
                         android:layout_height="0.1dip"
-                        android:background="#d5d5d5" />
+                        android:background="#d5d5d5"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/btn_share"
@@ -133,7 +136,7 @@
                         android:paddingBottom="10dip"
                         android:paddingTop="10dip"
                         android:singleLine="true"
-                        android:text="让他人评分"
+                        android:text="请朋友来打分"
                         android:textColor="@color/pciture_blue"
                         android:textSize="15sp" />
 

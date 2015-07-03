@@ -104,6 +104,7 @@ public class PictureServerCommentActivity extends BaseActivity implements
 	private EMMessage lastMessage;
 
 	private int picture_id;
+	private View line_ratingbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +134,7 @@ public class PictureServerCommentActivity extends BaseActivity implements
 	}
 
 	private void initView() {
+		line_ratingbar = (View) findViewById(R.id.line_ratingbar);
 		layout_content = (RelativeLayout) findViewById(R.id.layout_content);
 		txt_share = (TextView) findViewById(R.id.btn_share);
 		layout_title = (RelativeLayout) findViewById(R.id.layout_title);
@@ -146,6 +148,10 @@ public class PictureServerCommentActivity extends BaseActivity implements
 		edit_comment = (EditText) findViewById(R.id.edit_content);
 		comment_layout = (LinearLayout) findViewById(R.id.layout_comment);
 		ratingBar = (RatingBar) findViewById(R.id.ratingbar);
+		if (SharedUtils.getIntUid() != picture.getPublisher_id()) {
+			ratingBar.setVisibility(View.VISIBLE);
+			line_ratingbar.setVisibility(View.VISIBLE);
+		}
 		txt_score = (TextView) findViewById(R.id.txt_score);
 		LayoutParams layoutParams = img.getLayoutParams();
 		layoutParams.width = Utils.getSecreenWidth(this) - 100;

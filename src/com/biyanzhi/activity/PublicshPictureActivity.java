@@ -31,6 +31,7 @@ import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.FileUtils;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.ToastUtil;
+import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.RoundAngleImageView;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 
@@ -161,6 +162,9 @@ public class PublicshPictureActivity extends BaseActivity implements
 			finishThisActivity();
 			break;
 		case R.id.btnUpload:
+			if (Utils.isFastClick()) {
+				return;
+			}
 			String str_content = content.getText().toString().trim();
 			Picture picture = new Picture();
 			picture.setContent(str_content);

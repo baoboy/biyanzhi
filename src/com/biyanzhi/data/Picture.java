@@ -24,7 +24,7 @@ public class Picture implements Serializable {
 	private int picture_id;
 	private int publisher_id = 0;
 	private String publish_time = "";
-	private String publish_time_last_update = "";
+	// private String publish_time_last_update = "";
 	private String content = "";
 	private String publisher_name = "";
 	private String publisher_avatar = "";
@@ -74,13 +74,14 @@ public class Picture implements Serializable {
 		this.publish_time = publish_time;
 	}
 
-	public String getPublish_time_last_update() {
-		return publish_time_last_update;
-	}
-
-	public void setPublish_time_last_update(String publish_time_last_update) {
-		this.publish_time_last_update = publish_time_last_update;
-	}
+	// public String getPublish_time_last_update() {
+	// return publish_time_last_update;
+	// }
+	//
+	// public void setPublish_time_last_update(String publish_time_last_update)
+	// {
+	// this.publish_time_last_update = publish_time_last_update;
+	// }
 
 	public String getContent() {
 		return content;
@@ -186,6 +187,7 @@ public class Picture implements Serializable {
 		}
 	}
 
+<<<<<<< HEAD
 	@Override
 	public boolean equals(Object obj) {
 		Picture s = (Picture) obj;
@@ -198,4 +200,6 @@ public class Picture implements Serializable {
 		return String.valueOf(picture_id).hashCode();
 	}
 
+=======
+>>>>>>> c34e870643ecd88afc9cbc000c06c37e837c2d95
 }
