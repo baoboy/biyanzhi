@@ -153,10 +153,14 @@ public class PictureCommentActivity extends BaseActivity implements
 					autoChange = true;
 					return;
 				}
+				// if (picture.isIs_play_score()) {
+				// return;
+				// } ToastUtil.showToast("不能重复打分");
+
 				// txt_score.setText((int) (arg1 * 20) + "(分)");
 				showScore((int) (arg1 * 20));
 			}
-		});
+		}); 
 		mListView.setOnItemClickListener(this);
 		img_avatar.setOnClickListener(new OnAvatarClick(picture
 				.getPublisher_id(), this));

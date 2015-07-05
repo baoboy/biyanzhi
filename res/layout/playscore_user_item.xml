@@ -44,6 +44,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dip"
             android:layout_toRightOf="@+id/img_avatar"
+            android:isIndicator="true"
             android:numStars="5"
             android:stepSize="0.1" >
         </RatingBar>

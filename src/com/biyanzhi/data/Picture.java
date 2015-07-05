@@ -33,6 +33,15 @@ public class Picture implements Serializable {
 	private int average_score;
 	private int score_number;// 打分人数
 	private List<Comment> comments = new ArrayList<Comment>();
+	private boolean is_play_score;
+
+	public boolean isIs_play_score() {
+		return is_play_score;
+	}
+
+	public void setIs_play_score(boolean is_play_score) {
+		this.is_play_score = is_play_score;
+	}
 
 	public List<Comment> getComments() {
 		return comments;

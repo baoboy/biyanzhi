@@ -38,6 +38,7 @@ public class PictureListParser implements IParser {
 			String picture_image_url = obj.getString("picture_image_url");
 			int average_score = obj.getInt("average_score");
 			int score_number = obj.getInt("score_number");
+			boolean is_play_score = obj.getBoolean("is_play_score");
 			// comments
 			JSONArray commentsJson = obj.getJSONArray("comments");
 			List<Comment> comments = new ArrayList<Comment>();
@@ -78,6 +79,7 @@ public class PictureListParser implements IParser {
 			picture.setAverage_score(average_score);
 			picture.setScore_number(score_number);
 			picture.setComments(comments);
+			picture.setIs_play_score(is_play_score);
 			lists.add(picture);
 		}
 		PictureList cl = new PictureList();
