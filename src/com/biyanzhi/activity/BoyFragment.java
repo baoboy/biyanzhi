@@ -17,8 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 
 import com.biyanzhi.R;
 import com.biyanzhi.adapter.PictureAdapter;
@@ -26,7 +26,6 @@ import com.biyanzhi.data.Picture;
 import com.biyanzhi.data.PictureList;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.GetBoyBangPictureListTask;
-import com.biyanzhi.task.GetGirlBangPictureListTask;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.Utils;

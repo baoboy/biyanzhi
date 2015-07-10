@@ -74,7 +74,7 @@ public class SharePopwindow implements OnClickListener, OnItemClickListener {
 	private void initPopwindow() {
 		popupWindow = new PopupWindow(view, LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT);
-		// 这个是为了点击�?返回Back”也能使其消失，并且并不会影响你的背景（很神奇的�?
+		// 这个是为了点击�?返回Back”也能使其消失，并且并不会影响你的背景（很神奇的�?
 		// popupWindow.setBackgroundDrawable(new BitmapDrawable());
 		// popupWindow.setAnimationStyle(R.style.AnimBottom);
 		popupWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -82,7 +82,7 @@ public class SharePopwindow implements OnClickListener, OnItemClickListener {
 	}
 
 	/**
-	 * popwindow的显�?
+	 * popwindow的显�?
 	 */
 	public void show() {
 		popupWindow.showAtLocation(v, Gravity.BOTTOM
@@ -91,7 +91,7 @@ public class SharePopwindow implements OnClickListener, OnItemClickListener {
 		popupWindow.setFocusable(true);
 		// 设置允许在外点击消失
 		popupWindow.setOutsideTouchable(true);
-		// 刷新状�?
+		// 刷新状�?
 		popupWindow.update();
 	}
 

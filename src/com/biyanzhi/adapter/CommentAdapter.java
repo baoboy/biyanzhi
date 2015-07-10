@@ -16,7 +16,6 @@ import com.biyanzhi.R;
 import com.biyanzhi.data.Comment;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
-import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.RoundAngleImageView;
 import com.biyianzhi.interfaces.OnAvatarClick;
 

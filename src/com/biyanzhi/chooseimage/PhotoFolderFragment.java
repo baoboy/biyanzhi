@@ -87,7 +87,7 @@ public class PhotoFolderFragment extends Fragment {
 		@Override
 		protected Object doInBackground(Void... params) {
 
-			// 获取缩略�? ThumbnailsUtil.clear();
+			// 获取缩略�? ThumbnailsUtil.clear();
 			String[] projection = { Thumbnails._ID, Thumbnails.IMAGE_ID,
 					Thumbnails.DATA };
 			Cursor cur = cr.query(Thumbnails.EXTERNAL_CONTENT_URI, projection,
@@ -171,7 +171,7 @@ public class PhotoFolderFragment extends Fragment {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			// dialog = DialogUtil.getWaitDialog(getActivity(), "请稍�?);
+			// dialog = DialogUtil.getWaitDialog(getActivity(), "请稍�?);
 			// dialog.show();
 		}
 

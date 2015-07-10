@@ -78,7 +78,6 @@ public class SmileUtils {
 	public static final String ee_48 = "[ee_48]";
 	public static final String ee_49 = "[ee_49]";
 	public static final String ee_50 = "[ee_50]";
- 
 
 	private static final Factory spannableFactory = Spannable.Factory
 			.getInstance();
@@ -137,7 +136,7 @@ public class SmileUtils {
 		addPattern(emoticons, ee_48, R.drawable.ee_48);
 		addPattern(emoticons, ee_49, R.drawable.ee_49);
 		addPattern(emoticons, ee_50, R.drawable.ee_50);
- 		 
+
 	}
 
 	private static void addPattern(Map<Pattern, Integer> map, String smile,

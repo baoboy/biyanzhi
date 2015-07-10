@@ -160,7 +160,7 @@ public class PictureCommentActivity extends BaseActivity implements
 				// txt_score.setText((int) (arg1 * 20) + "(分)");
 				showScore((int) (arg1 * 20));
 			}
-		}); 
+		});
 		mListView.setOnItemClickListener(this);
 		img_avatar.setOnClickListener(new OnAvatarClick(picture
 				.getPublisher_id(), this));

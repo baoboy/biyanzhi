@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.biyanzhi.R;
 import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
-import com.biyanzhi.task.VerifyCellPhoneTask;
 import com.biyanzhi.task.VerifyFindPasswordCellPhoneTask;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.ToastUtil;
