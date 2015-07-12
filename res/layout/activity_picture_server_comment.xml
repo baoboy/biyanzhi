@@ -144,7 +144,7 @@
                             android:paddingBottom="10dip"
                             android:paddingTop="10dip"
                             android:singleLine="true"
-                            android:text="请朋友来打分"
+                            android:text="分享给朋友"
                             android:textColor="@color/pciture_blue"
                             android:textSize="15sp" />
 
