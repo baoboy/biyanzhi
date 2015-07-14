@@ -22,6 +22,7 @@ import android.widget.ViewFlipper;
 import com.biyanzhi.R;
 import com.biyanzhi.data.User;
 import com.biyanzhi.register.RegisterStep.onNextListener;
+import com.biyanzhi.utils.BitmapUtils;
 import com.biyanzhi.utils.FileUtils;
 import com.biyanzhi.utils.PhotoUtils;
 import com.biyanzhi.utils.ToastUtil;
@@ -173,7 +174,9 @@ public class RegisterActivity extends FragmentActivity implements
 							.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 					if (cursor.getCount() > 0 && cursor.moveToFirst()) {
 						String path = cursor.getString(column_index);
-						Bitmap bitmap = BitmapFactory.decodeFile(path);
+						// Bitmap bitmap = BitmapFactory.decodeFile(path);
+						Bitmap bitmap = BitmapUtils.FitSizeImg(path);
+
 						if (PhotoUtils.bitmapIsLarge(bitmap)) {
 							PhotoUtils.cropPhoto(this, this, path);
 						} else {
@@ -188,7 +191,9 @@ public class RegisterActivity extends FragmentActivity implements
 
 			if (resultCode == RESULT_OK) {
 				String path = reBasicInfo.getTakePicturePath();
-				Bitmap bitmap = BitmapFactory.decodeFile(path);
+				// Bitmap bitmap = BitmapFactory.decodeFile(path);
+				Bitmap bitmap = BitmapUtils.FitSizeImg(path);
+
 				if (PhotoUtils.bitmapIsLarge(bitmap)) {
 					PhotoUtils.cropPhoto(this, this, path);
 				} else {
@@ -202,7 +207,7 @@ public class RegisterActivity extends FragmentActivity implements
 				String path = data.getStringExtra("path");
 				if (path != null) {
 					Bitmap bitmap = BitmapFactory.decodeFile(path);
-					if (bitmap != null) {
+					if (bitmap != null && reBasicInfo != null) {
 						reBasicInfo.setUserPhoto(bitmap, path);
 					}
 				}

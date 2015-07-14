@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qq.QQ.ShareParams;
 import cn.sharesdk.tencent.qzone.QZone;
@@ -40,8 +41,8 @@ import com.biyanzhi.data.PictureScore;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.popwindow.CommentPopwindow;
 import com.biyanzhi.popwindow.CommentPopwindow.OnCommentOnClick;
-import com.biyanzhi.popwindow.SharePopwindow;
-import com.biyanzhi.popwindow.SharePopwindow.SelectMenuOnclick;
+import com.biyanzhi.popwindow.SharePopwindow1;
+import com.biyanzhi.popwindow.SharePopwindow1.SelectMenuOnclick;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
 import com.biyanzhi.task.GetPictureTask;
 import com.biyanzhi.task.SendCommentTask;
@@ -98,7 +99,7 @@ public class PictureServerCommentActivity extends BaseActivity implements
 	private boolean autoChange;
 	private CommentAdapter adapter;
 	private CommentPopwindow pop;
-	private SharePopwindow share_pop;
+	private SharePopwindow1 share_pop;
 
 	private EMConversation conversation;
 	private EMMessage lastMessage;
@@ -148,10 +149,6 @@ public class PictureServerCommentActivity extends BaseActivity implements
 		edit_comment = (EditText) findViewById(R.id.edit_content);
 		comment_layout = (LinearLayout) findViewById(R.id.layout_comment);
 		ratingBar = (RatingBar) findViewById(R.id.ratingbar);
-		if (SharedUtils.getIntUid() != picture.getPublisher_id()) {
-			ratingBar.setVisibility(View.VISIBLE);
-			line_ratingbar.setVisibility(View.VISIBLE);
-		}
 		txt_score = (TextView) findViewById(R.id.txt_score);
 		LayoutParams layoutParams = img.getLayoutParams();
 		layoutParams.width = Utils.getSecreenWidth(this) - 100;
@@ -179,13 +176,17 @@ public class PictureServerCommentActivity extends BaseActivity implements
 			}
 		});
 		mListView.setOnItemClickListener(this);
-		img_avatar.setOnClickListener(new OnAvatarClick(picture
-				.getPublisher_id(), this));
 		txt_score.setOnClickListener(this);
 
 	}
 
 	private void setValue() {
+		img_avatar.setOnClickListener(new OnAvatarClick(picture
+				.getPublisher_id(), this));
+		if (SharedUtils.getIntUid() != picture.getPublisher_id()) {
+			ratingBar.setVisibility(View.VISIBLE);
+			line_ratingbar.setVisibility(View.VISIBLE);
+		}
 		comments = picture.getComments();
 		adapter = new CommentAdapter(this, comments);
 		mListView.setAdapter(adapter);
@@ -270,7 +271,7 @@ public class PictureServerCommentActivity extends BaseActivity implements
 			startActivity(intent);
 			break;
 		case R.id.btn_share:
-			share_pop = new SharePopwindow(this, v);
+			share_pop = new SharePopwindow1(this, v);
 			share_pop.setmSelectOnclick(this);
 			share_pop.show();
 			break;
@@ -420,16 +421,20 @@ public class PictureServerCommentActivity extends BaseActivity implements
 	public void onClickPosition(int position) {
 		switch (position) {
 		case 0:
-			shareQQ();
+			shareWechatMoments();
 			break;
 		case 1:
-			shareQQZone();
-			break;
-		case 2:
 			shareWechat();
 			break;
+		case 2:
+			shareQQ();
+			break;
 		case 3:
-			shareWechatMoments();
+			shareQQZone();
+			break;
+		case 4:
+			shareSinaWeiBo();
+			break;
 		default:
 			break;
 		}
@@ -490,4 +495,18 @@ public class PictureServerCommentActivity extends BaseActivity implements
 
 	}
 
+	private void shareSinaWeiBo() {
+		ShareParams sp = new ShareParams();
+		sp.setTitle("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
+				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
+		sp.setText("http://123.56.46.254/biyanzhi/biyanzhi.html总共有 "
+				+ picture.getScore_number() + " 个人给我评分 ,平均分 "
+				+ picture.getAverage_score()
+				+ " 分,快来测测你的颜值能得少分吧http://123.56.46.254/biyanzhi/biyanzhi.html");
+		sp.setUrl("http://123.56.46.254/biyanzhi/biyanzhi.html");
+		sp.setImageUrl(picture.getPicture_image_url());
+		Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+		// 执行图文分享
+		weibo.share(sp);
+	}
 }

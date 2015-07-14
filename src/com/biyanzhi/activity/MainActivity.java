@@ -211,6 +211,9 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 				String msgId = intent.getStringExtra("msgid");
 				EMMessage message = EMChatManager.getInstance().getMessage(
 						msgId);
+				if (message == null) {
+					return;
+				}
 				if (message.getChatType() == ChatType.Chat) {
 					updateUnreadLabel();
 				}

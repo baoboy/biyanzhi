@@ -35,6 +35,7 @@ import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.GridViewWithHeaderAndFooter;
 import com.biyanzhi.utils.SharedUtils;
+import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 
@@ -80,6 +81,8 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 
 				if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+					UniversalImageLoadTool.resume();
+					adapter.notifyDataSetChanged();
 					// 滚动到底,请求下一页数据
 					if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
 						if (isLoading) {
@@ -87,6 +90,9 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 						}
 						loadMorePictureList();
 					}
+				} else {
+					UniversalImageLoadTool.pause();
+
 				}
 			}
 
@@ -111,6 +117,7 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 			Utils.leftOutRightIn(getActivity());
 			return;
 		}
+		UniversalImageLoadTool.resume();
 		startActivity(new Intent(getActivity(), PictureCommentActivity.class)
 				.putExtra("picture", mLists.get(position)).putExtra("position",
 						position));
@@ -226,7 +233,9 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 				if (position < 0) {
 					return;
 				}
-
+				if (position >= mLists.size()) {
+					return;
+				}
 				int all_score = mLists.get(position).getAverage_score()
 						* mLists.get(position).getScore_number();
 				mLists.get(position).setScore_number(

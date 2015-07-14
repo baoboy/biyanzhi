@@ -26,6 +26,7 @@ import com.biyanzhi.enums.RetError;
 import com.biyanzhi.popwindow.SelectPicPopwindow;
 import com.biyanzhi.popwindow.SelectPicPopwindow.SelectOnclick;
 import com.biyanzhi.task.PublishPictureTask;
+import com.biyanzhi.utils.BitmapUtils;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.FileUtils;
@@ -86,7 +87,7 @@ public class PublicshPictureActivity extends BaseActivity implements
 							.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 					if (cursor.getCount() > 0 && cursor.moveToFirst()) {
 						String path = cursor.getString(column_index);
-						Bitmap bitmap = BitmapFactory.decodeFile(path);
+						Bitmap bitmap = BitmapUtils.FitSizeImg(path);
 						if (null == bitmap) {
 							return;
 						}
@@ -108,7 +109,9 @@ public class PublicshPictureActivity extends BaseActivity implements
 				ToastUtil.showToast("≈ƒ’’ ß∞‹,«Î÷ÿ–¬≈ƒ’’");
 				return;
 			}
-			Bitmap bitmap = BitmapFactory.decodeFile(cameraPath);
+			// Bitmap bitmap = BitmapFactory.decodeFile(cameraPath);
+			Bitmap bitmap = BitmapUtils.FitSizeImg(cameraPath);
+
 			if (null == bitmap) {
 				return;
 			}

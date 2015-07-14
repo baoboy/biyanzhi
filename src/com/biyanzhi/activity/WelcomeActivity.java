@@ -22,15 +22,15 @@ public class WelcomeActivity extends BaseActivity {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				startActivity(new Intent(WelcomeActivity.this,
+						MainActivity.class));
+				// if (SharedUtils.getIntUid() == 0) {
+				// startActivity(new Intent(WelcomeActivity.this,
+				// LoginActivity.class));
+				// } else {
 				// startActivity(new Intent(WelcomeActivity.this,
 				// MainActivity.class));
-				if (SharedUtils.getIntUid() == 0) {
-					startActivity(new Intent(WelcomeActivity.this,
-							LoginActivity.class));
-				} else {
-					startActivity(new Intent(WelcomeActivity.this,
-							MainActivity.class));
-				}
+				// }
 				finish();
 			}
 		}.start();

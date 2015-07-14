@@ -60,6 +60,15 @@ public class SharedUtils {
 		editor.commit();
 	}
 
+	public static void setFirstPlayScore(boolean flag) {
+		editor.putBoolean("first_paly_score", flag);
+		editor.commit();
+	}
+
+	public static boolean getFirstPlayScore() {
+		return sharedPreferences.getBoolean("first_paly_score", true);
+	}
+
 	public static void setSettingMsgNotification(boolean paramBoolean) {
 		editor.putBoolean(SHARED_KEY_SETTING_NOTIFICATION, paramBoolean);
 		editor.commit();

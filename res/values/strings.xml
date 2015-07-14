@@ -30,6 +30,8 @@
     <string name="title_activity_self_info">SelfInfoActivity</string>
     <string name="title_activity_up_date_user_name">UpDateUserNameActivity</string>
     <string name="title_activity_guan_zhu">GuanZhuActivity</string>
+    <string name="weibo_oauth_regiseter">应用授权</string>
+    <string name="sinaweibo">新浪微博</string>
     <!-- 环信 -->
 
     <string name="text_ack_msg">已读</string>

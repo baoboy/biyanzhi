@@ -112,6 +112,9 @@ public class PictureCommentActivity extends BaseActivity implements
 		map.put("BypassApproval", false);
 		ShareSDK.setPlatformDevInfo("Wechat", map);
 		ShareSDK.setPlatformDevInfo("WechatMoments", map);
+		if (SharedUtils.getFirstPlayScore()) {
+			firstPrompt();
+		}
 	}
 
 	private void initView() {
@@ -160,6 +163,7 @@ public class PictureCommentActivity extends BaseActivity implements
 
 				// txt_score.setText((int) (arg1 * 20) + "(分)");
 				showScore((int) (arg1 * 20));
+				SharedUtils.setFirstPlayScore(false);
 			}
 		});
 		mListView.setOnItemClickListener(this);
@@ -326,6 +330,21 @@ public class PictureCommentActivity extends BaseActivity implements
 		dialog.show();
 	}
 
+	private void firstPrompt() {
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(this,
+				"点击星星为TA评分,每颗星星20分哦", "确定", null, new ConfirmDialog() {
+
+					@Override
+					public void onOKClick() {
+					}
+
+					public void onCancleClick() {
+
+					}
+				});
+		dialog.show();
+	}
+
 	private void sendScore(final int score) {
 		SendPictureScoreTask task = new SendPictureScoreTask();
 		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
@@ -481,7 +500,7 @@ public class PictureCommentActivity extends BaseActivity implements
 				+ " 分,快来测测你的颜值能得少分吧http://123.56.46.254/biyanzhi/biyanzhi.html");
 		sp.setUrl("http://123.56.46.254/biyanzhi/biyanzhi.html");
 		sp.setImageUrl(picture.getPicture_image_url());
-  		Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+		Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
 		// 执行图文分享
 		weibo.share(sp);
 	}

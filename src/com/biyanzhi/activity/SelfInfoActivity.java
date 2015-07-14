@@ -29,6 +29,7 @@ import com.biyanzhi.popwindow.SelectPicPopwindow;
 import com.biyanzhi.popwindow.SelectPicPopwindow.SelectOnclick;
 import com.biyanzhi.task.GetUserInfoTask;
 import com.biyanzhi.task.UpLoadUserAvatarTask;
+import com.biyanzhi.utils.BitmapUtils;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.FileUtils;
@@ -171,7 +172,8 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 							.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 					if (cursor.getCount() > 0 && cursor.moveToFirst()) {
 						String path = cursor.getString(column_index);
-						Bitmap bitmap = BitmapFactory.decodeFile(path);
+						// Bitmap bitmap = BitmapFactory.decodeFile(path);
+						Bitmap bitmap = BitmapUtils.FitSizeImg(path);
 						if (PhotoUtils.bitmapIsLarge(bitmap)) {
 							PhotoUtils.cropPhoto(this, this, path);
 						} else {
@@ -187,7 +189,8 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 			if (resultCode == RESULT_OK) {
 
 				String path = mTakePicturePath;
-				Bitmap bitmap = BitmapFactory.decodeFile(path);
+				// Bitmap bitmap = BitmapFactory.decodeFile(path);
+				Bitmap bitmap = BitmapUtils.FitSizeImg(path);
 				if (PhotoUtils.bitmapIsLarge(bitmap)) {
 					PhotoUtils.cropPhoto(this, this, path);
 				} else {
