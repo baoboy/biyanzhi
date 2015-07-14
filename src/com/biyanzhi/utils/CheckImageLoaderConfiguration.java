@@ -3,7 +3,9 @@ package com.biyanzhi.utils;
 import android.content.Context;
 
 import com.nostra13.universalimageloader.cache.disc.impl.LimitedAgeDiscCache;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
@@ -26,6 +28,9 @@ public class CheckImageLoaderConfiguration {
 					context)
 					.threadPriority(Thread.NORM_PRIORITY)
 					.denyCacheImageMultipleSizesInMemory()
+					.memoryCache(new WeakMemoryCache())
+					.memoryCacheSize((int) (2 * 1024 * 1024))
+					.memoryCacheSizePercentage(13)
 					.discCacheFileNameGenerator(new Md5FileNameGenerator())
 					.discCache(
 							new LimitedAgeDiscCache(StorageUtils
