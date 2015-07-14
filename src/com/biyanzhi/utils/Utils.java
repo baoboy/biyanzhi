@@ -34,7 +34,8 @@ public class Utils {
 
 	public static boolean isSystemUser(String user_id) {
 		if (Constants.COMMENT_USER_ID.equals(user_id)
-				|| Constants.PLAY_SCORE_USER_ID.equals(user_id)) {
+				|| Constants.PLAY_SCORE_USER_ID.equals(user_id)
+				|| Constants.GUANZHU_USER_ID.equals(user_id)) {
 			return true;
 		}
 		return false;

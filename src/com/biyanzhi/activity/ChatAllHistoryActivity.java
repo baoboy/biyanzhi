@@ -146,6 +146,12 @@ public class ChatAllHistoryActivity extends BaseActivity implements
 		if (Constants.COMMENT_USER_ID.equals(username)
 				|| Constants.PLAY_SCORE_USER_ID.equals(username)) {
 			intent = new Intent(this, PictureServerCommentActivity.class);
+		} else if (Constants.GUANZHU_USER_ID.equals(username)) {
+			intent = new Intent(this, SelfInfoActivity.class);
+			SharedUtils.setAPPUserGuanZhuCount(SharedUtils
+					.getAPPUserGuanZhuCount()
+					+ conversation.getUnreadMsgCount());
+			conversation.resetUnsetMsgCount();
 		} else {
 			intent = new Intent(this, ChatActivity.class);
 			EMMessage message = conversation.getLastMessage();

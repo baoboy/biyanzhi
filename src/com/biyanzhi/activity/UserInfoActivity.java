@@ -54,6 +54,7 @@ public class UserInfoActivity extends BaseActivity {
 	private View bottom_line;
 	private Button btn_add_guanzhu;
 	private Button btn_send_message;
+	private boolean is_ganzhu = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +159,11 @@ public class UserInfoActivity extends BaseActivity {
 			mVfFlipper.setDisplayedChild(1);
 			break;
 		case R.id.btn_add_guanzhu:
-			addGuanZhu();
+			if (!is_ganzhu) {
+				addGuanZhu();
+			} else {
+				ToastUtil.showToast("已经关注过了");
+			}
 			break;
 		case R.id.img_avatar_bg:
 			if (user == null) {
@@ -214,6 +219,7 @@ public class UserInfoActivity extends BaseActivity {
 				}
 				ToastUtil.showToast("关注成功");
 				user.setGuanZhu(true);
+				is_ganzhu = true;
 			}
 		});
 		task.executeParallel(guanzhu);
