@@ -207,7 +207,7 @@ public class UserInfoActivity extends BaseActivity {
 		dialog.show();
 		GuanZhu guanzhu = new GuanZhu();
 		guanzhu.setGuanzhu_user_id(user.getUser_id());
-		AddGuanZhuTask task = new AddGuanZhuTask();
+		AddGuanZhuTask task = new AddGuanZhuTask(user.getUser_chat_id());
 		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
 			@Override
 			public void taskFinish(RetError result) {

@@ -8,6 +8,7 @@ import com.biyanzhi.enums.RetError;
 import com.biyanzhi.enums.RetStatus;
 import com.biyanzhi.parser.IParser;
 import com.biyanzhi.parser.SimpleParser;
+import com.biyanzhi.utils.SharedUtils;
 
 public class GuanZhu {
 	private static final String ADD_GUANZHU_API = "addGuanZhu.do";
@@ -30,10 +31,13 @@ public class GuanZhu {
 		this.guanzhu_user_id = guanzhu_user_id;
 	}
 
-	public RetError addGuanZhu() {
+	public RetError addGuanZhu(String guanzhu_user_chat_id) {
 		IParser parser = new SimpleParser();
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("guanzhu_user_id", guanzhu_user_id);
+		params.put("user_name", SharedUtils.getAPPUserName());
+		params.put("guanzhu_user_chat_id", guanzhu_user_chat_id);
+
 		Result ret = ApiRequest.request(ADD_GUANZHU_API, params, parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			return RetError.NONE;
