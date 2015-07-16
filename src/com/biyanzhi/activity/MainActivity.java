@@ -52,9 +52,19 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (savedInstanceState != null && MyApplation.index == 0) {
+			Intent i = getBaseContext().getPackageManager()
+					.getLaunchIntentForPackage(
+							getBaseContext().getPackageName());
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
+			finish();
+			return;
+		}
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		MyApplation.addActivity(this);
+		MyApplation.index = 100;
 		initView();
 		initFragment();
 		registerBoradcastReceiver();
@@ -65,6 +75,9 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (img_prompt == null) {
+			return;
+		}
 		updateUnreadLabel();
 		EMChatManager.getInstance().activityResumed();
 	}
@@ -282,4 +295,5 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		}
 	}
+
 }

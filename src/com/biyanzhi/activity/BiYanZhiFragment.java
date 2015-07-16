@@ -172,11 +172,10 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 			public void onRefreshBegin(PtrFrameLayout frame) {
 				if (mLists.size() > 0) {
 					list.setPublish_time(mLists.get(0).getPublish_time());
-					getPictureList();
-					return;
+				} else {
+					list.setPublish_time("0");
 				}
-				mPtrFrame.refreshComplete();
-
+				getPictureList();
 			}
 
 			@Override

@@ -81,6 +81,7 @@ public class PersonalCenterActivity extends BaseActivity {
 		findViewById(R.id.back).setOnClickListener(this);
 		findViewById(R.id.layout_about).setOnClickListener(this);
 		findViewById(R.id.layout_version).setOnClickListener(this);
+		findViewById(R.id.layout_feedback).setOnClickListener(this);
 
 	}
 
@@ -108,6 +109,10 @@ public class PersonalCenterActivity extends BaseActivity {
 			break;
 		case R.id.layout_version:
 			getNewVersion();
+			break;
+		case R.id.layout_feedback:
+			startActivity(new Intent(this, FeedBackActivity.class));
+			Utils.leftOutRightIn(this);
 			break;
 		default:
 			break;
@@ -140,7 +145,7 @@ public class PersonalCenterActivity extends BaseActivity {
 				SharedUtils.clearData();
 				MyApplation.exit(false);
 				startActivity(new Intent(PersonalCenterActivity.this,
-						LoginActivity.class));
+						LoginActivity.class).putExtra("isquit", true));
 			}
 
 			@Override
