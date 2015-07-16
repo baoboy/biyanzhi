@@ -50,6 +50,10 @@ public class PictureScore {
 	}
 
 	public RetError sendScore() {
+		if (user == null) {
+			return RetError.NONE;
+
+		}
 		IParser parser = new SimpleParser();
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("user_id", user_id);

@@ -41,6 +41,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 
 	private Dialog dialog;
 
+	private boolean isquit = false;
+
 	public static final int CHATTYPE_SINGLE = 1;
 	public static final int CHATTYPE_GROUP = 2;
 	public static final int CHATTYPE_CHATROOM = 3;
@@ -84,6 +86,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 			return;
 		}
 		setContentView(R.layout.activity_login);
+		isquit = getIntent().getBooleanExtra("isquit", false);
 		initView();
 	}
 
@@ -224,4 +227,5 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 		super.onDestroy();
 		mHandler.removeCallbacksAndMessages(null);
 	}
+
 }

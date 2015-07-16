@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.biyanzhi.R;
-import com.biyanzhi.utils.SharedUtils;
 
 public class WelcomeActivity extends BaseActivity {
 

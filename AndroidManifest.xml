@@ -228,6 +228,11 @@
             android:label="@string/title_activity_look_play_score"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.biyanzhi.activity.FeedBackActivity"
+            android:label="@string/title_activity_feed_back"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>
