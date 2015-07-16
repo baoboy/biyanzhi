@@ -48,17 +48,13 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	private FragmentManager manager;
 	private BiYanZhiFragment biyanzhi_fragment;
 	private YanZhiBangFragment yanzhibang_fragment;
+	private boolean isregister = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (savedInstanceState != null && MyApplation.index == 0) {
-			Intent i = getBaseContext().getPackageManager()
-					.getLaunchIntentForPackage(
-							getBaseContext().getPackageName());
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
+			Utils.getError();
 			return;
 		}
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -109,7 +105,9 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		unregisterReceiver(mBroadcastReceiver);
+		if (isregister) {
+			unregisterReceiver(mBroadcastReceiver);
+		}
 	}
 
 	@Override
@@ -207,6 +205,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 		myIntentFilter.addAction(Constants.UPDATE_USER_AVATAR);
 		// ×¢²á¹ã²¥
 		registerReceiver(mBroadcastReceiver, myIntentFilter);
+		isregister = true;
 	}
 
 	/**
