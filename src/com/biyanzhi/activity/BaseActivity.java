@@ -53,11 +53,11 @@ public class BaseActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		if (MyApplation.index == 0) {
-			Utils.getError();
-		}
-	}
+	// @Override
+	// protected void onRestoreInstanceState(Bundle savedInstanceState) {
+	// super.onRestoreInstanceState(savedInstanceState);
+	// if (MyApplation.index == 0) {
+	// Utils.getError();
+	// }
+	// }
 }

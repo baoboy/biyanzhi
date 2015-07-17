@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:text="意见反馈"
+                        android:text="说出你的想法"
                         android:textColor="#6a6a6a"
                         android:textSize="15sp" />
                 </RelativeLayout>

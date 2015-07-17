@@ -16,7 +16,6 @@ public class MyApplation extends Application {
 
 	private static List<Activity> activityList = new ArrayList<Activity>();
 	public static QuYouHXSDKHelper hxSDKHelper = new QuYouHXSDKHelper();
-	public static int index = 0;
 
 	@Override
 	public void onCreate() {

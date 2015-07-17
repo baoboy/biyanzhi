@@ -231,7 +231,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/comment_edit"
-            android:hint="输入回复内容"
+            android:hint="评论一下TA"
             android:paddingBottom="8dip"
             android:paddingLeft="10dip"
             android:paddingTop="8dip"

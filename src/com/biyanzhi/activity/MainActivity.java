@@ -53,14 +53,9 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (savedInstanceState != null && MyApplation.index == 0) {
-			Utils.getError();
-			return;
-		}
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		MyApplation.addActivity(this);
-		MyApplation.index = 100;
 		initView();
 		initFragment();
 		registerBoradcastReceiver();

@@ -30,6 +30,7 @@ import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
+import com.haarman.listviewanimations.swinginadapters.prepared.AlphaInAnimationAdapter;
 
 public class GirlFragment extends Fragment implements OnItemClickListener {
 	private Dialog dialog;
@@ -63,7 +64,10 @@ public class GirlFragment extends Fragment implements OnItemClickListener {
 
 	private void setValue() {
 		adapter = new PictureAdapter(getActivity(), mLists);
-		mGridView.setAdapter(adapter);
+		AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(
+				adapter);
+		alphaInAnimationAdapter.setAbsListView(mGridView);
+		mGridView.setAdapter(alphaInAnimationAdapter);
 	}
 
 	@Override
@@ -90,6 +94,7 @@ public class GirlFragment extends Fragment implements OnItemClickListener {
 				mPtrFrame.refreshComplete();
 				mLists.clear();
 				mLists.addAll(0, list.getPictureList());
+
 				adapter.notifyDataSetChanged();
 
 			}

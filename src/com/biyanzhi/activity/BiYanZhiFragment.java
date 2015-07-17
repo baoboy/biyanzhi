@@ -38,6 +38,7 @@ import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
+import com.haarman.listviewanimations.swinginadapters.prepared.AlphaInAnimationAdapter;
 
 public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 	private Dialog dialog;
@@ -106,7 +107,10 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 
 	private void setValue() {
 		adapter = new PictureAdapter(getActivity(), mLists);
-		mGridView.setAdapter(adapter);
+		AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(
+				adapter);
+		alphaInAnimationAdapter.setAbsListView(mGridView);
+		mGridView.setAdapter(alphaInAnimationAdapter);
 	}
 
 	@Override
