@@ -16,7 +16,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
@@ -28,6 +30,7 @@ import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.GetGirlBangPictureListTask;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.SharedUtils;
+import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 import com.haarman.listviewanimations.swinginadapters.prepared.AlphaInAnimationAdapter;
@@ -60,6 +63,27 @@ public class GirlFragment extends Fragment implements OnItemClickListener {
 		initFefushView();
 		mGridView = (GridView) getView().findViewById(R.id.gridView1);
 		mGridView.setOnItemClickListener(this);
+		mGridView.setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+				if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+					UniversalImageLoadTool.resume();
+					adapter.notifyDataSetChanged();
+
+				} else {
+					UniversalImageLoadTool.pause();
+
+				}
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+
+			}
+		});
 	}
 
 	private void setValue() {
@@ -73,6 +97,7 @@ public class GirlFragment extends Fragment implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
+		UniversalImageLoadTool.resume();
 		if (SharedUtils.getIntUid() == 0) {
 			startActivity(new Intent(getActivity(), LoginActivity.class));
 			Utils.leftOutRightIn(getActivity());
