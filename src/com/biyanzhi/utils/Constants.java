@@ -18,6 +18,7 @@ public class Constants {
 	public static final String UPDATE_USER_NAME = "com.biyanzhi.update.user.name";
 	public static final String UPDATE_USER_ADDRESS = "com.biyanzhi.update.user.address";
 	public static final String PLAY_SCORE = "com.biyanzhi.play.score";
+	public static final String DEL_PICTURE = "com.biyanzhi.del_picture";
 
 	// »·ÐÅ
 	public static final String NEW_FRIENDS_USERNAME = "item_new_friends";

@@ -267,6 +267,8 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 	public void registerBoradcastReceiver() {
 		IntentFilter myIntentFilter = new IntentFilter();
 		myIntentFilter.addAction(Constants.UPDATE_USER_NAME);
+		myIntentFilter.addAction(Constants.DEL_PICTURE);
+
 		// ×¢²á¹ã²¥
 		registerReceiver(mBroadcastReceiver, myIntentFilter);
 	}
@@ -281,6 +283,9 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 			if (action.equals(Constants.UPDATE_USER_NAME)) {
 				info_view.setNickName();
 
+			} else if (action.equals(Constants.DEL_PICTURE)) {
+				int picture_id = intent.getIntExtra("picture_id", -1);
+				yanzhi_View.delPicture(picture_id);
 			}
 		}
 	};

@@ -49,4 +49,14 @@ public class UserInfoYanZhiView {
 		adapter = new PictureAdapter(mActivity, mLists);
 		mGridView.setAdapter(adapter);
 	}
+
+	public void delPicture(int picture_id) {
+		for (int i = 0; i < mLists.size(); i++) {
+			if (picture_id == mLists.get(i).getPicture_id()) {
+				mLists.remove(i);
+				adapter.notifyDataSetChanged();
+				break;
+			}
+		}
+	}
 }

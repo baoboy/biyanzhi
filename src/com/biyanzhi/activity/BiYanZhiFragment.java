@@ -219,6 +219,7 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 	public void registerBoradcastReceiver() {
 		IntentFilter myIntentFilter = new IntentFilter();
 		myIntentFilter.addAction(Constants.PLAY_SCORE);
+		myIntentFilter.addAction(Constants.DEL_PICTURE);
 		// ×¢²á¹ã²¥
 		getActivity().registerReceiver(mBroadcastReceiver, myIntentFilter);
 	}
@@ -247,6 +248,15 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 						/ mLists.get(position).getScore_number();
 				mLists.get(position).setAverage_score(new_avg_score);
 				adapter.notifyDataSetChanged();
+			} else if (action.equals(Constants.DEL_PICTURE)) {
+				int picture_id = intent.getIntExtra("picture_id", -1);
+				for (int i = 0; i < mLists.size(); i++) {
+					if (picture_id == mLists.get(i).getPicture_id()) {
+						mLists.remove(i);
+						adapter.notifyDataSetChanged();
+						break;
+					}
+				}
 			}
 		}
 	};

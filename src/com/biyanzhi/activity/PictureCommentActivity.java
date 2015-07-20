@@ -45,6 +45,7 @@ import com.biyanzhi.popwindow.CommentPopwindow.OnCommentOnClick;
 import com.biyanzhi.popwindow.SharePopwindow1;
 import com.biyanzhi.popwindow.SharePopwindow1.SelectMenuOnclick;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
+import com.biyanzhi.task.DelPictureTask;
 import com.biyanzhi.task.SendCommentTask;
 import com.biyanzhi.task.SendPictureScoreTask;
 import com.biyanzhi.task.UpdatePicturePublishTimeTask;
@@ -90,6 +91,7 @@ public class PictureCommentActivity extends BaseActivity implements
 	private RatingBar ratingBar;
 	private TextView txt_score;
 	private TextView txt_share;
+	private TextView btn_del;
 
 	private boolean autoChange;
 	private CommentAdapter adapter;
@@ -120,6 +122,7 @@ public class PictureCommentActivity extends BaseActivity implements
 	private void initView() {
 		line_ratingbar = (View) findViewById(R.id.line_ratingbar);
 		txt_share = (TextView) findViewById(R.id.btn_share);
+		btn_del = (TextView) findViewById(R.id.btn_del);
 		layout_title = (RelativeLayout) findViewById(R.id.layout_title);
 		back = (ImageView) findViewById(R.id.back);
 		img = (ImageView) findViewById(R.id.img);
@@ -134,6 +137,7 @@ public class PictureCommentActivity extends BaseActivity implements
 		if (SharedUtils.getIntUid() != picture.getPublisher_id()) {
 			ratingBar.setVisibility(View.VISIBLE);
 			line_ratingbar.setVisibility(View.VISIBLE);
+			btn_del.setVisibility(View.GONE);
 		}
 		txt_score = (TextView) findViewById(R.id.txt_score);
 		LayoutParams layoutParams = img.getLayoutParams();
@@ -170,6 +174,7 @@ public class PictureCommentActivity extends BaseActivity implements
 		img_avatar.setOnClickListener(new OnAvatarClick(picture
 				.getPublisher_id(), this));
 		txt_score.setOnClickListener(this);
+		btn_del.setOnClickListener(this);
 	}
 
 	private void setValue() {
@@ -239,6 +244,9 @@ public class PictureCommentActivity extends BaseActivity implements
 			startActivity(new Intent(this, LookPlayScoreActivity.class)
 					.putExtra("picture_id", picture.getPicture_id()));
 			Utils.leftOutRightIn(this);
+			break;
+		case R.id.btn_del:
+			DelPrompt();
 			break;
 		default:
 			break;
@@ -343,6 +351,41 @@ public class PictureCommentActivity extends BaseActivity implements
 					}
 				});
 		dialog.show();
+	}
+
+	private void DelPrompt() {
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(this, "确定要删除吗?",
+				"确定", null, new ConfirmDialog() {
+
+					@Override
+					public void onOKClick() {
+						delPicture();
+					}
+
+					public void onCancleClick() {
+
+					}
+				});
+		dialog.show();
+	}
+
+	private void delPicture() {
+		showDialog();
+		DelPictureTask task = new DelPictureTask();
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				dismissDialog();
+				if (result != RetError.NONE) {
+					return;
+				}
+				sendBroadcast(new Intent(Constants.DEL_PICTURE).putExtra(
+						"picture_id", picture.getPicture_id()));
+				ToastUtil.showToast("删除成功");
+				finishThisActivity();
+			}
+		});
+		task.executeParallel(picture);
 	}
 
 	private void sendScore(final int score) {

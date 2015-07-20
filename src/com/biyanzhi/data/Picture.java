@@ -20,6 +20,7 @@ public class Picture implements Serializable {
 	private static final String PUBLISH_PICTURE = "addpicture.do";
 	private static final String GET_PICTURE_BY_ID = "getPictureByID.do";
 	private static final String UPDATE_PICTURE_TIME_API = "upDatePictureTime.do";
+	private static final String DEL_PICTURE_API = "delPicture.do";
 
 	private int picture_id;
 	private int publisher_id = 0;
@@ -189,6 +190,18 @@ public class Picture implements Serializable {
 		params.put("picture_id", picture_id);
 		Result ret = ApiRequest
 				.request(UPDATE_PICTURE_TIME_API, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError delPicture() {
+		IParser parser = new SimpleParser();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("picture_id", picture_id);
+		Result ret = ApiRequest.request(DEL_PICTURE_API, params, parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			return RetError.NONE;
 		} else {
