@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.biyanzhi.R;
 import com.biyanzhi.applation.MyApplation;
 import com.biyanzhi.popwindow.SelectPicPopwindow.SelectOnclick;
+import com.biyanzhi.service.LoginHuanXinService;
 import com.biyanzhi.task.GetVersionTask;
 import com.biyanzhi.task.GetVersionTask.UpDateVersion;
 import com.biyanzhi.utils.Constants;
@@ -61,6 +62,9 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 		registerBoradcastReceiver();
 		updateUnreadLabel();
 		checkVersion();
+		if (SharedUtils.getHXId() != null && !SharedUtils.getHuanXinLogin()) {
+			startService(new Intent(this, LoginHuanXinService.class));
+		}
 	}
 
 	@Override

@@ -28,6 +28,10 @@ public class UserInfoYanZhiView {
 		initView();
 	}
 
+	public List<Picture> getmLists() {
+		return mLists;
+	}
+
 	private void initView() {
 		mGridView = (ExpandGridView) mContentRootView
 				.findViewById(R.id.gridView1);
@@ -42,12 +46,18 @@ public class UserInfoYanZhiView {
 				Utils.leftOutRightIn(mActivity);
 			}
 		});
+
 	}
 
 	public void setValue(List<Picture> lists) {
 		mLists.addAll(lists);
 		adapter = new PictureAdapter(mActivity, mLists);
 		mGridView.setAdapter(adapter);
+	}
+
+	public void addPictureList(List<Picture> lists) {
+		mLists.addAll(lists);
+		adapter.notifyDataSetChanged();
 	}
 
 	public void delPicture(int picture_id) {

@@ -21,6 +21,8 @@ public class SharedUtils {
 	private static String SHARED_KEY_SETTING_NOTIFICATION = "shared_key_setting_notification";
 	private static String SHARED_KEY_SETTING_SOUND = "shared_key_setting_sound";
 	private static String SHARED_KEY_SETTING_VIBRATE = "shared_key_setting_vibrate";
+	private static final String HUANXIN_USERNAME = "huanxin_username";
+	private static final String HUANXIN_PWD = "huanxin_pwd";
 
 	public static String getString(String key, String defaultValue) {
 		return sharedPreferences.getString(key, defaultValue);
@@ -67,6 +69,16 @@ public class SharedUtils {
 
 	public static boolean getFirstPlayScore() {
 		return sharedPreferences.getBoolean("first_paly_score", true);
+	}
+
+	public static void setHunXinLoginFlag(boolean flag) {
+		editor.putBoolean("is_login_flag", flag);
+		editor.commit();
+	}
+
+	public static boolean getHuanXinLogin() {
+		return sharedPreferences.getBoolean("is_login_flag", false);
+
 	}
 
 	public static void setSettingMsgNotification(boolean paramBoolean) {
@@ -202,6 +214,24 @@ public class SharedUtils {
 	public static String getAPPUserChatID() {
 		return sharedPreferences.getString("app_user_chat_id", "");
 
+	}
+
+	public static void saveHXId(String hxId) {
+		editor.putString(HUANXIN_USERNAME, hxId);
+		editor.commit();
+	}
+
+	public static String getHXId() {
+		return sharedPreferences.getString(HUANXIN_USERNAME, null);
+	}
+
+	public static void saveHuanXinPassword(String pwd) {
+		editor.putString(HUANXIN_PWD, pwd);
+		editor.commit();
+	}
+
+	public static String getHuanXinPwd() {
+		return sharedPreferences.getString(HUANXIN_PWD, null);
 	}
 
 	public static void clearData() {

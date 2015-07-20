@@ -13,20 +13,25 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.biyanzhi.R;
+import com.biyanzhi.data.PictureList;
 import com.biyanzhi.data.User;
 import com.biyanzhi.data.UserInfo;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.popwindow.SelectPicPopwindow;
 import com.biyanzhi.popwindow.SelectPicPopwindow.SelectOnclick;
+import com.biyanzhi.task.GetPictureListMoreByUserIDTask;
 import com.biyanzhi.task.GetUserInfoTask;
 import com.biyanzhi.task.UpLoadUserAvatarTask;
 import com.biyanzhi.utils.BitmapUtils;
@@ -49,6 +54,7 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 	private ImageView img_avatar_bg;
 	private int user_id;
 
+	private ScrollView scrollView;
 	private UserInfo info = new UserInfo();
 
 	private UserInfoYanZhiView yanzhi_View;
@@ -60,6 +66,9 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 	private SelectPicPopwindow pop;
 
 	private Dialog dialog;
+	private int index = 0;
+	private boolean isLoading = false;
+	private PictureList list = new PictureList();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +82,7 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 	}
 
 	private void initView() {
+		scrollView = (ScrollView) findViewById(R.id.scrollView1);
 		img_avatar_bg = (ImageView) findViewById(R.id.img_avatar_bg);
 		// view = (DampView) findViewById(R.id.scrollView1);
 		// view.setImageView(img_avatar_bg);
@@ -100,7 +110,60 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 		btn_yanzhi.setOnClickListener(this);
 		img_avatar_bg.setOnClickListener(this);
 		findViewById(R.id.back).setOnClickListener(this);
+		// 滑动加载
+		scrollView.setOnTouchListener(new OnTouchListener() {
 
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+
+					break;
+				case MotionEvent.ACTION_MOVE:
+					index++;
+					break;
+				default:
+					break;
+				}
+				if (event.getAction() == MotionEvent.ACTION_UP && index > 0) {
+					index = 0;
+					View view = ((ScrollView) v).getChildAt(0);
+					if (view.getMeasuredHeight() <= v.getScrollY()
+							+ v.getHeight()) {
+						// 加载数据代码
+						if (mVfFlipper.getDisplayedChild() == 0) {
+							return false;
+						}
+						loadMorePictureList();
+					}
+				}
+				return false;
+			}
+		});
+	}
+
+	private void loadMorePictureList() {
+		if (isLoading) {
+			return;
+		}
+		if (yanzhi_View.getmLists().size() == 0) {
+			return;
+		}
+		isLoading = true;
+		list.setPublish_time(yanzhi_View.getmLists()
+				.get(yanzhi_View.getmLists().size() - 1).getPublish_time());
+		GetPictureListMoreByUserIDTask task = new GetPictureListMoreByUserIDTask(
+				user_id);
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				yanzhi_View.addPictureList(list.getPictureList());
+				isLoading = false;
+			}
+		});
+		task.executeParallel(list);
 	}
 
 	private void getValue() {

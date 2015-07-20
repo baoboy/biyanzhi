@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,11 +22,13 @@ import android.widget.ViewFlipper;
 
 import com.biyanzhi.R;
 import com.biyanzhi.data.GuanZhu;
+import com.biyanzhi.data.PictureList;
 import com.biyanzhi.data.User;
 import com.biyanzhi.data.UserInfo;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
 import com.biyanzhi.task.AddGuanZhuTask;
+import com.biyanzhi.task.GetPictureListMoreByUserIDTask;
 import com.biyanzhi.task.GetUserInfoTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
@@ -55,6 +59,9 @@ public class UserInfoActivity extends BaseActivity {
 	private Button btn_add_guanzhu;
 	private Button btn_send_message;
 	private boolean is_ganzhu = false;
+	private int index = 0;
+	private boolean isLoading = false;
+	private PictureList list = new PictureList();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +111,60 @@ public class UserInfoActivity extends BaseActivity {
 		btn_send_message.setOnClickListener(this);
 		findViewById(R.id.back).setOnClickListener(this);
 
+		// 滑动加载
+		scrollView.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+
+					break;
+				case MotionEvent.ACTION_MOVE:
+					index++;
+					break;
+				default:
+					break;
+				}
+				if (event.getAction() == MotionEvent.ACTION_UP && index > 0) {
+					index = 0;
+					View view = ((ScrollView) v).getChildAt(0);
+					if (view.getMeasuredHeight() <= v.getScrollY()
+							+ v.getHeight()) {
+						// 加载数据代码
+						if (mVfFlipper.getDisplayedChild() == 0) {
+							return false;
+						}
+						loadMorePictureList();
+					}
+				}
+				return false;
+			}
+		});
+	}
+
+	private void loadMorePictureList() {
+		if (isLoading) {
+			return;
+		}
+		if (yanzhi_View.getmLists().size() == 0) {
+			return;
+		}
+		isLoading = true;
+		list.setPublish_time(yanzhi_View.getmLists()
+				.get(yanzhi_View.getmLists().size() - 1).getPublish_time());
+		GetPictureListMoreByUserIDTask task = new GetPictureListMoreByUserIDTask(
+				user_id);
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				yanzhi_View.addPictureList(list.getPictureList());
+				isLoading = false;
+			}
+		});
+		task.executeParallel(list);
 	}
 
 	private void getValue() {

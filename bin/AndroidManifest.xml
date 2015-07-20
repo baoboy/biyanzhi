@@ -208,6 +208,8 @@
 
         <service android:name="com.biyanzhi.service.UpdateService" >
         </service>
+        <service android:name="com.biyanzhi.service.LoginHuanXinService" >
+        </service>
 
         <activity
             android:name="com.biyanzhi.activity.PictureServerCommentActivity"
