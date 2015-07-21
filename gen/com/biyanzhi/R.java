@@ -1857,7 +1857,7 @@ containing a value of this type.
         public static final int btnUpload=0x7f0900ea;
         public static final int btn_add_guanzhu=0x7f0900a4;
         public static final int btn_biyanzhi=0x7f090083;
-        public static final int btn_boy=0x7f090147;
+        public static final int btn_boy=0x7f090148;
         public static final int btn_cancel=0x7f09011f;
         public static final int btn_del=0x7f090069;
         public static final int btn_divider1=0x7f0900cd;
@@ -1866,7 +1866,7 @@ containing a value of this type.
         public static final int btn_fiish=0x7f0900c0;
         public static final int btn_findPasswrod=0x7f090081;
         public static final int btn_get_code=0x7f0900be;
-        public static final int btn_girl=0x7f090146;
+        public static final int btn_girl=0x7f090147;
         public static final int btn_info=0x7f090099;
         public static final int btn_location_send=0x7f090042;
         public static final int btn_login=0x7f090080;
@@ -1926,6 +1926,7 @@ containing a value of this type.
         public static final int edittext_layout=0x7f09004b;
         public static final int et_sendmessage=0x7f09004c;
         public static final int firstStrong=0x7f090026;
+        public static final int footview=0x7f09013a;
         public static final int gone=0x7f090011;
         public static final int gravity=0x7f090028;
         public static final int gridView1=0x7f0900a8;
@@ -1973,7 +1974,7 @@ containing a value of this type.
         public static final int laybg=0x7f09003c;
         public static final int layout1=0x7f090098;
         public static final int layout_about=0x7f090090;
-        public static final int layout_address=0x7f09013c;
+        public static final int layout_address=0x7f09013d;
         public static final int layout_addview=0x7f0900c8;
         public static final int layout_bottom=0x7f0900a2;
         public static final int layout_comment=0x7f09006c;
@@ -1982,7 +1983,7 @@ containing a value of this type.
         public static final int layout_feedback=0x7f09008c;
         public static final int layout_guanzhu=0x7f090135;
         public static final int layout_message=0x7f09008a;
-        public static final int layout_nick_name=0x7f09013a;
+        public static final int layout_nick_name=0x7f09013b;
         public static final int layout_parent=0x7f0900ac;
         public static final int layout_qq_haoyou=0x7f090124;
         public static final int layout_qq_kongjian=0x7f090125;
@@ -2124,7 +2125,7 @@ containing a value of this type.
         public static final int txt_guanzhu=0x7f0900a6;
         public static final int txt_info=0x7f0900db;
         public static final int txt_name=0x7f090092;
-        public static final int txt_nick_name=0x7f09013b;
+        public static final int txt_nick_name=0x7f09013c;
         public static final int txt_num=0x7f0900dc;
         public static final int txt_num_show=0x7f0900c4;
         public static final int txt_page=0x7f0900f4;
@@ -2146,15 +2147,15 @@ containing a value of this type.
         public static final int view_top=0x7f09006d;
         public static final int viewflipper=0x7f090074;
         public static final int visible=0x7f09000f;
-        public static final int xlistview_footer_content=0x7f09013d;
-        public static final int xlistview_footer_hint_textview=0x7f09013f;
-        public static final int xlistview_footer_progressbar=0x7f09013e;
-        public static final int xlistview_header_arrow=0x7f090144;
-        public static final int xlistview_header_content=0x7f090140;
-        public static final int xlistview_header_hint_textview=0x7f090142;
-        public static final int xlistview_header_progressbar=0x7f090145;
-        public static final int xlistview_header_text=0x7f090141;
-        public static final int xlistview_header_time=0x7f090143;
+        public static final int xlistview_footer_content=0x7f09013e;
+        public static final int xlistview_footer_hint_textview=0x7f090140;
+        public static final int xlistview_footer_progressbar=0x7f09013f;
+        public static final int xlistview_header_arrow=0x7f090145;
+        public static final int xlistview_header_content=0x7f090141;
+        public static final int xlistview_header_hint_textview=0x7f090143;
+        public static final int xlistview_header_progressbar=0x7f090146;
+        public static final int xlistview_header_text=0x7f090142;
+        public static final int xlistview_header_time=0x7f090144;
         public static final int yes=0x7f09002e;
     }
     public static final class layout {

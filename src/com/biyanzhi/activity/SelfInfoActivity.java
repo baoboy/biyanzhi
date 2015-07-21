@@ -151,6 +151,13 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 		if (yanzhi_View.getmLists().size() == 0) {
 			return;
 		}
+		yanzhi_View.setVisibileFootView(true);
+		scrollView.post(new Runnable() {
+			@Override
+			public void run() {
+				scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+			}
+		});
 		isLoading = true;
 		list.setPublish_time(yanzhi_View.getmLists()
 				.get(yanzhi_View.getmLists().size() - 1).getPublish_time());
@@ -161,6 +168,8 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 			public void taskFinish(RetError result) {
 				yanzhi_View.addPictureList(list.getPictureList());
 				isLoading = false;
+				yanzhi_View.setVisibileFootView(false);
+
 			}
 		});
 		task.executeParallel(list);

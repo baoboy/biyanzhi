@@ -152,6 +152,7 @@ public class UserInfoActivity extends BaseActivity {
 		if (yanzhi_View.getmLists().size() == 0) {
 			return;
 		}
+		yanzhi_View.setVisibileFootView(true);
 		isLoading = true;
 		list.setPublish_time(yanzhi_View.getmLists()
 				.get(yanzhi_View.getmLists().size() - 1).getPublish_time());
@@ -162,6 +163,8 @@ public class UserInfoActivity extends BaseActivity {
 			public void taskFinish(RetError result) {
 				yanzhi_View.addPictureList(list.getPictureList());
 				isLoading = false;
+				yanzhi_View.setVisibileFootView(false);
+
 			}
 		});
 		task.executeParallel(list);

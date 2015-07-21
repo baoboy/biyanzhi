@@ -467,7 +467,7 @@ int id btnSave 0x7f0900c3
 int id btnUpload 0x7f0900ea
 int id btn_add_guanzhu 0x7f0900a4
 int id btn_biyanzhi 0x7f090083
-int id btn_boy 0x7f090147
+int id btn_boy 0x7f090148
 int id btn_cancel 0x7f09011f
 int id btn_del 0x7f090069
 int id btn_divider1 0x7f0900cd
@@ -476,7 +476,7 @@ int id btn_exit 0x7f090091
 int id btn_fiish 0x7f0900c0
 int id btn_findPasswrod 0x7f090081
 int id btn_get_code 0x7f0900be
-int id btn_girl 0x7f090146
+int id btn_girl 0x7f090147
 int id btn_info 0x7f090099
 int id btn_location_send 0x7f090042
 int id btn_login 0x7f090080
@@ -536,6 +536,7 @@ int id edit_verify_code 0x7f0900bd
 int id edittext_layout 0x7f09004b
 int id et_sendmessage 0x7f09004c
 int id firstStrong 0x7f090026
+int id footview 0x7f09013a
 int id gone 0x7f090011
 int id gravity 0x7f090028
 int id gridView1 0x7f0900a8
@@ -583,7 +584,7 @@ int id lay_down 0x7f09000d
 int id laybg 0x7f09003c
 int id layout1 0x7f090098
 int id layout_about 0x7f090090
-int id layout_address 0x7f09013c
+int id layout_address 0x7f09013d
 int id layout_addview 0x7f0900c8
 int id layout_bottom 0x7f0900a2
 int id layout_comment 0x7f09006c
@@ -592,7 +593,7 @@ int id layout_content 0x7f090093
 int id layout_feedback 0x7f09008c
 int id layout_guanzhu 0x7f090135
 int id layout_message 0x7f09008a
-int id layout_nick_name 0x7f09013a
+int id layout_nick_name 0x7f09013b
 int id layout_parent 0x7f0900ac
 int id layout_qq_haoyou 0x7f090124
 int id layout_qq_kongjian 0x7f090125
@@ -734,7 +735,7 @@ int id txt_gender 0x7f090137
 int id txt_guanzhu 0x7f0900a6
 int id txt_info 0x7f0900db
 int id txt_name 0x7f090092
-int id txt_nick_name 0x7f09013b
+int id txt_nick_name 0x7f09013c
 int id txt_num 0x7f0900dc
 int id txt_num_show 0x7f0900c4
 int id txt_page 0x7f0900f4
@@ -756,15 +757,15 @@ int id view_bottom 0x7f09006f
 int id view_top 0x7f09006d
 int id viewflipper 0x7f090074
 int id visible 0x7f09000f
-int id xlistview_footer_content 0x7f09013d
-int id xlistview_footer_hint_textview 0x7f09013f
-int id xlistview_footer_progressbar 0x7f09013e
-int id xlistview_header_arrow 0x7f090144
-int id xlistview_header_content 0x7f090140
-int id xlistview_header_hint_textview 0x7f090142
-int id xlistview_header_progressbar 0x7f090145
-int id xlistview_header_text 0x7f090141
-int id xlistview_header_time 0x7f090143
+int id xlistview_footer_content 0x7f09013e
+int id xlistview_footer_hint_textview 0x7f090140
+int id xlistview_footer_progressbar 0x7f09013f
+int id xlistview_header_arrow 0x7f090145
+int id xlistview_header_content 0x7f090141
+int id xlistview_header_hint_textview 0x7f090143
+int id xlistview_header_progressbar 0x7f090146
+int id xlistview_header_text 0x7f090142
+int id xlistview_header_time 0x7f090144
 int id yes 0x7f09002e
 int layout activity_about 0x7f030000
 int layout activity_baidumap 0x7f030001

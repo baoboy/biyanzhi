@@ -6,8 +6,11 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 
 import com.biyanzhi.R;
 import com.biyanzhi.adapter.PictureAdapter;
@@ -21,6 +24,7 @@ public class UserInfoYanZhiView {
 	private ExpandGridView mGridView;
 	private PictureAdapter adapter;
 	private List<Picture> mLists = new ArrayList<Picture>();
+	private LinearLayout layout_footView;
 
 	public UserInfoYanZhiView(Context activity, View contentRootView) {
 		this.mActivity = activity;
@@ -35,6 +39,8 @@ public class UserInfoYanZhiView {
 	private void initView() {
 		mGridView = (ExpandGridView) mContentRootView
 				.findViewById(R.id.gridView1);
+		layout_footView = (LinearLayout) mContentRootView
+				.findViewById(R.id.footview);
 		mGridView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -47,6 +53,14 @@ public class UserInfoYanZhiView {
 			}
 		});
 
+	}
+
+	public void setVisibileFootView(boolean isVisibile) {
+		if (isVisibile) {
+			layout_footView.setVisibility(View.VISIBLE);
+		} else {
+			layout_footView.setVisibility(View.GONE);
+		}
 	}
 
 	public void setValue(List<Picture> lists) {
