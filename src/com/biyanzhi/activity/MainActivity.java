@@ -45,10 +45,12 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	private ImageView img_prompt;
 	private TextView btn_biyanzhi;
 	private TextView btn_yanzhibang;
+	private TextView btn_pk;
 	private FragmentTransaction fraTra = null;
 	private FragmentManager manager;
 	private BiYanZhiFragment biyanzhi_fragment;
 	private YanZhiBangFragment yanzhibang_fragment;
+	private PKFragment pk_fragment;
 	private boolean isregister = false;
 
 	@Override
@@ -80,7 +82,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	private void initView() {
 		btn_biyanzhi = (TextView) findViewById(R.id.btn_biyanzhi);
 		btn_yanzhibang = (TextView) findViewById(R.id.btn_yanzhibang);
-
+		btn_pk = (TextView) findViewById(R.id.btn_pk);
 		img_prompt = (ImageView) findViewById(R.id.img_prompt);
 		img_avatar = (CircularImage) findViewById(R.id.img_avatar);
 		UniversalImageLoadTool.disPlay(SharedUtils.getAPPUserAvatar(),
@@ -90,6 +92,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 		img_avatar.setOnClickListener(this);
 		btn_biyanzhi.setOnClickListener(this);
 		btn_yanzhibang.setOnClickListener(this);
+		btn_pk.setOnClickListener(this);
 
 	}
 
@@ -141,8 +144,14 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			btn_yanzhibang.setTextColor(getResources().getColor(R.color.white));
 			btn_yanzhibang.setBackgroundColor(getResources().getColor(
 					R.color.titleBarBackGround));
+			btn_pk.setTextColor(getResources().getColor(R.color.white));
+			btn_pk.setBackgroundColor(getResources().getColor(
+					R.color.titleBarBackGround));
 			if (yanzhibang_fragment != null) {
 				fraTra.hide(yanzhibang_fragment);
+			}
+			if (pk_fragment != null) {
+				fraTra.hide(pk_fragment);
 			}
 			fraTra.show(biyanzhi_fragment);
 			fraTra.commit();
@@ -157,6 +166,9 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			btn_biyanzhi.setTextColor(getResources().getColor(R.color.white));
 			btn_biyanzhi.setBackgroundColor(getResources().getColor(
 					R.color.titleBarBackGround));
+			btn_pk.setTextColor(getResources().getColor(R.color.white));
+			btn_pk.setBackgroundColor(getResources().getColor(
+					R.color.titleBarBackGround));
 			if (yanzhibang_fragment == null) {
 				yanzhibang_fragment = new YanZhiBangFragment();
 				fraTra.add(R.id.main_layout, yanzhibang_fragment);
@@ -166,7 +178,36 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			if (biyanzhi_fragment != null) {
 				fraTra.hide(biyanzhi_fragment);
 			}
+			if (pk_fragment != null) {
+				fraTra.hide(pk_fragment);
+			}
 			fraTra.show(yanzhibang_fragment);
+			fraTra.commit();
+			break;
+		case R.id.btn_pk:
+			fraTra = getSupportFragmentManager().beginTransaction();
+			btn_pk.setTextColor(getResources().getColor(
+					R.color.titleBarBackGround));
+			btn_pk.setBackgroundColor(getResources().getColor(R.color.white));
+			btn_biyanzhi.setTextColor(getResources().getColor(R.color.white));
+			btn_biyanzhi.setBackgroundColor(getResources().getColor(
+					R.color.titleBarBackGround));
+			btn_yanzhibang.setTextColor(getResources().getColor(R.color.white));
+			btn_yanzhibang.setBackgroundColor(getResources().getColor(
+					R.color.titleBarBackGround));
+			if (pk_fragment == null) {
+				pk_fragment = new PKFragment();
+				fraTra.add(R.id.main_layout, pk_fragment);
+			} else {
+				pk_fragment.onResume();
+			}
+			if (biyanzhi_fragment != null) {
+				fraTra.hide(biyanzhi_fragment);
+			}
+			if (yanzhibang_fragment != null) {
+				fraTra.hide(yanzhibang_fragment);
+			}
+			fraTra.show(pk_fragment);
 			fraTra.commit();
 
 			break;

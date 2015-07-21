@@ -138,6 +138,8 @@ public class PictureCommentActivity extends BaseActivity implements
 			ratingBar.setVisibility(View.VISIBLE);
 			line_ratingbar.setVisibility(View.VISIBLE);
 			btn_del.setVisibility(View.GONE);
+		} else {
+			txt_share.setText("炫耀一下");
 		}
 		txt_score = (TextView) findViewById(R.id.txt_score);
 		LayoutParams layoutParams = img.getLayoutParams();

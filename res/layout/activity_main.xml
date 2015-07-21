@@ -22,8 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="35dip"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="100dip"
-            android:layout_marginRight="100dip"
+            android:layout_marginLeft="60dip"
+            android:layout_marginRight="60dip"
             android:background="@drawable/tab_bg"
             android:padding="2.0dip" >
 
@@ -39,6 +39,11 @@
                 android:textColor="@color/titleBarBackGround"
                 android:textSize="16sp" />
 
+            <View
+                android:layout_width="1dip"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
             <TextView
                 android:id="@+id/btn_yanzhibang"
                 android:layout_width="0dip"
@@ -48,6 +53,23 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="颜值榜"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="1dip"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/btn_pk"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/titleBarBackGround"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="PK大厅"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>

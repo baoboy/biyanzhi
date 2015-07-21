@@ -186,6 +186,8 @@ public class PictureServerCommentActivity extends BaseActivity implements
 		if (SharedUtils.getIntUid() != picture.getPublisher_id()) {
 			ratingBar.setVisibility(View.VISIBLE);
 			line_ratingbar.setVisibility(View.VISIBLE);
+		} else {
+			txt_share.setText("ìÅÒ«Ò»ÏÂ");
 		}
 		comments = picture.getComments();
 		adapter = new CommentAdapter(this, comments);
