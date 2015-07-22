@@ -18,6 +18,7 @@ public class PictureList {
 	private static final String GET_GIRL_PICTURE_LIST_URL = "getGirlBangPictureList.do";
 	private static final String GET_BOY_PICTURE_LIST_URL = "getBoyBangPictureList.do";
 	private static final String GET_PICTURELISTMOREBYUSERID = "getPictureListMoreByUserID.do";
+	private static final String GET_PICTURELIST_BY_USER_ID_URL = "getPictureListsByUserID.do";
 
 	private List<Picture> pictureList = new ArrayList<Picture>();
 	private String publish_time = "";
@@ -56,8 +57,23 @@ public class PictureList {
 		IParser parser = new PictureListParser();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("publish_time", publish_time);
-		params.put("publicsher_user_id", publicsher_user_id);
+		params.put("publisher_user_id", publicsher_user_id);
 		Result ret = ApiRequest.request(GET_PICTURELISTMOREBYUSERID, params,
+				parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			PictureList lists = (PictureList) ret.getData();
+			this.pictureList = lists.getPictureList();
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError getPictureListByUserID(int publicsher_user_id) {
+		IParser parser = new PictureListParser();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("publisher_user_id", publicsher_user_id);
+		Result ret = ApiRequest.request(GET_PICTURELIST_BY_USER_ID_URL, params,
 				parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			PictureList lists = (PictureList) ret.getData();
