@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import com.biyanzhi.data.Comment;
 import com.biyanzhi.data.Picture;
 import com.biyanzhi.data.PictureList;
+import com.biyanzhi.data.User;
 import com.biyanzhi.data.result.Result;
 
 public class PictureListParser implements IParser {
@@ -67,7 +68,20 @@ public class PictureListParser implements IParser {
 				comments.add(comment);
 			}
 			sortComment(comments);
+			User user = null;
+			if (obj.has("user")) {
+				String userResult = obj.getString("user");
+				if (!"".equals(userResult) || !"null".equals(userResult)) {
+					user = new User();
+					JSONObject userObj = new JSONObject(userResult);
+					user.setUser_id(userObj.getInt("user_id"));
+					user.setUser_name(userObj.getString("user_name"));
+					user.setUser_gender(userObj.getString("user_gender"));
+					user.setUser_avatar(userObj.getString("user_avatar"));
+				}
+			}
 			Picture picture = new Picture();
+			picture.setUser(user);
 			picture.setContent(content);
 			picture.setPicture_id(picture_id);
 			picture.setPublish_time(publish_time);

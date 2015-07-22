@@ -52,6 +52,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	private YanZhiBangFragment yanzhibang_fragment;
 	private PKFragment pk_fragment;
 	private boolean isregister = false;
+	private int current_index = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +136,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			Utils.leftOutRightIn(this);
 			break;
 		case R.id.btn_biyanzhi:
+			current_index = 1;
 			fraTra = getSupportFragmentManager().beginTransaction();
 
 			btn_biyanzhi.setTextColor(getResources().getColor(
@@ -158,6 +160,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 
 			break;
 		case R.id.btn_yanzhibang:
+			current_index = 2;
 			fraTra = getSupportFragmentManager().beginTransaction();
 			btn_yanzhibang.setTextColor(getResources().getColor(
 					R.color.titleBarBackGround));
@@ -185,6 +188,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			fraTra.commit();
 			break;
 		case R.id.btn_pk:
+			current_index = 3;
 			fraTra = getSupportFragmentManager().beginTransaction();
 			btn_pk.setTextColor(getResources().getColor(
 					R.color.titleBarBackGround));
@@ -213,6 +217,12 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			break;
 		default:
 			break;
+		}
+		if (current_index == 3) {
+			img_select.setVisibility(View.GONE);
+		} else {
+			img_select.setVisibility(View.VISIBLE);
+
 		}
 	}
 

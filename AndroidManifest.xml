@@ -235,6 +235,11 @@
             android:label="@string/title_activity_feed_back"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.biyanzhi.activity.SelectPKPictureActivity"
+            android:label="@string/title_activity_select_pkpicture"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

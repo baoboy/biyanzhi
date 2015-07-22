@@ -295,5 +295,6 @@
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="title_activity_look_play_score">LookPlayScoreActivity</string>
     <string name="title_activity_feed_back">FeedBackActivity</string>
+    <string name="title_activity_select_pkpicture">SelectPKPictureActivity</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.biyanzhi.data;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.HashMap;
 
 import com.biyanzhi.data.result.ApiRequest;
@@ -15,7 +16,7 @@ import com.biyanzhi.parser.UserLoginPaser;
 import com.biyanzhi.utils.BitmapUtils;
 import com.biyanzhi.utils.SharedUtils;
 
-public class User {
+public class User implements Serializable {
 	private static final String VERIFY_FINDPASSWORD_CELLPHONE_API = "getFindPassWordVerifyCode.do";
 	private static final String VERIFY_CELLPHONE_API = "getVerifyCode.do";
 	private static final String USER_REGISTER_API = "userRegister.do";

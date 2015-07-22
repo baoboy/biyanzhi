@@ -6,8 +6,6 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
