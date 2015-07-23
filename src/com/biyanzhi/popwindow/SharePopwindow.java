@@ -26,7 +26,7 @@ import android.widget.TextView;
 import com.biyanzhi.R;
 import com.biyanzhi.utils.Utils;
 
-public class SharePopwindow1 implements OnClickListener, OnItemClickListener {
+public class SharePopwindow implements OnClickListener, OnItemClickListener {
 	private PopupWindow popupWindow;
 	private Context mContext;
 	private View v;
@@ -43,7 +43,7 @@ public class SharePopwindow1 implements OnClickListener, OnItemClickListener {
 		this.mSelectOnclick = mSelectOnclick;
 	}
 
-	public SharePopwindow1(Context context, View v) {
+	public SharePopwindow(Context context, View v) {
 		this.mContext = context;
 		this.v = v;
 		LayoutInflater inflater = LayoutInflater.from(mContext);

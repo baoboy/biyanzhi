@@ -3,22 +3,38 @@ package com.biyanzhi.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
 import com.biyanzhi.adapter.SelectPKPictureAdapter;
+import com.biyanzhi.data.PK1;
+import com.biyanzhi.data.PK2;
+import com.biyanzhi.data.PKData;
 import com.biyanzhi.data.Picture;
 import com.biyanzhi.data.PictureList;
 import com.biyanzhi.enums.RetError;
+import com.biyanzhi.popwindow.MenuPopwindow;
+import com.biyanzhi.popwindow.MenuPopwindow.OnMenuListOnclick;
+import com.biyanzhi.task.AddPKTask;
 import com.biyanzhi.task.GetPictureListByUserIDTask;
 import com.biyanzhi.task.GetPictureListMoreByUserIDTask;
+import com.biyanzhi.utils.Constants;
+import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.SharedUtils;
+import com.biyanzhi.utils.ToastUtil;
+import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
+import com.biyianzhi.interfaces.ConfirmDialog;
+
+import fynn.app.PromptDialog;
 
 public class SelectPKPictureActivity extends BaseActivity {
 	private GridView mGridView;
@@ -29,11 +45,14 @@ public class SelectPKPictureActivity extends BaseActivity {
 	private PictureList list = new PictureList();
 	private TextView txt_title;
 	private int load_more_count = 10;
+	private MenuPopwindow pop;
+	private PK2 pk2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_pkpicture);
+		pk2 = (PK2) getIntent().getSerializableExtra("pk");
 		initView();
 		setValue();
 		showDialog();
@@ -42,7 +61,7 @@ public class SelectPKPictureActivity extends BaseActivity {
 
 	private void initView() {
 		txt_title = (TextView) findViewById(R.id.title_txt);
-		txt_title.setText("选择PK照片");
+		txt_title.setText("选择你要PK的照片");
 		mGridView = (GridView) findViewById(R.id.gridView1);
 		// layout_footView = (LinearLayout) findViewById(R.id.footview);
 		setListener();
@@ -50,6 +69,34 @@ public class SelectPKPictureActivity extends BaseActivity {
 
 	private void setListener() {
 		findViewById(R.id.back).setOnClickListener(this);
+		mGridView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View v,
+					final int item_position, long arg3) {
+				pop = new MenuPopwindow(getApplicationContext(), v,
+						new String[] { "查看", "选择为PK照片" });
+				pop.setCallback(new OnMenuListOnclick() {
+
+					@Override
+					public void onclick(int position) {
+						switch (position) {
+						case 0:
+							Utils.showBigPicture(mLists.get(item_position)
+									.getPicture_image_url(),
+									SelectPKPictureActivity.this);
+							break;
+						case 1:
+							pkPrompt(item_position);
+							break;
+						default:
+							break;
+						}
+					}
+				});
+				pop.show();
+			}
+		});
 		mGridView.setOnScrollListener(new OnScrollListener() {
 
 			@Override
@@ -72,6 +119,49 @@ public class SelectPKPictureActivity extends BaseActivity {
 
 			}
 		});
+	}
+
+	private void pkPrompt(final int position) {
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(this, "是否要进行PK",
+				"是", "否", new ConfirmDialog() {
+
+					@Override
+					public void onOKClick() {
+						PK1 pk1 = new PK1();
+						pk1.setPk1_user_id(mLists.get(position)
+								.getPublisher_id());
+						pk1.setPk1_user_picture(mLists.get(position)
+								.getPicture_image_url());
+						addPK(pk1);
+					}
+
+					public void onCancleClick() {
+
+					}
+				});
+		dialog.show();
+	}
+
+	private void addPK(PK1 pk1) {
+		showDialog();
+		AddPKTask task = new AddPKTask();
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				dismissDialog();
+				if (result != RetError.NONE) {
+					return;
+				}
+				ToastUtil.showToast("添加PK成功,请到PK大厅查看PK结果");
+				sendBroadcast(new Intent(Constants.SEND_PK));
+				finishThisActivity();
+
+			}
+		});
+		PKData pk = new PKData();
+		pk.setPk1(pk1);
+		pk.setPk2(pk2);
+		task.executeParallel(pk);
 	}
 
 	private void setValue() {

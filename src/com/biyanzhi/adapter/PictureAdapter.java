@@ -16,15 +16,12 @@ import android.widget.TextView;
 
 import com.biyanzhi.R;
 import com.biyanzhi.activity.SelectPKPictureActivity;
+import com.biyanzhi.data.PK2;
 import com.biyanzhi.data.Picture;
-import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.RoundAnglePictureImageView;
-import com.biyianzhi.interfaces.ConfirmDialog;
-
-import fynn.app.PromptDialog;
 
 public class PictureAdapter extends BaseAdapter {
 	private List<Picture> mLists;
@@ -80,7 +77,7 @@ public class PictureAdapter extends BaseAdapter {
 				holder.img_pk.setVisibility(View.GONE);
 			}
 		}
-		holder.img_pk.setOnClickListener(new OnClick());
+		holder.img_pk.setOnClickListener(new OnClick(position));
 		return convertView;
 	}
 
@@ -107,32 +104,23 @@ public class PictureAdapter extends BaseAdapter {
 	}
 
 	class OnClick implements OnClickListener {
-		public OnClick() {
+		int position;
 
+		public OnClick(int position) {
+			this.position = position;
 		}
 
 		@Override
 		public void onClick(View v) {
-			pkPrompt();
+			// pkPrompt();
+			PK2 pk = new PK2();
+			pk.setPk2_user_id(mLists.get(position).getPublisher_id());
+			pk.setPk2_user_picture(mLists.get(position).getPicture_image_url());
+			mContext.startActivity(new Intent(mContext,
+					SelectPKPictureActivity.class).putExtra("pk", pk));
+			Utils.leftOutRightIn(mContext);
 		}
 
 	}
 
-	private void pkPrompt() {
-		PromptDialog.Builder dialog = DialogUtil.confirmDialog(mContext,
-				"是否要和TA进行PK", "是", "否", new ConfirmDialog() {
-
-					@Override
-					public void onOKClick() {
-						mContext.startActivity(new Intent(mContext,
-								SelectPKPictureActivity.class));
-						Utils.leftOutRightIn(mContext);
-					}
-
-					public void onCancleClick() {
-
-					}
-				});
-		dialog.show();
-	}
 }

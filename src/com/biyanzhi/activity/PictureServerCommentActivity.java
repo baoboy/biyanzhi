@@ -41,8 +41,8 @@ import com.biyanzhi.data.PictureScore;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.popwindow.CommentPopwindow;
 import com.biyanzhi.popwindow.CommentPopwindow.OnCommentOnClick;
-import com.biyanzhi.popwindow.SharePopwindow1;
-import com.biyanzhi.popwindow.SharePopwindow1.SelectMenuOnclick;
+import com.biyanzhi.popwindow.SharePopwindow;
+import com.biyanzhi.popwindow.SharePopwindow.SelectMenuOnclick;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
 import com.biyanzhi.task.GetPictureTask;
 import com.biyanzhi.task.SendCommentTask;
@@ -99,7 +99,7 @@ public class PictureServerCommentActivity extends BaseActivity implements
 	private boolean autoChange;
 	private CommentAdapter adapter;
 	private CommentPopwindow pop;
-	private SharePopwindow1 share_pop;
+	private SharePopwindow share_pop;
 
 	private EMConversation conversation;
 	private EMMessage lastMessage;
@@ -273,7 +273,7 @@ public class PictureServerCommentActivity extends BaseActivity implements
 			startActivity(intent);
 			break;
 		case R.id.btn_share:
-			share_pop = new SharePopwindow1(this, v);
+			share_pop = new SharePopwindow(this, v);
 			share_pop.setmSelectOnclick(this);
 			share_pop.show();
 			break;

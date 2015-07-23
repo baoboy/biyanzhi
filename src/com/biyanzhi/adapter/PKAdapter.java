@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.biyanzhi.R;
+import com.biyanzhi.data.PKData;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.UniversalImageLoadTool;
@@ -25,16 +26,17 @@ import com.biyanzhi.view.RoundAngleImageView;
 public class PKAdapter extends BaseAdapter {
 	private Context mContext;
 	private int width;
+	private List<PKData> mlists;
 
-	public PKAdapter(Context mContext) {
+	public PKAdapter(Context mContext, List<PKData> mlists) {
 		this.mContext = mContext;
 		width = Utils.getSecreenWidth(mContext) / 2 - 80;// 24 marginֵ
-
+		this.mlists = mlists;
 	}
 
 	@Override
 	public int getCount() {
-		return 10;
+		return mlists.size();
 	}
 
 	@Override
@@ -48,7 +50,7 @@ public class PKAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int arg0, View convertView, ViewGroup arg2) {
+	public View getView(int position, View convertView, ViewGroup arg2) {
 		ViewHolder holder = null;
 		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).inflate(
@@ -70,18 +72,16 @@ public class PKAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		UniversalImageLoadTool.disPlay(
-				"http://cdn.7kk.com//201407/08/1747414993488.jpg",
-				holder.img_pk1, R.drawable.picture_default_head);
-		UniversalImageLoadTool
-				.disPlay(
-						"http://www.sinaimg.cn/dy/slidenews/21_img/2011_37/2236_511531_466668.jpg",
-						holder.img_pk2, R.drawable.picture_default_head);
-		holder.img_pk1.setOnClickListener(new OnClick(
-				"http://cdn.7kk.com//201407/08/1747414993488.jpg"));
-		holder.img_pk2
-				.setOnClickListener(new OnClick(
-						"http://www.sinaimg.cn/dy/slidenews/21_img/2011_37/2236_511531_466668.jpg"));
+		String pk1_picture = mlists.get(position).getPk1()
+				.getPk1_user_picture();
+		String pk2_picture = mlists.get(position).getPk2()
+				.getPk2_user_picture();
+		UniversalImageLoadTool.disPlay(pk1_picture, holder.img_pk1,
+				R.drawable.picture_default_head);
+		UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
+				R.drawable.picture_default_head);
+		holder.img_pk1.setOnClickListener(new OnClick(pk1_picture));
+		holder.img_pk2.setOnClickListener(new OnClick(pk2_picture));
 		return convertView;
 	}
 

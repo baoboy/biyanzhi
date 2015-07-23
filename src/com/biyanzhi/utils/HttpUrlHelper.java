@@ -52,7 +52,7 @@ public class HttpUrlHelper {
 	public static final int SO_TIMEOUT = 30 * 1000;
 	// public static final String DEFAULT_HOST =
 	// "http://123.56.46.254:8080/biyanzhi/"; // 服务器地址
-	public static final String DEFAULT_HOST = "http://192.168.1.102:8080/biyanzhi/";
+	public static final String DEFAULT_HOST = "http://192.168.1.108:8080/biyanzhi/";
 
 	/**
 	 * get 提交方式 // *

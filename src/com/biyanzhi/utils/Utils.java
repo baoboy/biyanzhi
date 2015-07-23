@@ -1,6 +1,9 @@
 package com.biyanzhi.utils;
 
 import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,16 +15,15 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.InputMethodManager;
 
 import com.biyanzhi.R;
 import com.biyanzhi.applation.MyApplation;
+import com.biyanzhi.showbigimage.ImagePagerActivity;
 
 public class Utils {
 	private static long lastClickTime;
@@ -252,4 +254,16 @@ public class Utils {
 			return false;
 	}
 
+	public static void showBigPicture(String path, Context mContext) {
+		List<String> imgUrl = new ArrayList<String>();
+		imgUrl.add(path);
+		Intent intent = new Intent(mContext, ImagePagerActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(Constants.EXTRA_IMAGE_URLS,
+				(Serializable) imgUrl);
+		intent.putExtras(bundle);
+		intent.putExtra(Constants.EXTRA_IMAGE_INDEX, 1);
+		mContext.startActivity(intent);
+
+	}
 }
