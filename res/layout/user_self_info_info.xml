@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:id="@+id/layout_guanzhu"
+        android:id="@+id/layout_my_guanzhu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="13dip"
@@ -18,11 +18,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="关注"
+            android:text="我关注的人"
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/txt_guanzhu"
+            android:id="@+id/txt_my_guanzhu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imageView1"
+            android:paddingRight="15dip"
+            android:textColor="@color/pciture_blue" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_right" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line4"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dip"
+        android:background="#50d5d5d5" />
+
+    <RelativeLayout
+        android:id="@+id/layout_guanzhu_my"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="13dip"
+        android:paddingLeft="30dip"
+        android:paddingRight="30dip"
+        android:paddingTop="13dip" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="关注我的人"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/txt_guanzhu_my"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

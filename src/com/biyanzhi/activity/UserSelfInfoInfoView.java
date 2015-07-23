@@ -27,7 +27,7 @@ public class UserSelfInfoInfoView implements OnClickListener {
 	private TextView txt_gender;
 	private TextView txt_birthday;
 	private TextView txt_address;
-	private TextView txt_guanzhu;
+	private TextView txt_guanzhu_my;
 	private TextView txt_nick_name;
 	private RelativeLayout layout_nick_name;
 	private CityListPopWindow city_pop;
@@ -42,8 +42,8 @@ public class UserSelfInfoInfoView implements OnClickListener {
 	private void initView() {
 		txt_nick_name = (TextView) mContentRootView
 				.findViewById(R.id.txt_nick_name);
-		txt_guanzhu = (TextView) mContentRootView
-				.findViewById(R.id.txt_guanzhu);
+		txt_guanzhu_my = (TextView) mContentRootView
+				.findViewById(R.id.txt_guanzhu_my);
 		txt_address = (TextView) mContentRootView
 				.findViewById(R.id.txt_address);
 		txt_birthday = (TextView) mContentRootView
@@ -54,8 +54,10 @@ public class UserSelfInfoInfoView implements OnClickListener {
 		layout_nick_name.setOnClickListener(this);
 		mContentRootView.findViewById(R.id.layout_address).setOnClickListener(
 				this);
-		mContentRootView.findViewById(R.id.layout_guanzhu).setOnClickListener(
-				this);
+		mContentRootView.findViewById(R.id.layout_guanzhu_my)
+				.setOnClickListener(this);
+		mContentRootView.findViewById(R.id.layout_my_guanzhu)
+				.setOnClickListener(this);
 		setValue();
 	}
 
@@ -64,11 +66,11 @@ public class UserSelfInfoInfoView implements OnClickListener {
 		txt_address.setText(SharedUtils.getAPPUserAddress());
 		txt_birthday.setText(SharedUtils.getAPPUserBirthday());
 		txt_gender.setText(SharedUtils.getAPPUserGender());
-		txt_guanzhu.setText(SharedUtils.getAPPUserGuanZhuCount() + "人");
+		txt_guanzhu_my.setText(SharedUtils.getAPPUserGuanZhuCount() + "人");
 	}
 
 	public void setGuanZhuCount(int count) {
-		txt_guanzhu.setText(count + "人");
+		txt_guanzhu_my.setText(count + "人");
 		SharedUtils.setAPPUserGuanZhuCount(count);
 
 	}
@@ -100,7 +102,7 @@ public class UserSelfInfoInfoView implements OnClickListener {
 			});
 			city_pop.show();
 			break;
-		case R.id.layout_guanzhu:
+		case R.id.layout_guanzhu_my:
 			mActivity
 					.startActivity(new Intent(mActivity, GuanZhuActivity.class)
 							.putExtra("user_id", SharedUtils.getIntUid()));

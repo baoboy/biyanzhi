@@ -69,6 +69,7 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 	private int index = 0;
 	private boolean isLoading = false;
 	private PictureList list = new PictureList();
+	private int load_more_count = 10;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +137,9 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 						if (mVfFlipper.getDisplayedChild() == 0) {
 							return false;
 						}
+						if (load_more_count < 9) {
+							return false;
+						}
 						loadMorePictureList();
 					}
 				}
@@ -166,9 +170,13 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
 			@Override
 			public void taskFinish(RetError result) {
+				if (result != RetError.NONE) {
+					return;
+				}
 				yanzhi_View.addPictureList(list.getPictureList());
 				isLoading = false;
 				yanzhi_View.setVisibileFootView(false);
+				load_more_count = list.getPictureList().size();
 
 			}
 		});

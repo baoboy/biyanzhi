@@ -19,6 +19,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.biyanzhi.R;
@@ -27,6 +30,7 @@ import com.biyanzhi.data.PKData;
 import com.biyanzhi.data.PKList;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.GetPKListTask;
+import com.biyanzhi.task.LoadMorePKListTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
@@ -39,6 +43,9 @@ public class PKFragment extends Fragment {
 	private PKAdapter adapter;
 	private PtrClassicFrameLayout mPtrFrame;
 	private boolean isLoading = false;
+	private View foot_view;
+	private LinearLayout layout_foot;
+	private int load_more_count = 10;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,8 +64,38 @@ public class PKFragment extends Fragment {
 	}
 
 	private void initView() {
+		foot_view = LayoutInflater.from(getActivity()).inflate(
+				R.layout.pk_foot_view, null);
+		layout_foot = (LinearLayout) foot_view
+				.findViewById(R.id.layout_footview);
 		initFefushView();
 		mListView = (ListView) getView().findViewById(R.id.listView1);
+		mListView.addFooterView(foot_view);
+		layout_foot.setVisibility(View.GONE);
+		mListView.setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+				// 滚动到底,请求下一页数据
+				if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
+					if (isLoading) {
+						return;
+					}
+					if (load_more_count < 9) {
+						return;
+					}
+					loadMorePKList();
+				}
+
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+
+			}
+		});
 		adapter = new PKAdapter(getActivity(), mlists);
 		mListView.setAdapter(adapter);
 	}
@@ -109,6 +146,31 @@ public class PKFragment extends Fragment {
 		// }, 100);
 	}
 
+	private void loadMorePKList() {
+		if (mlists.size() == 0) {
+			return;
+		}
+		layout_foot.setVisibility(View.VISIBLE);
+		mListView.setSelection(mListView.getCount() - 1);
+		isLoading = true;
+		list.setPk_time(mlists.get(mlists.size() - 1).getPk_time());
+		LoadMorePKListTask task = new LoadMorePKListTask();
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				if (result != RetError.NONE) {
+					return;
+				}
+				load_more_count = list.getMlists().size();
+				mlists.addAll(list.getMlists());
+				adapter.notifyDataSetChanged();
+				isLoading = false;
+				layout_foot.setVisibility(View.INVISIBLE);
+			}
+		});
+		task.executeParallel(list);
+	}
+
 	private void getPkList() {
 		GetPKListTask task = new GetPKListTask();
 		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
@@ -146,6 +208,11 @@ public class PKFragment extends Fragment {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
 			if (action.equals(Constants.SEND_PK)) {
+				if (mlists.size() > 0) {
+					list.setPk_time(mlists.get(0).getPk_time());
+				} else {
+					list.setPk_time("0");
+				}
 				getPkList();
 			}
 		}

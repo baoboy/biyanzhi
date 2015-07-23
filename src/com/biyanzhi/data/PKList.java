@@ -15,6 +15,7 @@ import com.biyanzhi.parser.PictureListParser;
 
 public class PKList {
 	private static final String GET_PK_LIST_URL = "getPKList.do";
+	private static final String LOAD_MORE_PK_LIST = "loadMorePKList.do";
 	private List<PKData> mlists = new ArrayList<PKData>();
 	private String pk_time = "";
 
@@ -48,4 +49,20 @@ public class PKList {
 			return ret.getErr();
 		}
 	}
+
+	public RetError loadMorePKList() {
+		IParser parser = new PKListParser();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pk_time", pk_time);
+		Result ret = ApiRequest.request(LOAD_MORE_PK_LIST, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			PKList pk_lists = (PKList) ret.getData();
+			this.mlists.clear();
+			this.mlists = pk_lists.getMlists();
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
 }

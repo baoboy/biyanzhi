@@ -5,12 +5,12 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
@@ -28,6 +28,7 @@ import com.biyanzhi.task.GetPictureListByUserIDTask;
 import com.biyanzhi.task.GetPictureListMoreByUserIDTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.GridViewWithHeaderAndFooter;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.Utils;
@@ -37,10 +38,9 @@ import com.biyianzhi.interfaces.ConfirmDialog;
 import fynn.app.PromptDialog;
 
 public class SelectPKPictureActivity extends BaseActivity {
-	private GridView mGridView;
+	private GridViewWithHeaderAndFooter mGridView;
 	private SelectPKPictureAdapter adapter;
 	private List<Picture> mLists = new ArrayList<Picture>();
-	// private LinearLayout layout_footView;
 	private boolean isLoading = false;
 	private PictureList list = new PictureList();
 	private TextView txt_title;
@@ -62,8 +62,12 @@ public class SelectPKPictureActivity extends BaseActivity {
 	private void initView() {
 		txt_title = (TextView) findViewById(R.id.title_txt);
 		txt_title.setText("Ñ¡ÔñÄãÒªPKµÄÕÕÆ¬");
-		mGridView = (GridView) findViewById(R.id.gridView1);
-		// layout_footView = (LinearLayout) findViewById(R.id.footview);
+		mGridView = (GridViewWithHeaderAndFooter) findViewById(R.id.gridView1);
+		LayoutInflater layoutInflater = LayoutInflater.from(this);
+		View footerView = layoutInflater
+				.inflate(R.layout.pulldown_footer, null);
+		mGridView.addFooterView(footerView);
+		mGridView.hideFootView();
 		setListener();
 	}
 
@@ -192,7 +196,7 @@ public class SelectPKPictureActivity extends BaseActivity {
 		}
 		isLoading = true;
 		list.setPublish_time(mLists.get(mLists.size() - 1).getPublish_time());
-		// layout_footView.setVisibility(View.VISIBLE);
+		mGridView.showFootView();
 
 		GetPictureListMoreByUserIDTask task = new GetPictureListMoreByUserIDTask(
 				SharedUtils.getIntUid());
@@ -201,9 +205,9 @@ public class SelectPKPictureActivity extends BaseActivity {
 			public void taskFinish(RetError result) {
 				isLoading = false;
 				load_more_count = list.getPictureList().size();
-				// layout_footView.setVisibility(View.GONE);
 				mLists.addAll(list.getPictureList());
 				adapter.notifyDataSetChanged();
+				mGridView.hideFootView();
 
 			}
 		});

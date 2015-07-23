@@ -5,24 +5,23 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 
 import com.biyanzhi.R;
 import com.biyanzhi.adapter.PictureAdapter;
 import com.biyanzhi.data.Picture;
+import com.biyanzhi.utils.ScrollViewGridViewWithHeaderAndFooter;
 import com.biyanzhi.utils.Utils;
-import com.biyanzhi.view.ExpandGridView;
 
 public class UserInfoYanZhiView {
 	private Context mActivity;
 	private View mContentRootView;
-	private ExpandGridView mGridView;
+	private ScrollViewGridViewWithHeaderAndFooter mGridView;
 	private PictureAdapter adapter;
 	private List<Picture> mLists = new ArrayList<Picture>();
-	private LinearLayout layout_footView;
 
 	public UserInfoYanZhiView(Context activity, View contentRootView) {
 		this.mActivity = activity;
@@ -35,10 +34,13 @@ public class UserInfoYanZhiView {
 	}
 
 	private void initView() {
-		mGridView = (ExpandGridView) mContentRootView
+		mGridView = (ScrollViewGridViewWithHeaderAndFooter) mContentRootView
 				.findViewById(R.id.gridView1);
-		layout_footView = (LinearLayout) mContentRootView
-				.findViewById(R.id.footview);
+		LayoutInflater layoutInflater = LayoutInflater.from(mActivity);
+		View footerView = layoutInflater
+				.inflate(R.layout.pulldown_footer, null);
+		mGridView.addFooterView(footerView);
+		mGridView.hideFootView();
 		mGridView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -55,9 +57,9 @@ public class UserInfoYanZhiView {
 
 	public void setVisibileFootView(boolean isVisibile) {
 		if (isVisibile) {
-			layout_footView.setVisibility(View.VISIBLE);
+			mGridView.showFootView();
 		} else {
-			layout_footView.setVisibility(View.GONE);
+			mGridView.hideFootView();
 		}
 	}
 
