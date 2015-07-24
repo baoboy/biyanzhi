@@ -19,11 +19,11 @@
             android:src="@drawable/default_avatar" />
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/img_vs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/red" />
+            android:src="@drawable/girl_vs" />
 
         <com.biyanzhi.view.RoundAngleImageView
             android:id="@+id/img_pk2"

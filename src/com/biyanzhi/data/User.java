@@ -39,6 +39,15 @@ public class User implements Serializable {
 	private int user_id = 0;
 	private int guanzhu_count;
 	private boolean isGuanZhu;
+	private int my_guanzhu_count;
+
+	public int getMy_guanzhu_count() {
+		return my_guanzhu_count;
+	}
+
+	public void setMy_guanzhu_count(int my_guanzhu_count) {
+		this.my_guanzhu_count = my_guanzhu_count;
+	}
 
 	public String getUser_chat_id() {
 		return user_chat_id;

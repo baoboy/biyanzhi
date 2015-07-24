@@ -11,9 +11,22 @@ import com.biyanzhi.parser.SimpleParser;
 
 public class PKData {
 	private static final String ADD_PK_URL = "addPK.do";
+	private static final String UPDATE_PK2_URL = "upDatePK2.do";
+	private static final String UPDATE_PK2_TICKET_COUNT_URL = "upDatePK2TicketCount.do";
+	private static final String UPDATE_PK1_TICKET_COUNT_URL = "upDatePK1TicketCount.do";
+
 	private PK1 pk1;
 	private PK2 pk2;
 	private String pk_time = "";
+	private int pk_id;
+
+	public int getPk_id() {
+		return pk_id;
+	}
+
+	public void setPk_id(int pk_id) {
+		this.pk_id = pk_id;
+	}
 
 	public String getPk_time() {
 		return pk_time;
@@ -43,12 +56,55 @@ public class PKData {
 		IParser parser = new SimpleParser();
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("pk1_user_id", pk1.getPk1_user_id());
+		params.put("pk1_user_gender", pk1.getPk1_user_gender());
 		params.put("pk1_user_picture", pk1.getPk1_user_picture());
 		params.put("pk1_ticket_count", pk1.getPk1_ticket_count());
 		params.put("pk2_user_id", pk2.getPk2_user_id());
 		params.put("pk2_user_picture", pk2.getPk2_user_picture());
 		params.put("pk2_ticket_count", pk2.getPk2_ticket_count());
 		Result ret = ApiRequest.request(ADD_PK_URL, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError upDatePK2() {
+		IParser parser = new SimpleParser();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("pk_id", pk_id);
+		params.put("pk2_user_id", pk2.getPk2_user_id());
+		params.put("pk2_user_picture", pk2.getPk2_user_picture());
+		Result ret = ApiRequest.request(UPDATE_PK2_URL, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError upDatePK2TicketCount() {
+		IParser parser = new SimpleParser();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("pk_id", pk_id);
+		params.put("pk2_ticket_count", pk2.getPk2_user_picture());
+		Result ret = ApiRequest.request(UPDATE_PK2_TICKET_COUNT_URL, params,
+				parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError upDatePK1TicketCount() {
+		IParser parser = new SimpleParser();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("pk_id", pk_id);
+		params.put("pk1_ticket_count", pk1.getPk1_user_picture());
+		Result ret = ApiRequest.request(UPDATE_PK1_TICKET_COUNT_URL, params,
+				parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			return RetError.NONE;
 		} else {

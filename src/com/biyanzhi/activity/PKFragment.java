@@ -196,6 +196,8 @@ public class PKFragment extends Fragment {
 	public void registerBoradcastReceiver() {
 		IntentFilter myIntentFilter = new IntentFilter();
 		myIntentFilter.addAction(Constants.SEND_PK);
+		myIntentFilter.addAction(Constants.UPDATE_PK2);
+
 		// ×¢²á¹ã²¥
 		getActivity().registerReceiver(mBroadcastReceiver, myIntentFilter);
 	}
@@ -214,6 +216,22 @@ public class PKFragment extends Fragment {
 					list.setPk_time("0");
 				}
 				getPkList();
+			}
+			if (action.equals(Constants.UPDATE_PK2)) {
+				int pk_id = intent.getIntExtra("pk_id", 0);
+				int pk2_user_id = intent.getIntExtra("pk2_user_id", 0);
+				String pk2_user_picture = intent
+						.getStringExtra("pk2_user_picture");
+				for (int i = 0; i < mlists.size(); i++) {
+					if (pk_id == mlists.get(i).getPk_id()) {
+						mlists.get(i).getPk2().setPk2_user_id(pk2_user_id);
+						mlists.get(i).getPk2()
+								.setPk2_user_picture(pk2_user_picture);
+						adapter.notifyDataSetChanged();
+						break;
+					}
+				}
+
 			}
 		}
 	};

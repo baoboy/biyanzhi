@@ -122,8 +122,14 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 				Utils.leftOutRightIn(this);
 				return;
 			}
-			startActivity(new Intent(this, PublicshPictureActivity.class));
-			Utils.leftOutRightIn(this);
+			if (current_index == 3) {
+				startActivity(new Intent(this, SelectPKPictureActivity.class));
+				Utils.leftOutRightIn(this);
+			} else {
+				startActivity(new Intent(this, PublicshPictureActivity.class));
+				Utils.leftOutRightIn(this);
+			}
+
 			break;
 		case R.id.img_avatar:
 			if (SharedUtils.getIntUid() == 0) {
@@ -219,9 +225,9 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			break;
 		}
 		if (current_index == 3) {
-			img_select.setVisibility(View.GONE);
+			img_select.setImageResource(R.drawable.icon_pk);
 		} else {
-			img_select.setVisibility(View.VISIBLE);
+			img_select.setImageResource(R.drawable.icon_create_scene);
 
 		}
 	}

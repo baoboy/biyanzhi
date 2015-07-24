@@ -191,7 +191,8 @@ public class SelfInfoActivity extends BaseActivity implements SelectOnclick {
 				if (result != RetError.NONE) {
 					return;
 				}
-				info_view.setGuanZhuCount(info.getUser().getGuanzhu_count());
+				info_view.setGuanZhuCount(info.getUser().getGuanzhu_count(),
+						info.getUser().getMy_guanzhu_count());
 				yanzhi_View.setValue(info.getPictureList());
 			}
 		});

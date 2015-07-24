@@ -46,13 +46,11 @@ public class SelectPKPictureActivity extends BaseActivity {
 	private TextView txt_title;
 	private int load_more_count = 10;
 	private MenuPopwindow pop;
-	private PK2 pk2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_pkpicture);
-		pk2 = (PK2) getIntent().getSerializableExtra("pk");
 		initView();
 		setValue();
 		showDialog();
@@ -61,7 +59,7 @@ public class SelectPKPictureActivity extends BaseActivity {
 
 	private void initView() {
 		txt_title = (TextView) findViewById(R.id.title_txt);
-		txt_title.setText("选择你要PK的照片");
+		txt_title.setText("选择你要发起PK的照片");
 		mGridView = (GridViewWithHeaderAndFooter) findViewById(R.id.gridView1);
 		LayoutInflater layoutInflater = LayoutInflater.from(this);
 		View footerView = layoutInflater
@@ -126,12 +124,13 @@ public class SelectPKPictureActivity extends BaseActivity {
 	}
 
 	private void pkPrompt(final int position) {
-		PromptDialog.Builder dialog = DialogUtil.confirmDialog(this, "是否要进行PK",
-				"是", "否", new ConfirmDialog() {
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(this,
+				"是否选择该照片进行PK", "是", "否", new ConfirmDialog() {
 
 					@Override
 					public void onOKClick() {
 						PK1 pk1 = new PK1();
+						pk1.setPk1_user_gender(SharedUtils.getAPPUserGender());
 						pk1.setPk1_user_id(mLists.get(position)
 								.getPublisher_id());
 						pk1.setPk1_user_picture(mLists.get(position)
@@ -162,6 +161,7 @@ public class SelectPKPictureActivity extends BaseActivity {
 
 			}
 		});
+		PK2 pk2 = new PK2();
 		PKData pk = new PKData();
 		pk.setPk1(pk1);
 		pk.setPk2(pk2);
@@ -180,8 +180,14 @@ public class SelectPKPictureActivity extends BaseActivity {
 			@Override
 			public void taskFinish(RetError result) {
 				dismissDialog();
+				if (result != RetError.NONE) {
+					return;
+				}
 				mLists.addAll(list.getPictureList());
 				adapter.notifyDataSetChanged();
+				if (mLists.size() == 0) {
+					ToastUtil.showToast("先上传一张照片再来PK吧");
+				}
 			}
 		});
 		task.executeParallel(list);

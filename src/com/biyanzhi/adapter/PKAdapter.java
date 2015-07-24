@@ -14,8 +14,10 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.biyanzhi.R;
+import com.biyanzhi.activity.SelectPK2PictureActivity;
 import com.biyanzhi.data.PKData;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
 import com.biyanzhi.utils.Constants;
@@ -56,6 +58,7 @@ public class PKAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.pk_item, null);
 			holder = new ViewHolder();
+			holder.img_vs = (ImageView) convertView.findViewById(R.id.img_vs);
 			holder.img_pk1 = (RoundAngleImageView) convertView
 					.findViewById(R.id.img_pk1);
 			holder.img_pk2 = (RoundAngleImageView) convertView
@@ -78,10 +81,46 @@ public class PKAdapter extends BaseAdapter {
 				.getPk2_user_picture();
 		UniversalImageLoadTool.disPlay(pk1_picture, holder.img_pk1,
 				R.drawable.picture_default_head);
-		UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
-				R.drawable.picture_default_head);
-		holder.img_pk1.setOnClickListener(new OnClick(pk1_picture));
-		holder.img_pk2.setOnClickListener(new OnClick(pk2_picture));
+		if ("女".equals(mlists.get(position).getPk1().getPk1_user_gender())) {
+			holder.btn_pk1.setText("她美");
+			holder.btn_pk2.setText("她美");
+			holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
+					R.drawable.pk_girl_btn));
+			holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
+					R.drawable.pk_girl_btn));
+			holder.img_vs.setImageResource(R.drawable.girl_vs);
+			if (mlists.get(position).getPk2().getPk2_user_id() == 0) {
+				UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
+						R.drawable.girl_pk_default1);
+			} else {
+				UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
+						R.drawable.picture_default_head);
+			}
+		} else {
+			holder.btn_pk1.setText("他帅");
+			holder.btn_pk2.setText("他帅");
+			holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
+					R.drawable.pk_boy_btn));
+			holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
+					R.drawable.pk_boy_btn));
+			holder.img_vs.setImageResource(R.drawable.boy_vs);
+			if (mlists.get(position).getPk2().getPk2_user_id() == 0) {
+				UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
+						R.drawable.boy_pk_default1);
+			} else {
+				UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
+						R.drawable.picture_default_head);
+			}
+		}
+		if (mlists.get(position).getPk2().getPk2_user_id() == 0) {
+			holder.btn_pk1.setVisibility(View.GONE);
+			holder.btn_pk2.setVisibility(View.GONE);
+		} else {
+			holder.btn_pk1.setVisibility(View.VISIBLE);
+			holder.btn_pk2.setVisibility(View.VISIBLE);
+		}
+		holder.img_pk1.setOnClickListener(new OnClick(position));
+		holder.img_pk2.setOnClickListener(new OnClick(position));
 		return convertView;
 	}
 
@@ -90,19 +129,37 @@ public class PKAdapter extends BaseAdapter {
 		RoundAngleImageView img_pk2;
 		Button btn_pk1;
 		Button btn_pk2;
+		ImageView img_vs;
 
 	}
 
 	class OnClick implements OnClickListener {
-		private String path = "";
+		private int position;
 
-		public OnClick(String path) {
-			this.path = path;
+		public OnClick(int position) {
+			this.position = position;
 		}
 
 		@Override
 		public void onClick(View v) {
-			intent(path);
+			switch (v.getId()) {
+			case R.id.img_pk1:
+				intent(mlists.get(position).getPk1().getPk1_user_picture());
+				break;
+			case R.id.img_pk2:
+				if (mlists.get(position).getPk2().getPk2_user_id() == 0) {
+					mContext.startActivity(new Intent(mContext,
+							SelectPK2PictureActivity.class).putExtra("pk_id",
+							mlists.get(position).getPk_id()));
+					Utils.leftOutRightIn(mContext);
+				} else {
+					intent(mlists.get(position).getPk2().getPk2_user_picture());
+
+				}
+				break;
+			default:
+				break;
+			}
 		}
 
 	}
