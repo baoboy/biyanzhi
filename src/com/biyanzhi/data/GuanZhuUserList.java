@@ -14,6 +14,7 @@ import com.biyanzhi.parser.IParser;
 
 public class GuanZhuUserList {
 	private static final String GET_GUANZHU_LIST_USERS_API = "getGuanZhuUserListsByUserID.do";
+	private static final String GET_MY_GUANZHU_LIST_USERS_API = "getMyGuanZhuUserListsByUserID.do";
 
 	private int guanzhu_user_id;
 	private List<User> lists = new ArrayList<User>();
@@ -39,6 +40,21 @@ public class GuanZhuUserList {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("guanzhu_user_id", guanzhu_user_id);
 		Result ret = ApiRequest.request(GET_GUANZHU_LIST_USERS_API, params,
+				parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			GuanZhuUserList lists = (GuanZhuUserList) ret.getData();
+			this.lists = lists.getLists();
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError getMyGuanZhuListUsers() {
+		IParser parser = new GuanZhuListPaser();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("user_id", guanzhu_user_id);
+		Result ret = ApiRequest.request(GET_MY_GUANZHU_LIST_USERS_API, params,
 				parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			GuanZhuUserList lists = (GuanZhuUserList) ret.getData();

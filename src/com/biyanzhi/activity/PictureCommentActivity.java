@@ -26,18 +26,14 @@ import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-import cn.sharesdk.tencent.qq.QQ;
-import cn.sharesdk.tencent.qq.QQ.ShareParams;
-import cn.sharesdk.tencent.qzone.QZone;
 
 import com.biyanzhi.R;
 import com.biyanzhi.adapter.CommentAdapter;
 import com.biyanzhi.data.Comment;
 import com.biyanzhi.data.Picture;
 import com.biyanzhi.data.PictureScore;
+import com.biyanzhi.data.Share;
 import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.popwindow.CommentPopwindow;
@@ -52,6 +48,7 @@ import com.biyanzhi.task.UpdatePicturePublishTimeTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DateUtils;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.ShareUtil;
 import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.UniversalImageLoadTool;
@@ -238,7 +235,13 @@ public class PictureCommentActivity extends BaseActivity implements
 			startActivity(intent);
 			break;
 		case R.id.btn_share:
-			share_pop = new SharePopwindow(this, v);
+			List<Share> lists = new ArrayList<Share>();
+			lists.add(new Share("微信朋友圈", R.drawable.share_wx_pyq));
+			lists.add(new Share("微信好友", R.drawable.share_wx_py));
+			lists.add(new Share("QQ好友", R.drawable.share_qq));
+			lists.add(new Share("QQ空间", R.drawable.share_qzone));
+			lists.add(new Share("新浪微博", R.drawable.share_sina));
+			share_pop = new SharePopwindow(this, v, lists);
 			share_pop.setmSelectOnclick(this);
 			share_pop.show();
 			break;
@@ -480,73 +483,51 @@ public class PictureCommentActivity extends BaseActivity implements
 	}
 
 	private void shareQQ() {
-		Platform plat = ShareSDK.getPlatform(QQ.NAME);
-		ShareParams sp = new ShareParams();
-		sp.setTitle("比颜值");
-		sp.setTitleUrl("http://123.56.46.254/biyanzhi/biyanzhi.html"); // 标题的超链接
-		sp.setText("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
-				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
-		sp.setSite("比颜值");
-		sp.setSiteUrl("http://123.56.46.254/biyanzhi/biyanzhi.html");
-		sp.setImageUrl(picture.getPicture_image_url());
-		sp.setShareType(Platform.SHARE_WEBPAGE);
-		plat.share(sp);
+		ShareUtil.shareQQ("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
+				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧",
+				picture.getPicture_image_url());
 	}
 
 	private void shareQQZone() {
-		Platform plat = ShareSDK.getPlatform(QZone.NAME);
-		ShareParams sp = new ShareParams();
-		sp.setTitle("比颜值");
-		sp.setTitleUrl("http://123.56.46.254/biyanzhi/biyanzhi.html"); // 标题的超链接
-		sp.setText("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
-				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
-		sp.setImageUrl(picture.getPicture_image_url());
-		sp.setSite("比颜值");
-		sp.setSiteUrl("http://123.56.46.254/biyanzhi/biyanzhi.html");
-		sp.setShareType(Platform.SHARE_WEBPAGE);
-		plat.share(sp);
+		ShareUtil.shareQQZone("总共有 " + picture.getScore_number()
+				+ " 个人给我评分 ,平均分 " + picture.getAverage_score()
+				+ " 分,快来测测你的颜值能得少分吧", picture.getPicture_image_url());
+
 	}
 
 	private void shareWechat() {
-		Platform plat = ShareSDK.getPlatform("Wechat");
-		ShareParams sp = new ShareParams();
-		sp.setTitle("比颜值");
-		sp.setText("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
-				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
-		sp.setShareType(Platform.SHARE_WEBPAGE);
-		sp.setUrl("http://123.56.46.254/biyanzhi/biyanzhi.html");
-		sp.setImageUrl(picture.getPicture_image_url());
-		plat.share(sp);
+		ShareUtil.shareWechat("总共有 " + picture.getScore_number()
+				+ " 个人给我评分 ,平均分 " + picture.getAverage_score()
+				+ " 分,快来测测你的颜值能得少分吧", picture.getPicture_image_url());
 
 	}
 
 	private void shareWechatMoments() {
-		Platform plat = ShareSDK.getPlatform("WechatMoments");
-		ShareParams sp = new ShareParams();
-		sp.setTitle("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
-				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
-		sp.setText("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
-				+ picture.getAverage_score()
-				+ " 分,快来测测你的颜值能得少分吧http://123.56.46.254/biyanzhi/biyanzhi.html");
-		sp.setShareType(Platform.SHARE_WEBPAGE);
-		sp.setUrl("http://123.56.46.254/biyanzhi/biyanzhi.html");
-		sp.setImageUrl(picture.getPicture_image_url());
-		plat.share(sp);
-
+		ShareUtil
+				.shareWechatMoments(
+						"总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
+								+ picture.getAverage_score()
+								+ " 分,快来测测你的颜值能得少分吧",
+						"总共有 "
+								+ picture.getScore_number()
+								+ " 个人给我评分 ,平均分 "
+								+ picture.getAverage_score()
+								+ " 分,快来测测你的颜值能得少分吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+						picture.getPicture_image_url());
 	}
 
 	private void shareSinaWeiBo() {
+		ShareUtil
+				.shareSinaWeiBo(
+						"总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
+								+ picture.getAverage_score()
+								+ " 分,快来测测你的颜值能得少分吧",
+						"总共有 "
+								+ picture.getScore_number()
+								+ " 个人给我评分 ,平均分 "
+								+ picture.getAverage_score()
+								+ " 分,快来测测你的颜值能得少分吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+						picture.getPicture_image_url());
 
-		ShareParams sp = new ShareParams();
-		sp.setTitle("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
-				+ picture.getAverage_score() + " 分,快来测测你的颜值能得少分吧");
-		sp.setText("总共有 " + picture.getScore_number() + " 个人给我评分 ,平均分 "
-				+ picture.getAverage_score()
-				+ " 分,快来测测你的颜值能得少分吧http://123.56.46.254/biyanzhi/biyanzhi.html");
-		sp.setUrl("http://123.56.46.254/biyanzhi/biyanzhi.html");
-		sp.setImageUrl(picture.getPicture_image_url());
-		Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
-		// 执行图文分享
-		weibo.share(sp);
 	}
 }

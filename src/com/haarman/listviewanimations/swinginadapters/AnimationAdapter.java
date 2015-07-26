@@ -35,8 +35,8 @@ import com.nineoldandroids.animation.ObjectAnimator;
  */
 public abstract class AnimationAdapter extends BaseAdapterDecorator {
 
-	protected static final long DEFAULTANIMATIONDELAYMILLIS = 300;
-	protected static final long DEFAULTANIMATIONDURATIONMILLIS = 500;
+	protected static final long DEFAULTANIMATIONDELAYMILLIS = 0;// 300
+	protected static final long DEFAULTANIMATIONDURATIONMILLIS = 1000;// 500
 	private static final long INITIALDELAYMILLIS = 50;
 
 	private SparseArray<AnimationInfo> mAnimators;

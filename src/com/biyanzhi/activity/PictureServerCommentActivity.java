@@ -38,6 +38,7 @@ import com.biyanzhi.adapter.CommentAdapter;
 import com.biyanzhi.data.Comment;
 import com.biyanzhi.data.Picture;
 import com.biyanzhi.data.PictureScore;
+import com.biyanzhi.data.Share;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.popwindow.CommentPopwindow;
 import com.biyanzhi.popwindow.CommentPopwindow.OnCommentOnClick;
@@ -273,7 +274,13 @@ public class PictureServerCommentActivity extends BaseActivity implements
 			startActivity(intent);
 			break;
 		case R.id.btn_share:
-			share_pop = new SharePopwindow(this, v);
+			List<Share> lists = new ArrayList<Share>();
+			lists.add(new Share("Œ¢–≈≈Û”—»¶", R.drawable.share_wx_pyq));
+			lists.add(new Share("Œ¢–≈∫√”—", R.drawable.share_wx_py));
+			lists.add(new Share("QQ∫√”—", R.drawable.share_qq));
+			lists.add(new Share("QQø’º‰", R.drawable.share_qzone));
+			lists.add(new Share("–¬¿ÀŒ¢≤©", R.drawable.share_sina));
+			share_pop = new SharePopwindow(this, v, lists);
 			share_pop.setmSelectOnclick(this);
 			share_pop.show();
 			break;

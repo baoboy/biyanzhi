@@ -23,8 +23,8 @@ public class MyApplation extends Application {
 		instance = this;
 		CheckImageLoaderConfiguration.checkImageLoaderConfiguration(this);
 		hxSDKHelper.onInit(this);
-		// CrashHandler catchHandler = CrashHandler.getInstance();
-		// catchHandler.init(this);
+		 CrashHandler catchHandler = CrashHandler.getInstance();
+		 catchHandler.init(this);
 	}
 
 	public static MyApplation getInstance() {

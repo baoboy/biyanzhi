@@ -24,6 +24,7 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
+import com.biyanzhi.data.Share;
 import com.biyanzhi.utils.Utils;
 
 public class SharePopwindow implements OnClickListener, OnItemClickListener {
@@ -43,12 +44,12 @@ public class SharePopwindow implements OnClickListener, OnItemClickListener {
 		this.mSelectOnclick = mSelectOnclick;
 	}
 
-	public SharePopwindow(Context context, View v) {
+	public SharePopwindow(Context context, View v, List<Share> lists) {
 		this.mContext = context;
 		this.v = v;
+		this.lists = lists;
 		LayoutInflater inflater = LayoutInflater.from(mContext);
 		view = inflater.inflate(R.layout.share_layout, null);
-		initData();
 		initView();
 		initPopwindow();
 
@@ -61,25 +62,6 @@ public class SharePopwindow implements OnClickListener, OnItemClickListener {
 		mGridView = (GridView) view.findViewById(R.id.gridView1);
 		mGridView.setAdapter(new MyAdapter());
 		mGridView.setOnItemClickListener(this);
-	}
-
-	private void initData() {
-		lists.add(new Share("微信朋友圈", R.drawable.share_wx_pyq));
-		lists.add(new Share("微信好友", R.drawable.share_wx_py));
-		lists.add(new Share("QQ好友", R.drawable.share_qq));
-		lists.add(new Share("QQ空间", R.drawable.share_qzone));
-		lists.add(new Share("新浪微博", R.drawable.share_sina));
-
-	}
-
-	class Share {
-		private String share_name;
-		private int share_img_id;
-
-		public Share(String share_name, int share_img_id) {
-			this.share_img_id = share_img_id;
-			this.share_name = share_name;
-		}
 	}
 
 	/**
@@ -215,8 +197,9 @@ public class SharePopwindow implements OnClickListener, OnItemClickListener {
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			holder.share_img.setImageResource(lists.get(position).share_img_id);
-			holder.share_name.setText(lists.get(position).share_name);
+			holder.share_img.setImageResource(lists.get(position)
+					.getShare_img_id());
+			holder.share_name.setText(lists.get(position).getShare_name());
 			return convertView;
 		}
 

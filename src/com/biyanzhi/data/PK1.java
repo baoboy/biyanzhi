@@ -2,11 +2,20 @@ package com.biyanzhi.data;
 
 public class PK1 {
 	private int pk1_user_id;
+	private String pk1_user_gender = "";
 	private String pk1_user_picture = "";
 	private int pk1_ticket_count;
 
 	public int getPk1_user_id() {
 		return pk1_user_id;
+	}
+
+	public String getPk1_user_gender() {
+		return pk1_user_gender;
+	}
+
+	public void setPk1_user_gender(String pk1_user_gender) {
+		this.pk1_user_gender = pk1_user_gender;
 	}
 
 	public void setPk1_user_id(int pk1_user_id) {

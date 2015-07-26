@@ -26,18 +26,24 @@ public class PKListParser implements IParser {
 		List<PKData> lists = new ArrayList<PKData>();
 		for (int i = 0; i < jsonArr.length(); i++) {
 			JSONObject obj = (JSONObject) jsonArr.opt(i);
+			int pk_id = obj.getInt("pk_id");
 			int pk1_user_id = obj.getInt("pk1_user_id");
+			String pk1_user_gender = obj.getString("pk1_user_gender");
 			String pk1_user_picture = obj.getString("pk1_user_picture");
 			int pk1_ticket_count = obj.getInt("pk1_ticket_count");
 			int pk2_user_id = obj.getInt("pk2_user_id");
 			String pk2_user_picture = obj.getString("pk2_user_picture");
 			int pk2_ticket_count = obj.getInt("pk2_ticket_count");
 			String pk_time = obj.getString("pk_time");
+			boolean is_voted = obj.getBoolean("is_voted");
+			int pk_state = obj.getInt("pk_state");
+			int pk_winer_user_id = obj.getInt("pk_winer_user_id");
 			PKData pk = new PKData();
 			PK1 pk1 = new PK1();
 			PK2 pk2 = new PK2();
 			pk1.setPk1_ticket_count(pk1_ticket_count);
 			pk1.setPk1_user_id(pk1_user_id);
+			pk1.setPk1_user_gender(pk1_user_gender);
 			pk1.setPk1_user_picture(pk1_user_picture);
 			pk2.setPk2_ticket_count(pk2_ticket_count);
 			pk2.setPk2_user_id(pk2_user_id);
@@ -45,6 +51,10 @@ public class PKListParser implements IParser {
 			pk.setPk1(pk1);
 			pk.setPk2(pk2);
 			pk.setPk_time(pk_time);
+			pk.setPk_id(pk_id);
+			pk.setIs_voted(is_voted);
+			pk.setPk_state(pk_state);
+			pk.setPk_winer_user_id(pk_winer_user_id);
 			lists.add(pk);
 		}
 		PKList pl = new PKList();

@@ -11,7 +11,6 @@ import com.biyanzhi.enums.RetError;
 import com.biyanzhi.enums.RetStatus;
 import com.biyanzhi.parser.IParser;
 import com.biyanzhi.parser.PKListParser;
-import com.biyanzhi.parser.PictureListParser;
 
 public class PKList {
 	private static final String GET_PK_LIST_URL = "getPKList.do";

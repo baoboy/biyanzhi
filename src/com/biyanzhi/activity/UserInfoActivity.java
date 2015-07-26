@@ -28,10 +28,12 @@ import com.biyanzhi.data.UserInfo;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
 import com.biyanzhi.task.AddGuanZhuTask;
+import com.biyanzhi.task.CancleGuanZhuTask;
 import com.biyanzhi.task.GetPictureListMoreByUserIDTask;
 import com.biyanzhi.task.GetUserInfoTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.ToastUtil;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
@@ -58,7 +60,6 @@ public class UserInfoActivity extends BaseActivity {
 	private View bottom_line;
 	private Button btn_add_guanzhu;
 	private Button btn_send_message;
-	private boolean is_ganzhu = false;
 	private int index = 0;
 	private boolean isLoading = false;
 	private PictureList list = new PictureList();
@@ -197,9 +198,12 @@ public class UserInfoActivity extends BaseActivity {
 					ToastUtil.showToast("加载失败");
 					return;
 				}
+				if (user.isGuanZhu()) {
+					btn_add_guanzhu.setText("取消关注");
+				}
 				info_View.setValue(user.getUser_address(),
 						user.getUser_gender(), user.getUser_birthday(),
-						user.getGuanzhu_count());
+						user.getGuanzhu_count(), user.getMy_guanzhu_count());
 				txt_title.setText(user.getUser_name());
 				UniversalImageLoadTool.disPlay(user.getUser_avatar(),
 						img_avatar_bg, R.drawable.default_avatar);
@@ -231,10 +235,10 @@ public class UserInfoActivity extends BaseActivity {
 			mVfFlipper.setDisplayedChild(1);
 			break;
 		case R.id.btn_add_guanzhu:
-			if (!is_ganzhu) {
+			if (!user.isGuanZhu()) {
 				addGuanZhu();
 			} else {
-				ToastUtil.showToast("已经关注过了");
+				cancleGuanZhu();
 			}
 			break;
 		case R.id.img_avatar_bg:
@@ -291,7 +295,28 @@ public class UserInfoActivity extends BaseActivity {
 				}
 				ToastUtil.showToast("关注成功");
 				user.setGuanZhu(true);
-				is_ganzhu = true;
+				btn_add_guanzhu.setText("取消关注");
+			}
+		});
+		task.executeParallel(guanzhu);
+	}
+
+	private void cancleGuanZhu() {
+		showDialog();
+		GuanZhu guanzhu = new GuanZhu();
+		guanzhu.setUser_id(SharedUtils.getIntUid());
+		guanzhu.setGuanzhu_user_id(user.getUser_id());
+		CancleGuanZhuTask task = new CancleGuanZhuTask();
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				dismissDialog();
+				if (result != RetError.NONE) {
+					return;
+				}
+				ToastUtil.showToast("取消关注成功");
+				user.setGuanZhu(false);
+				btn_add_guanzhu.setText("关注");
 			}
 		});
 		task.executeParallel(guanzhu);

@@ -28,6 +28,7 @@ public class UserSelfInfoInfoView implements OnClickListener {
 	private TextView txt_birthday;
 	private TextView txt_address;
 	private TextView txt_guanzhu_my;
+	private TextView txt_my_guanzhu;
 	private TextView txt_nick_name;
 	private RelativeLayout layout_nick_name;
 	private CityListPopWindow city_pop;
@@ -44,6 +45,8 @@ public class UserSelfInfoInfoView implements OnClickListener {
 				.findViewById(R.id.txt_nick_name);
 		txt_guanzhu_my = (TextView) mContentRootView
 				.findViewById(R.id.txt_guanzhu_my);
+		txt_my_guanzhu = (TextView) mContentRootView
+				.findViewById(R.id.txt_my_guanzhu);
 		txt_address = (TextView) mContentRootView
 				.findViewById(R.id.txt_address);
 		txt_birthday = (TextView) mContentRootView
@@ -67,12 +70,15 @@ public class UserSelfInfoInfoView implements OnClickListener {
 		txt_birthday.setText(SharedUtils.getAPPUserBirthday());
 		txt_gender.setText(SharedUtils.getAPPUserGender());
 		txt_guanzhu_my.setText(SharedUtils.getAPPUserGuanZhuCount() + "人");
+		txt_my_guanzhu.setText(SharedUtils.getAPPUserMyGuanZhuCount() + "人");
+
 	}
 
-	public void setGuanZhuCount(int count) {
+	public void setGuanZhuCount(int count, int myGuanZhuCount) {
 		txt_guanzhu_my.setText(count + "人");
+		txt_my_guanzhu.setText(myGuanZhuCount + "人");
 		SharedUtils.setAPPUserGuanZhuCount(count);
-
+		SharedUtils.setAPPUserMyGuanZhuCount(myGuanZhuCount);
 	}
 
 	public void setNickName() {
@@ -106,6 +112,12 @@ public class UserSelfInfoInfoView implements OnClickListener {
 			mActivity
 					.startActivity(new Intent(mActivity, GuanZhuActivity.class)
 							.putExtra("user_id", SharedUtils.getIntUid()));
+			Utils.leftOutRightIn(mActivity);
+			break;
+		case R.id.layout_my_guanzhu:
+			mActivity.startActivity(new Intent(mActivity,
+					MyGuanZhuActivity.class).putExtra("user_id",
+					SharedUtils.getIntUid()));
 			Utils.leftOutRightIn(mActivity);
 			break;
 		default:

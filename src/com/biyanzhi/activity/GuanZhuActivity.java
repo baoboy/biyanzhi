@@ -20,6 +20,7 @@ import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.GetGuanZhuListTask;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 
@@ -34,12 +35,14 @@ public class GuanZhuActivity extends BaseActivity implements
 	private GuanZhuUserList list = new GuanZhuUserList();
 	private List<User> lists = new ArrayList<User>();
 	private GuanZhuListAdapter adapter;
+	private int user_id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_guan_zhu);
-		list.setGuanzhu_user_id(getIntent().getIntExtra("user_id", 0));
+		user_id = getIntent().getIntExtra("user_id", 0);
+		list.setGuanzhu_user_id(user_id);
 		initView();
 		setValue();
 		getLists();
@@ -58,7 +61,12 @@ public class GuanZhuActivity extends BaseActivity implements
 	}
 
 	private void setValue() {
-		txt_title.setText("关注");
+		if (user_id == SharedUtils.getIntUid()) {
+			txt_title.setText("关注我的");
+		} else {
+			txt_title.setText("关注TA的");
+
+		}
 		adapter = new GuanZhuListAdapter(this, lists);
 		mListView.setAdapter(adapter);
 	}

@@ -32,6 +32,7 @@ public class UserInfoPaser implements IParser {
 		String userBirthday = objUser.getString("user_birthday");
 		String user_address = objUser.getString("user_address");
 		int guanzhu_count = objUser.getInt("guanzhu_count");
+		int my_guanzhu_count = objUser.getInt("my_guanzhu_count");
 		boolean isGuanZhu = objUser.getBoolean("guanZhu");
 		String user_chat_id = objUser.getString("user_chat_id");
 		User member = new User();
@@ -42,6 +43,7 @@ public class UserInfoPaser implements IParser {
 		member.setUser_gender(userGender);
 		member.setUser_address(user_address);
 		member.setGuanzhu_count(guanzhu_count);
+		member.setMy_guanzhu_count(my_guanzhu_count);
 		member.setGuanZhu(isGuanZhu);
 		member.setUser_chat_id(user_chat_id);
 		JSONArray jsonArr = jsonObj.getJSONArray("pictures");

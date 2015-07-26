@@ -11,6 +11,7 @@ import com.biyanzhi.parser.SimpleParser;
 import com.biyanzhi.utils.SharedUtils;
 
 public class GuanZhu {
+	private static final String CANCLE_GUANZHU_API = "cancleGuanZhu.do";
 	private static final String ADD_GUANZHU_API = "addGuanZhu.do";
 	private int user_id;
 	private int guanzhu_user_id;
@@ -39,6 +40,19 @@ public class GuanZhu {
 		params.put("guanzhu_user_chat_id", guanzhu_user_chat_id);
 
 		Result ret = ApiRequest.request(ADD_GUANZHU_API, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError cancleGuanZhu() {
+		IParser parser = new SimpleParser();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("guanzhu_user_id", guanzhu_user_id);
+		params.put("user_id", user_id);
+		Result ret = ApiRequest.request(CANCLE_GUANZHU_API, params, parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			return RetError.NONE;
 		} else {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,19 +15,37 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.biyanzhi.R;
+import com.biyanzhi.activity.SelectPK2PictureActivity;
+import com.biyanzhi.data.PK1;
+import com.biyanzhi.data.PK2;
 import com.biyanzhi.data.PKData;
+import com.biyanzhi.data.Share;
+import com.biyanzhi.enums.RetError;
+import com.biyanzhi.popwindow.SharePopwindow;
+import com.biyanzhi.popwindow.SharePopwindow.SelectMenuOnclick;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
+import com.biyanzhi.task.UpDatePK1TicketCountTask;
+import com.biyanzhi.task.UpDatePK2TicketCountTask;
 import com.biyanzhi.utils.Constants;
+import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.ShareUtil;
+import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.RoundAngleImageView;
+import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
+import com.biyianzhi.interfaces.ConfirmDialog;
+
+import fynn.app.PromptDialog;
 
 public class PKAdapter extends BaseAdapter {
 	private Context mContext;
 	private int width;
 	private List<PKData> mlists;
+	private Dialog dialog;
 
 	public PKAdapter(Context mContext, List<PKData> mlists) {
 		this.mContext = mContext;
@@ -56,6 +75,11 @@ public class PKAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.pk_item, null);
 			holder = new ViewHolder();
+			holder.img_pk1_win = (ImageView) convertView
+					.findViewById(R.id.img_pk1_win);
+			holder.img_pk2_win = (ImageView) convertView
+					.findViewById(R.id.img_pk2_win);
+			holder.img_vs = (ImageView) convertView.findViewById(R.id.img_vs);
 			holder.img_pk1 = (RoundAngleImageView) convertView
 					.findViewById(R.id.img_pk1);
 			holder.img_pk2 = (RoundAngleImageView) convertView
@@ -72,16 +96,112 @@ public class PKAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		String pk1_picture = mlists.get(position).getPk1()
-				.getPk1_user_picture();
-		String pk2_picture = mlists.get(position).getPk2()
-				.getPk2_user_picture();
+		PK1 pk1 = mlists.get(position).getPk1();
+		PK2 pk2 = mlists.get(position).getPk2();
+		String pk1_picture = pk1.getPk1_user_picture();
+		String pk2_picture = pk2.getPk2_user_picture();
 		UniversalImageLoadTool.disPlay(pk1_picture, holder.img_pk1,
 				R.drawable.picture_default_head);
-		UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
-				R.drawable.picture_default_head);
-		holder.img_pk1.setOnClickListener(new OnClick(pk1_picture));
-		holder.img_pk2.setOnClickListener(new OnClick(pk2_picture));
+		int pk1_ticket_count = pk1.getPk1_ticket_count();
+		int pk2_ticket_count = pk2.getPk2_ticket_count();
+		int pk1_user_id = pk1.getPk1_user_id();
+		int pk2_user_id = pk2.getPk2_user_id();
+		if ("女".equals(mlists.get(position).getPk1().getPk1_user_gender())) {
+			if (pk1_ticket_count == 0) {
+				holder.btn_pk1.setText("她美");
+			} else {
+				holder.btn_pk1.setText("(+" + pk1_ticket_count + ")  她美");
+
+			}
+			if (pk2_ticket_count == 0) {
+				holder.btn_pk2.setText("她美");
+			} else {
+				holder.btn_pk2.setText("(+" + pk2_ticket_count + ")  她美");
+
+			}
+			holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
+					R.drawable.pk_girl_btn));
+			holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
+					R.drawable.pk_girl_btn));
+			holder.img_vs.setImageResource(R.drawable.girl_vs);
+			if (mlists.get(position).getPk2().getPk2_user_id() == 0) {
+				UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
+						R.drawable.girl_pk_default1);
+			} else {
+				UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
+						R.drawable.picture_default_head);
+			}
+		} else {
+			holder.btn_pk1.setText("他帅");
+			holder.btn_pk2.setText("他帅");
+			holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
+					R.drawable.pk_boy_btn));
+			holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
+					R.drawable.pk_boy_btn));
+			holder.img_vs.setImageResource(R.drawable.boy_vs);
+			if (pk2.getPk2_user_id() == 0) {
+				UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
+						R.drawable.boy_pk_default1);
+			} else {
+				UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
+						R.drawable.picture_default_head);
+			}
+		}
+		if (pk2.getPk2_user_id() == 0) {
+			holder.btn_pk1.setVisibility(View.GONE);
+			holder.btn_pk2.setVisibility(View.GONE);
+		} else {
+			holder.btn_pk1.setVisibility(View.VISIBLE);
+			holder.btn_pk2.setVisibility(View.VISIBLE);
+		}
+		if (SharedUtils.getIntUid() == pk1_user_id) {
+			holder.btn_pk1.setText("拉一下票");
+
+		}
+		if (SharedUtils.getIntUid() == pk2_user_id) {
+			holder.btn_pk2.setText("拉一下票");
+
+		}
+		if (mlists.get(position).getPk_state() == 1) {
+
+			if (mlists.get(position).getPk_winer_user_id() == pk1_user_id) {
+				if (pk1_user_id == SharedUtils.getIntUid()) {
+					holder.btn_pk1.setText("炫耀一下");
+					holder.btn_pk2.setText("失败");
+				} else {
+					holder.btn_pk1.setText("胜利");
+					if (pk2_user_id == SharedUtils.getIntUid()) {
+						holder.btn_pk2.setText("别灰心");
+					} else {
+						holder.btn_pk2.setText("失败");
+					}
+				}
+				holder.img_pk1_win.setVisibility(View.VISIBLE);
+				holder.img_pk2_win.setVisibility(View.GONE);
+
+			} else {
+				if (pk2_user_id == SharedUtils.getIntUid()) {
+					holder.btn_pk2.setText("炫耀一下");
+					holder.btn_pk1.setText("失败");
+				} else {
+					holder.btn_pk2.setText("胜利");
+					if (pk1_user_id == SharedUtils.getIntUid()) {
+						holder.btn_pk1.setText("别灰心");
+					} else {
+						holder.btn_pk1.setText("失败");
+					}
+				}
+				holder.img_pk2_win.setVisibility(View.VISIBLE);
+				holder.img_pk1_win.setVisibility(View.GONE);
+			}
+		} else {
+			holder.img_pk2_win.setVisibility(View.GONE);
+			holder.img_pk1_win.setVisibility(View.GONE);
+		}
+		holder.img_pk1.setOnClickListener(new OnClick(position));
+		holder.img_pk2.setOnClickListener(new OnClick(position));
+		holder.btn_pk1.setOnClickListener(new OnClick(position));
+		holder.btn_pk2.setOnClickListener(new OnClick(position));
 		return convertView;
 	}
 
@@ -90,21 +210,328 @@ public class PKAdapter extends BaseAdapter {
 		RoundAngleImageView img_pk2;
 		Button btn_pk1;
 		Button btn_pk2;
+		ImageView img_vs;
+		ImageView img_pk1_win;
+		ImageView img_pk2_win;
 
 	}
 
 	class OnClick implements OnClickListener {
-		private String path = "";
+		private int position;
 
-		public OnClick(String path) {
-			this.path = path;
+		public OnClick(int position) {
+			this.position = position;
 		}
 
 		@Override
 		public void onClick(View v) {
-			intent(path);
-		}
+			switch (v.getId()) {
+			case R.id.img_pk1:
+				intent(mlists.get(position).getPk1().getPk1_user_picture());
+				break;
+			case R.id.img_pk2:
+				if (SharedUtils.getIntUid() == mlists.get(position).getPk1()
+						.getPk1_user_id()) {
+					pkPrompt();
+					return;
+				}
+				if (mlists.get(position).getPk2().getPk2_user_id() == 0) {
+					if (!mlists.get(position).getPk1().getPk1_user_gender()
+							.equals(SharedUtils.getAPPUserGender())) {
+						genderPrompt();
+						return;
+					}
+					mContext.startActivity(new Intent(mContext,
+							SelectPK2PictureActivity.class).putExtra("pk_id",
+							mlists.get(position).getPk_id()));
+					Utils.leftOutRightIn(mContext);
+				} else {
+					intent(mlists.get(position).getPk2().getPk2_user_picture());
 
+				}
+				break;
+			case R.id.btn_pk1:
+				if (mlists.get(position).getPk_state() == 1) {
+					if (SharedUtils.getIntUid() == mlists.get(position)
+							.getPk1().getPk1_user_id()) {
+						xuanYaoShare(v, mlists.get(position).getPk1()
+								.getPk1_user_picture());
+					}
+					return;
+				}
+				if (SharedUtils.getIntUid() == mlists.get(position).getPk1()
+						.getPk1_user_id()) {
+					laPiaoShare(v, mlists.get(position).getPk1()
+							.getPk1_user_picture());
+					return;
+				}
+				if (mlists.get(position).isIs_voted()) {
+					votePrompt();
+					return;
+				}
+
+				upDatePK1Ticket(position);
+				break;
+			case R.id.btn_pk2:
+
+				if (mlists.get(position).getPk_state() == 1) {
+					if (SharedUtils.getIntUid() == mlists.get(position)
+							.getPk2().getPk2_user_id()) {
+						xuanYaoShare(v, mlists.get(position).getPk2()
+								.getPk2_user_picture());
+					}
+					return;
+				}
+				if (SharedUtils.getIntUid() == mlists.get(position).getPk2()
+						.getPk2_user_id()) {
+					laPiaoShare(v, mlists.get(position).getPk2()
+							.getPk2_user_picture());
+					return;
+				}
+				if (mlists.get(position).isIs_voted()) {
+					votePrompt();
+					return;
+				}
+				upDatePK2Ticket(position);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	private void laPiaoShare(View v, final String img_path) {
+		List<Share> lists = new ArrayList<Share>();
+		lists.add(new Share("微信朋友圈", R.drawable.share_wx_pyq));
+		lists.add(new Share("微信好友", R.drawable.share_wx_py));
+		lists.add(new Share("QQ好友", R.drawable.share_qq));
+		lists.add(new Share("QQ空间", R.drawable.share_qzone));
+		lists.add(new Share("新浪微博", R.drawable.share_sina));
+		SharePopwindow share_pop = new SharePopwindow(mContext, v, lists);
+		share_pop.setmSelectOnclick(new SelectMenuOnclick() {
+
+			@Override
+			public void onClickPosition(int position) {
+				switch (position) {
+				case 0:
+					ShareUtil
+							.shareWechatMoments(
+									"我正在  比颜值  中和对手PK,小伙伴快来给我投票支持我吧",
+									"我正在  比颜值  中和对手PK,小伙伴快来给我投票支持我吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+									img_path);
+					break;
+				case 1:
+					ShareUtil
+							.shareWechat(
+									"我正在  比颜值  中和对手PK,小伙伴快来给我投票支持我吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+									img_path);
+					break;
+				case 2:
+					ShareUtil
+							.shareQQ(
+									"我正在  比颜值  中和对手PK,小伙伴快来给我投票支持我吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+									img_path);
+					break;
+				case 3:
+					ShareUtil
+							.shareQQZone(
+									"我正在  比颜值  中和对手PK,小伙伴快来给我投票支持我吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+									img_path);
+					break;
+				case 4:
+					ShareUtil
+							.shareSinaWeiBo(
+									"我正在  比颜值  中和对手PK,小伙伴快来给我投票支持我吧",
+									"我正在  比颜值  中和对手PK,小伙伴快来给我投票支持我吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+									img_path);
+					break;
+				default:
+					break;
+				}
+			}
+		});
+		share_pop.show();
+	}
+
+	private void xuanYaoShare(View v, final String img_path) {
+		List<Share> lists = new ArrayList<Share>();
+		lists.add(new Share("微信朋友圈", R.drawable.share_wx_pyq));
+		lists.add(new Share("微信好友", R.drawable.share_wx_py));
+		lists.add(new Share("QQ好友", R.drawable.share_qq));
+		lists.add(new Share("QQ空间", R.drawable.share_qzone));
+		lists.add(new Share("新浪微博", R.drawable.share_sina));
+		SharePopwindow share_pop = new SharePopwindow(mContext, v, lists);
+		share_pop.setmSelectOnclick(new SelectMenuOnclick() {
+
+			@Override
+			public void onClickPosition(int position) {
+				switch (position) {
+				case 0:
+					ShareUtil
+							.shareWechatMoments(
+									"我在  比颜值  APP的PK大赛中成功PK掉了对手,获取了胜利。你们也快来PK吧",
+									"我在  比颜值  APP的PK大赛中成功PK掉了对手,获取了胜利。你们也快来PK吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+									img_path);
+					break;
+				case 1:
+					ShareUtil
+							.shareWechat(
+									"我在  比颜值  APP的PK大赛中成功PK掉了对手,获取了胜利。你们也快来PK吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+									img_path);
+					break;
+				case 2:
+					ShareUtil
+							.shareQQ(
+									"我在  比颜值  APP的PK大赛中成功PK掉了对手,获取了胜利。你们也快来PK吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+									img_path);
+					break;
+				case 3:
+					ShareUtil
+							.shareQQZone(
+									"我在  比颜值  APP的PK大赛中成功PK掉了对手,获取了胜利。你们也快来PK吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+									img_path);
+					break;
+				case 4:
+					ShareUtil
+							.shareSinaWeiBo(
+									"我在  比颜值  APP的PK大赛中成功PK掉了对手,获取了胜利。你们也快来PK吧",
+									"我在  比颜值  APP的PK大赛中成功PK掉了对手,获取了胜利。你们也快来PK吧http://123.56.46.254/biyanzhi/biyanzhi.html",
+									img_path);
+					break;
+				default:
+					break;
+				}
+			}
+		});
+		share_pop.show();
+	}
+
+	private void pkPrompt() {
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(mContext,
+				"不能与自己PK哦", "确定", null, new ConfirmDialog() {
+
+					@Override
+					public void onOKClick() {
+
+					}
+
+					public void onCancleClick() {
+
+					}
+				});
+		dialog.show();
+	}
+
+	private void genderPrompt() {
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(mContext,
+				"性别一样才能PK哦", "确定", null, new ConfirmDialog() {
+
+					@Override
+					public void onOKClick() {
+
+					}
+
+					public void onCancleClick() {
+
+					}
+				});
+		dialog.show();
+	}
+
+	private void winPrompt() {
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(mContext,
+				"PK已经结束了哦", "确定", null, new ConfirmDialog() {
+
+					@Override
+					public void onOKClick() {
+
+					}
+
+					public void onCancleClick() {
+
+					}
+				});
+		dialog.show();
+	}
+
+	private void votePrompt() {
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(mContext,
+				"该组PK你已经投过票了哦", "确定", null, new ConfirmDialog() {
+
+					@Override
+					public void onOKClick() {
+
+					}
+
+					public void onCancleClick() {
+
+					}
+				});
+		dialog.show();
+	}
+
+	private void upDatePK1Ticket(final int position) {
+		showDialow();
+		final int pk1_ticket_count = mlists.get(position).getPk1()
+				.getPk1_ticket_count();
+		UpDatePK1TicketCountTask task = new UpDatePK1TicketCountTask();
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				dismissDialog();
+				if (result != RetError.NONE) {
+					return;
+				}
+				mlists.get(position).getPk1()
+						.setPk1_ticket_count(pk1_ticket_count + 1);
+				mlists.get(position).setIs_voted(true);
+				if (mlists.get(position).getPk1().getPk1_ticket_count() >= 2) {
+					mlists.get(position).setPk_state(1);
+					mlists.get(position).setPk_winer_user_id(
+							mlists.get(position).getPk1().getPk1_user_id());
+				}
+				notifyDataSetChanged();
+			}
+		});
+		PKData pk = new PKData();
+		pk.setPk_id(mlists.get(position).getPk_id());
+		PK1 pk1 = new PK1();
+		pk1.setPk1_ticket_count(pk1_ticket_count + 1);
+		pk1.setPk1_user_id(mlists.get(position).getPk1().getPk1_user_id());
+		pk.setPk1(pk1);
+		task.executeParallel(pk);
+	}
+
+	private void upDatePK2Ticket(final int position) {
+		showDialow();
+		final int pk2_ticket_count = mlists.get(position).getPk2()
+				.getPk2_ticket_count();
+		UpDatePK2TicketCountTask task = new UpDatePK2TicketCountTask();
+		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
+			@Override
+			public void taskFinish(RetError result) {
+				dismissDialog();
+				if (result != RetError.NONE) {
+					return;
+				}
+				mlists.get(position).getPk2()
+						.setPk2_ticket_count(pk2_ticket_count + 1);
+				mlists.get(position).setIs_voted(true);
+				if (mlists.get(position).getPk2().getPk2_ticket_count() >= 2) {
+					mlists.get(position).setPk_state(1);
+					mlists.get(position).setPk_winer_user_id(
+							mlists.get(position).getPk2().getPk2_user_id());
+				}
+				notifyDataSetChanged();
+			}
+		});
+		PKData pk = new PKData();
+		pk.setPk_id(mlists.get(position).getPk_id());
+		PK2 pk2 = new PK2();
+		pk2.setPk2_ticket_count(pk2_ticket_count + 1);
+		pk2.setPk2_user_id(mlists.get(position).getPk2().getPk2_user_id());
+		pk.setPk2(pk2);
+		task.executeParallel(pk);
 	}
 
 	private void intent(String path) {
@@ -130,5 +557,16 @@ public class PKAdapter extends BaseAdapter {
 		LayoutParams layoutParams = btn.getLayoutParams();
 		layoutParams.width = width;
 		return layoutParams;
+	}
+
+	private void showDialow() {
+		dialog = DialogUtil.createLoadingDialog(mContext, "投票中...");
+		dialog.show();
+	}
+
+	private void dismissDialog() {
+		if (dialog != null) {
+			dialog.dismiss();
+		}
 	}
 }

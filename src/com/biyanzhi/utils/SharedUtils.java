@@ -206,6 +206,16 @@ public class SharedUtils {
 
 	}
 
+	public static void setAPPUserMyGuanZhuCount(int count) {
+		editor.putInt("my_guanzhu_count", count);
+		editor.commit();
+	}
+
+	public static int getAPPUserMyGuanZhuCount() {
+		return sharedPreferences.getInt("my_guanzhu_count", 0);
+
+	}
+
 	public static void setAPPUserChatID(String value) {
 		editor.putString("app_user_chat_id", value);
 		editor.commit();

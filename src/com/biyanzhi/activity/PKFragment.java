@@ -7,6 +7,7 @@ import in.srain.cube.views.ptr.PtrHandler;
 import in.srain.cube.views.ptr.header.StoreHouseHeader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.Dialog;
@@ -18,11 +19,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import cn.sharesdk.framework.ShareSDK;
 
 import com.biyanzhi.R;
 import com.biyanzhi.adapter.PKAdapter;
@@ -33,9 +37,10 @@ import com.biyanzhi.task.GetPKListTask;
 import com.biyanzhi.task.LoadMorePKListTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 
-public class PKFragment extends Fragment {
+public class PKFragment extends Fragment implements OnClickListener {
 	private ListView mListView;
 	private PKList list = new PKList();
 	private List<PKData> mlists = new ArrayList<PKData>();
@@ -46,6 +51,7 @@ public class PKFragment extends Fragment {
 	private View foot_view;
 	private LinearLayout layout_foot;
 	private int load_more_count = 10;
+	private ImageView img_pk;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,9 +67,16 @@ public class PKFragment extends Fragment {
 		dialog.show();
 		getPkList();
 		registerBoradcastReceiver();
+		ShareSDK.initSDK(getActivity());
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("BypassApproval", false);
+		ShareSDK.setPlatformDevInfo("Wechat", map);
+		ShareSDK.setPlatformDevInfo("WechatMoments", map);
 	}
 
 	private void initView() {
+		img_pk = (ImageView) getView().findViewById(R.id.img_pk);
+		img_pk.setOnClickListener(this);
 		foot_view = LayoutInflater.from(getActivity()).inflate(
 				R.layout.pk_foot_view, null);
 		layout_foot = (LinearLayout) foot_view
@@ -196,6 +209,8 @@ public class PKFragment extends Fragment {
 	public void registerBoradcastReceiver() {
 		IntentFilter myIntentFilter = new IntentFilter();
 		myIntentFilter.addAction(Constants.SEND_PK);
+		myIntentFilter.addAction(Constants.UPDATE_PK2);
+
 		// ×¢²á¹ã²¥
 		getActivity().registerReceiver(mBroadcastReceiver, myIntentFilter);
 	}
@@ -215,11 +230,41 @@ public class PKFragment extends Fragment {
 				}
 				getPkList();
 			}
+			if (action.equals(Constants.UPDATE_PK2)) {
+				int pk_id = intent.getIntExtra("pk_id", 0);
+				int pk2_user_id = intent.getIntExtra("pk2_user_id", 0);
+				String pk2_user_picture = intent
+						.getStringExtra("pk2_user_picture");
+				for (int i = 0; i < mlists.size(); i++) {
+					if (pk_id == mlists.get(i).getPk_id()) {
+						mlists.get(i).getPk2().setPk2_user_id(pk2_user_id);
+						mlists.get(i).getPk2()
+								.setPk2_user_picture(pk2_user_picture);
+						adapter.notifyDataSetChanged();
+						break;
+					}
+				}
+
+			}
 		}
 	};
 
 	public void onDestroy() {
 		super.onDestroy();
 		getActivity().unregisterReceiver(mBroadcastReceiver);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.img_pk:
+			startActivity(new Intent(getActivity(),
+					SelectPKPictureActivity.class));
+			Utils.leftOutRightIn(getActivity());
+			break;
+
+		default:
+			break;
+		}
 	};
 }

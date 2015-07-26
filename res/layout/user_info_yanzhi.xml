@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.biyanzhi.utils.ScrollViewGridViewWithHeaderAndFooter
+    <com.biyanzhi.view.ExpandGridView
         android:id="@+id/gridView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,6 +15,30 @@
         android:listSelector="#00000000"
         android:numColumns="2"
         android:scrollbars="none" >
-    </com.biyanzhi.utils.ScrollViewGridViewWithHeaderAndFooter>
+    </com.biyanzhi.view.ExpandGridView>
+
+    <LinearLayout
+        android:id="@+id/footview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <ProgressBar
+            android:id="@+id/pulldown_footer_loading"
+            android:layout_width="25dip"
+            android:layout_height="25dip"
+            android:indeterminateDrawable="@drawable/iamge_progress" />
+
+        <TextView
+            android:id="@+id/pulldown_footer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="加载更多中"
+            android:textColor="#c8313131"
+            android:textSize="16dp" />
+    </LinearLayout>
 
 </LinearLayout>

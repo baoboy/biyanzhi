@@ -240,6 +240,16 @@
             android:label="@string/title_activity_select_pkpicture"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.biyanzhi.activity.MyGuanZhuActivity"
+            android:label="@string/title_activity_my_guan_zhu"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.biyanzhi.activity.SelectPK2PictureActivity"
+            android:label="@string/title_activity_select_pk2_picture"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333"
-    android:orientation="vertical" >
+    android:background="#333333" >
 
-    <in.srain.cube.views.ptr.PtrClassicFrameLayout
-        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/rotate_header_grid_view_frame"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        cube_ptr:ptr_duration_to_close="200"
-        cube_ptr:ptr_duration_to_close_header="1000"
-        cube_ptr:ptr_keep_header_when_refresh="true"
-        cube_ptr:ptr_pull_to_fresh="false"
-        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
-        cube_ptr:ptr_resistance="1.7" >
+        android:layout_height="match_parent" >
 
-        <ListView
-            android:id="@+id/listView1"
+        <in.srain.cube.views.ptr.PtrClassicFrameLayout
+            xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rotate_header_grid_view_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:cacheColorHint="#00000000"
-            android:divider="#d5d5d5"
-            android:dividerHeight="0.5dip"
-            android:listSelector="#00000000"
-            android:scrollbars="none" >
-        </ListView>
-    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+            cube_ptr:ptr_duration_to_close="200"
+            cube_ptr:ptr_duration_to_close_header="1000"
+            cube_ptr:ptr_keep_header_when_refresh="true"
+            cube_ptr:ptr_pull_to_fresh="false"
+            cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+            cube_ptr:ptr_resistance="1.7" >
 
-</LinearLayout>
+            <ListView
+                android:id="@+id/listView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:cacheColorHint="#00000000"
+                android:divider="#d5d5d5"
+                android:dividerHeight="0.5dip"
+                android:listSelector="#00000000"
+                android:scrollbars="none" >
+            </ListView>
+        </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+        <ImageView
+            android:id="@+id/img_pk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="40dip"
+            android:layout_marginRight="30dip"
+            android:src="@drawable/icon_pk" />
+    </RelativeLayout>
+
+</RelativeLayout>

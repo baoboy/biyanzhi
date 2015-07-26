@@ -11,14 +11,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
 import com.biyanzhi.activity.SelectPKPictureActivity;
 import com.biyanzhi.data.PK2;
 import com.biyanzhi.data.Picture;
-import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.RoundAnglePictureImageView;
@@ -52,7 +50,8 @@ public class PictureAdapter extends BaseAdapter {
 			layoutParams.width = width;
 			layoutParams.height = width;
 			holder.imageView.setLayoutParams(layoutParams);
-			holder.img_pk = (ImageView) convertView.findViewById(R.id.img_pk);
+			// holder.img_pk = (ImageView)
+			// convertView.findViewById(R.id.img_pk);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -68,16 +67,16 @@ public class PictureAdapter extends BaseAdapter {
 		}
 		UniversalImageLoadTool.disPlay(path, holder.imageView,
 				R.drawable.picture_default_head);
-		if (picture.getUser() != null) {
-			if (SharedUtils.getAPPUserGender().equals(
-					picture.getUser().getUser_gender())
-					&& picture.getPublisher_id() != SharedUtils.getIntUid()) {
-				holder.img_pk.setVisibility(View.VISIBLE);
-			} else {
-				holder.img_pk.setVisibility(View.GONE);
-			}
-		}
-		holder.img_pk.setOnClickListener(new OnClick(position));
+		// if (picture.getUser() != null) {
+		// if (SharedUtils.getAPPUserGender().equals(
+		// picture.getUser().getUser_gender())
+		// && picture.getPublisher_id() != SharedUtils.getIntUid()) {
+		// holder.img_pk.setVisibility(View.VISIBLE);
+		// } else {
+		// holder.img_pk.setVisibility(View.GONE);
+		// }
+		// }
+		// holder.img_pk.setOnClickListener(new OnClick(position));
 		return convertView;
 	}
 
@@ -100,7 +99,7 @@ public class PictureAdapter extends BaseAdapter {
 		RoundAnglePictureImageView imageView;
 		TextView timeView;
 		TextView txt_score;
-		ImageView img_pk;
+		// ImageView img_pk;
 	}
 
 	class OnClick implements OnClickListener {
