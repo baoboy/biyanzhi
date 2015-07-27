@@ -53,7 +53,7 @@ public class GuanZhuUserList {
 	public RetError getMyGuanZhuListUsers() {
 		IParser parser = new GuanZhuListPaser();
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("user_id", guanzhu_user_id);
+		params.put("guanzhu_user_id", guanzhu_user_id);
 		Result ret = ApiRequest.request(GET_MY_GUANZHU_LIST_USERS_API, params,
 				parser);
 		if (ret.getStatus() == RetStatus.SUCC) {

@@ -1,9 +1,12 @@
 package com.biyanzhi.utils;
 
 public class Constants {
+	public static final int pk_count = 10;
+
 	public static final String COMMENT_USER_ID = "comment";
 	public static final String PLAY_SCORE_USER_ID = "playscore";
 	public static final String GUANZHU_USER_ID = "guanzhu";
+	public static final String PK_USER_ID = "pk";
 
 	public static final int REQUEST_CODE_GETIMAGE_BYSDCARD = 0;// —°‘ÒÕº∆¨
 	public static final int REQUEST_CODE_GETIMAGE_BYCAMERA = 1;// ≈ƒ’’

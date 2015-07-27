@@ -14,8 +14,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 import com.biyanzhi.R;
-import com.biyanzhi.R.id;
-import com.biyanzhi.R.layout;
 import com.biyanzhi.adapter.SelectPKPictureAdapter;
 import com.biyanzhi.data.PK1;
 import com.biyanzhi.data.PK2;
@@ -25,7 +23,6 @@ import com.biyanzhi.data.PictureList;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.popwindow.MenuPopwindow;
 import com.biyanzhi.popwindow.MenuPopwindow.OnMenuListOnclick;
-import com.biyanzhi.task.AddPKTask;
 import com.biyanzhi.task.GetPictureListByUserIDTask;
 import com.biyanzhi.task.GetPictureListMoreByUserIDTask;
 import com.biyanzhi.task.UpDatePK2Task;
@@ -50,12 +47,14 @@ public class SelectPK2PictureActivity extends BaseActivity {
 	private int load_more_count = 10;
 	private MenuPopwindow pop;
 	private int pk_id;
+	private int pk1_user_id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_pkpicture);
 		pk_id = getIntent().getIntExtra("pk_id", 0);
+		pk1_user_id = getIntent().getIntExtra("pk1_user_id", pk1_user_id);
 		initView();
 		setValue();
 		showDialog();
@@ -151,7 +150,7 @@ public class SelectPK2PictureActivity extends BaseActivity {
 
 	private void upDatePK2(final PK2 pk2) {
 		showDialog();
-		UpDatePK2Task task = new UpDatePK2Task();
+		UpDatePK2Task task = new UpDatePK2Task(SharedUtils.getAPPUserName());
 		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
 			@Override
 			public void taskFinish(RetError result) {
@@ -169,6 +168,7 @@ public class SelectPK2PictureActivity extends BaseActivity {
 			}
 		});
 		PK1 pk1 = new PK1();
+		pk1.setPk1_user_id(pk1_user_id);
 		PKData pk = new PKData();
 		pk.setPk1(pk1);
 		pk.setPk2(pk2);

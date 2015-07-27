@@ -1,13 +1,11 @@
 package com.biyanzhi.adapter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,15 +16,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.biyanzhi.R;
+import com.biyanzhi.activity.LoginActivity;
 import com.biyanzhi.activity.SelectPK2PictureActivity;
+import com.biyanzhi.activity.UserInfoActivity;
 import com.biyanzhi.data.PK1;
 import com.biyanzhi.data.PK2;
 import com.biyanzhi.data.PKData;
 import com.biyanzhi.data.Share;
 import com.biyanzhi.enums.RetError;
+import com.biyanzhi.popwindow.MenuPopwindow;
+import com.biyanzhi.popwindow.MenuPopwindow.OnMenuListOnclick;
 import com.biyanzhi.popwindow.SharePopwindow;
 import com.biyanzhi.popwindow.SharePopwindow.SelectMenuOnclick;
-import com.biyanzhi.showbigimage.ImagePagerActivity;
 import com.biyanzhi.task.UpDatePK1TicketCountTask;
 import com.biyanzhi.task.UpDatePK2TicketCountTask;
 import com.biyanzhi.utils.Constants;
@@ -132,8 +133,17 @@ public class PKAdapter extends BaseAdapter {
 						R.drawable.picture_default_head);
 			}
 		} else {
-			holder.btn_pk1.setText("他帅");
-			holder.btn_pk2.setText("他帅");
+			if (pk1_ticket_count == 0) {
+				holder.btn_pk1.setText("他帅");
+			} else {
+				holder.btn_pk1.setText("(+" + pk1_ticket_count + ")  他帅");
+
+			}
+			if (pk2_ticket_count == 0) {
+				holder.btn_pk2.setText("他帅");
+			} else {
+				holder.btn_pk2.setText("(+" + pk2_ticket_count + ")  他帅");
+			}
 			holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
 					R.drawable.pk_boy_btn));
 			holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
@@ -155,13 +165,22 @@ public class PKAdapter extends BaseAdapter {
 			holder.btn_pk2.setVisibility(View.VISIBLE);
 		}
 		if (SharedUtils.getIntUid() == pk1_user_id) {
-			holder.btn_pk1.setText("拉一下票");
+			if (pk1_ticket_count == 0) {
+				holder.btn_pk1.setText("拉一下票");
+			} else {
+				holder.btn_pk1.setText("(+" + pk1_ticket_count + ")" + "拉一下票");
+			}
 
 		}
 		if (SharedUtils.getIntUid() == pk2_user_id) {
-			holder.btn_pk2.setText("拉一下票");
+			if (pk2_ticket_count == 0) {
+				holder.btn_pk2.setText("拉一下票");
+			} else {
+				holder.btn_pk2.setText("(+" + pk2_ticket_count + ")" + "拉一下票");
+			}
 
 		}
+
 		if (mlists.get(position).getPk_state() == 1) {
 
 			if (mlists.get(position).getPk_winer_user_id() == pk1_user_id) {
@@ -227,11 +246,39 @@ public class PKAdapter extends BaseAdapter {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.img_pk1:
-				intent(mlists.get(position).getPk1().getPk1_user_picture());
-				break;
-			case R.id.img_pk2:
 				if (SharedUtils.getIntUid() == mlists.get(position).getPk1()
 						.getPk1_user_id()) {
+					Utils.showBigPicture(mlists.get(position).getPk1()
+							.getPk1_user_picture(), mContext);
+				} else {
+					showMenu(v, mlists.get(position).getPk1().getPk1_user_id(),
+							mlists.get(position).getPk1().getPk1_user_picture());
+				}
+
+				break;
+			case R.id.img_pk2:
+				if (SharedUtils.getIntUid() == 0) {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+					Utils.leftOutRightIn(mContext);
+					return;
+				}
+				if (mlists.get(position).getPk_state() == 1) {
+					if (SharedUtils.getIntUid() == mlists.get(position)
+							.getPk2().getPk2_user_id()) {
+						Utils.showBigPicture(mlists.get(position).getPk2()
+								.getPk2_user_picture(), mContext);
+					} else {
+						showMenu(v, mlists.get(position).getPk2()
+								.getPk2_user_id(), mlists.get(position)
+								.getPk2().getPk2_user_picture());
+					}
+
+					return;
+				}
+				if (SharedUtils.getIntUid() == mlists.get(position).getPk1()
+						.getPk1_user_id()
+						&& mlists.get(position).getPk2().getPk2_user_id() == 0) {
 					pkPrompt();
 					return;
 				}
@@ -243,17 +290,35 @@ public class PKAdapter extends BaseAdapter {
 					}
 					mContext.startActivity(new Intent(mContext,
 							SelectPK2PictureActivity.class).putExtra("pk_id",
-							mlists.get(position).getPk_id()));
+							mlists.get(position).getPk_id()).putExtra(
+							"pk1_user_id",
+							mlists.get(position).getPk1().getPk1_user_id()));
 					Utils.leftOutRightIn(mContext);
 				} else {
-					intent(mlists.get(position).getPk2().getPk2_user_picture());
+					if (SharedUtils.getIntUid() == mlists.get(position)
+							.getPk2().getPk2_user_id()) {
+						Utils.showBigPicture(mlists.get(position).getPk2()
+								.getPk2_user_picture(), mContext);
+					} else {
+						showMenu(v, mlists.get(position).getPk2()
+								.getPk2_user_id(), mlists.get(position)
+								.getPk2().getPk2_user_picture());
+					}
 
 				}
 				break;
 			case R.id.btn_pk1:
+				if (SharedUtils.getIntUid() == 0) {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+					Utils.leftOutRightIn(mContext);
+					return;
+				}
 				if (mlists.get(position).getPk_state() == 1) {
 					if (SharedUtils.getIntUid() == mlists.get(position)
-							.getPk1().getPk1_user_id()) {
+							.getPk1().getPk1_user_id()
+							&& mlists.get(position).getPk_winer_user_id() == mlists
+									.get(position).getPk1().getPk1_user_id()) {
 						xuanYaoShare(v, mlists.get(position).getPk1()
 								.getPk1_user_picture());
 					}
@@ -273,10 +338,17 @@ public class PKAdapter extends BaseAdapter {
 				upDatePK1Ticket(position);
 				break;
 			case R.id.btn_pk2:
-
+				if (SharedUtils.getIntUid() == 0) {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+					Utils.leftOutRightIn(mContext);
+					return;
+				}
 				if (mlists.get(position).getPk_state() == 1) {
 					if (SharedUtils.getIntUid() == mlists.get(position)
-							.getPk2().getPk2_user_id()) {
+							.getPk2().getPk2_user_id()
+							&& mlists.get(position).getPk_winer_user_id() == mlists
+									.get(position).getPk2().getPk2_user_id()) {
 						xuanYaoShare(v, mlists.get(position).getPk2()
 								.getPk2_user_picture());
 					}
@@ -485,7 +557,7 @@ public class PKAdapter extends BaseAdapter {
 				mlists.get(position).getPk1()
 						.setPk1_ticket_count(pk1_ticket_count + 1);
 				mlists.get(position).setIs_voted(true);
-				if (mlists.get(position).getPk1().getPk1_ticket_count() >= 2) {
+				if (mlists.get(position).getPk1().getPk1_ticket_count() >= Constants.pk_count) {
 					mlists.get(position).setPk_state(1);
 					mlists.get(position).setPk_winer_user_id(
 							mlists.get(position).getPk1().getPk1_user_id());
@@ -499,6 +571,9 @@ public class PKAdapter extends BaseAdapter {
 		pk1.setPk1_ticket_count(pk1_ticket_count + 1);
 		pk1.setPk1_user_id(mlists.get(position).getPk1().getPk1_user_id());
 		pk.setPk1(pk1);
+		PK2 pk2 = new PK2();
+		pk2.setPk2_user_id(mlists.get(position).getPk2().getPk2_user_id());
+		pk.setPk2(pk2);
 		task.executeParallel(pk);
 	}
 
@@ -517,7 +592,7 @@ public class PKAdapter extends BaseAdapter {
 				mlists.get(position).getPk2()
 						.setPk2_ticket_count(pk2_ticket_count + 1);
 				mlists.get(position).setIs_voted(true);
-				if (mlists.get(position).getPk2().getPk2_ticket_count() >= 2) {
+				if (mlists.get(position).getPk2().getPk2_ticket_count() >= Constants.pk_count) {
 					mlists.get(position).setPk_state(1);
 					mlists.get(position).setPk_winer_user_id(
 							mlists.get(position).getPk2().getPk2_user_id());
@@ -531,19 +606,35 @@ public class PKAdapter extends BaseAdapter {
 		pk2.setPk2_ticket_count(pk2_ticket_count + 1);
 		pk2.setPk2_user_id(mlists.get(position).getPk2().getPk2_user_id());
 		pk.setPk2(pk2);
+		PK1 pk1 = new PK1();
+		pk1.setPk1_user_id(mlists.get(position).getPk1().getPk1_user_id());
+		pk.setPk1(pk1);
 		task.executeParallel(pk);
 	}
 
-	private void intent(String path) {
-		List<String> imgUrl = new ArrayList<String>();
-		imgUrl.add(path);
-		Intent intent = new Intent(mContext, ImagePagerActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putSerializable(Constants.EXTRA_IMAGE_URLS,
-				(Serializable) imgUrl);
-		intent.putExtras(bundle);
-		intent.putExtra(Constants.EXTRA_IMAGE_INDEX, 1);
-		mContext.startActivity(intent);
+	private void showMenu(View v, final int user_id, final String picture_url) {
+		MenuPopwindow pop = new MenuPopwindow(mContext, v, new String[] {
+				"看大图", "查看PK者信息" });
+		pop.setCallback(new OnMenuListOnclick() {
+
+			@Override
+			public void onclick(int position) {
+				switch (position) {
+				case 0:
+					Utils.showBigPicture(picture_url, mContext);
+					break;
+				case 1:
+					mContext.startActivity(new Intent(mContext,
+							UserInfoActivity.class)
+							.putExtra("user_id", user_id));
+					Utils.leftOutRightIn(mContext);
+					break;
+				default:
+					break;
+				}
+			}
+		});
+		pop.show();
 	}
 
 	private LayoutParams getLayoutParams(RoundAngleImageView img) {

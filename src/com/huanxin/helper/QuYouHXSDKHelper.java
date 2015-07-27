@@ -65,6 +65,10 @@ public class QuYouHXSDKHelper extends HXSDKHelper {
 					return "有人关注了你";
 
 				}
+				if (Constants.PK_USER_ID.equals(message.getFrom())) {
+					return "PK通知";
+
+				}
 				if (Utils.isSystemUser(message.getFrom())) {
 					return "系统通知";
 				}
@@ -95,6 +99,10 @@ public class QuYouHXSDKHelper extends HXSDKHelper {
 				}
 				if (Constants.GUANZHU_USER_ID.equals(message.getFrom())) {
 					return "有人关注了你";
+
+				}
+				if (Constants.PK_USER_ID.equals(message.getFrom())) {
+					return "PK通知";
 
 				}
 				if (Utils.isSystemUser(message.getFrom())) {

@@ -250,6 +250,11 @@
             android:label="@string/title_activity_select_pk2_picture"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.biyanzhi.activity.PKPromptActivity"
+            android:label="@string/title_activity_pkprompt"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

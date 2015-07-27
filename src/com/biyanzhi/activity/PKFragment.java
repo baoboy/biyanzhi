@@ -37,6 +37,7 @@ import com.biyanzhi.task.GetPKListTask;
 import com.biyanzhi.task.LoadMorePKListTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
+import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 
@@ -120,11 +121,11 @@ public class PKFragment extends Fragment implements OnClickListener {
 		mPtrFrame.setPtrHandler(new PtrHandler() {
 			@Override
 			public void onRefreshBegin(PtrFrameLayout frame) {
-				if (mlists.size() > 0) {
-					list.setPk_time(mlists.get(0).getPk_time());
-				} else {
-					list.setPk_time("0");
-				}
+				// if (mlists.size() > 0) {
+				// list.setPk_time(mlists.get(0).getPk_time());
+				// } else {
+				list.setPk_time("0");
+				// }
 				getPkList();
 			}
 
@@ -189,6 +190,7 @@ public class PKFragment extends Fragment implements OnClickListener {
 		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
 			@Override
 			public void taskFinish(RetError result) {
+				load_more_count = 10;
 				mPtrFrame.refreshComplete();
 				if (dialog != null) {
 					dialog.dismiss();
@@ -196,6 +198,7 @@ public class PKFragment extends Fragment implements OnClickListener {
 				if (result != RetError.NONE) {
 					return;
 				}
+				mlists.clear();
 				mlists.addAll(0, list.getMlists());
 				adapter.notifyDataSetChanged();
 			}
@@ -258,6 +261,11 @@ public class PKFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.img_pk:
+			if (SharedUtils.getIntUid() == 0) {
+				startActivity(new Intent(getActivity(), LoginActivity.class));
+				Utils.leftOutRightIn(getActivity());
+				return;
+			}
 			startActivity(new Intent(getActivity(),
 					SelectPKPictureActivity.class));
 			Utils.leftOutRightIn(getActivity());

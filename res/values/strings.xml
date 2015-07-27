@@ -298,5 +298,6 @@
     <string name="title_activity_select_pkpicture">SelectPKPictureActivity</string>
     <string name="title_activity_my_guan_zhu">MyGuanZhuActivity</string>
     <string name="title_activity_select_pk2_picture">SelectPK2PictureActivity</string>
+    <string name="title_activity_pkprompt">PKPromptActivity</string>
 
 </resources>
