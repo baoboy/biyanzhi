@@ -188,7 +188,7 @@ public class PKAdapter extends BaseAdapter {
 					holder.btn_pk1.setText("炫耀一下");
 					holder.btn_pk2.setText("失败");
 				} else {
-					holder.btn_pk1.setText("胜利");
+					holder.btn_pk1.setText("PK成功");
 					if (pk2_user_id == SharedUtils.getIntUid()) {
 						holder.btn_pk2.setText("别灰心");
 					} else {
@@ -203,7 +203,7 @@ public class PKAdapter extends BaseAdapter {
 					holder.btn_pk2.setText("炫耀一下");
 					holder.btn_pk1.setText("失败");
 				} else {
-					holder.btn_pk2.setText("胜利");
+					holder.btn_pk2.setText("PK成功");
 					if (pk1_user_id == SharedUtils.getIntUid()) {
 						holder.btn_pk1.setText("别灰心");
 					} else {
@@ -246,6 +246,12 @@ public class PKAdapter extends BaseAdapter {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.img_pk1:
+				if (SharedUtils.getIntUid() == 0) {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+					Utils.leftOutRightIn(mContext);
+					return;
+				}
 				if (SharedUtils.getIntUid() == mlists.get(position).getPk1()
 						.getPk1_user_id()) {
 					Utils.showBigPicture(mlists.get(position).getPk1()

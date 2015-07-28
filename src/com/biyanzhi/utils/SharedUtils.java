@@ -71,6 +71,15 @@ public class SharedUtils {
 		return sharedPreferences.getBoolean("first_paly_score", true);
 	}
 
+	public static void setFirstPK(boolean flag) {
+		editor.putBoolean("first_pk", flag);
+		editor.commit();
+	}
+
+	public static boolean getFirstPK() {
+		return sharedPreferences.getBoolean("first_pk", true);
+	}
+
 	public static void setHunXinLoginFlag(boolean flag) {
 		editor.putBoolean("is_login_flag", flag);
 		editor.commit();
