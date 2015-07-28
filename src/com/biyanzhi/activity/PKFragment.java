@@ -1,5 +1,6 @@
 package com.biyanzhi.activity;
 
+import fynn.app.PromptDialog;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -38,8 +39,10 @@ import com.biyanzhi.task.LoadMorePKListTask;
 import com.biyanzhi.utils.Constants;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.SharedUtils;
+import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
+import com.biyianzhi.interfaces.ConfirmDialog;
 
 public class PKFragment extends Fragment implements OnClickListener {
 	private ListView mListView;
@@ -73,6 +76,9 @@ public class PKFragment extends Fragment implements OnClickListener {
 		map.put("BypassApproval", false);
 		ShareSDK.setPlatformDevInfo("Wechat", map);
 		ShareSDK.setPlatformDevInfo("WechatMoments", map);
+		if (SharedUtils.getFirstPK()) {
+			pkPrompt();
+		}
 	}
 
 	private void initView() {
@@ -90,16 +96,22 @@ public class PKFragment extends Fragment implements OnClickListener {
 
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+					UniversalImageLoadTool.resume();
+					adapter.notifyDataSetChanged();
+					// 滚动到底,请求下一页数据
+					if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
+						if (isLoading) {
+							return;
+						}
+						if (load_more_count < 9) {
+							return;
+						}
+						loadMorePKList();
+					}
+				} else {
+					UniversalImageLoadTool.pause();
 
-				// 滚动到底,请求下一页数据
-				if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
-					if (isLoading) {
-						return;
-					}
-					if (load_more_count < 9) {
-						return;
-					}
-					loadMorePKList();
 				}
 
 			}
@@ -226,11 +238,11 @@ public class PKFragment extends Fragment implements OnClickListener {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
 			if (action.equals(Constants.SEND_PK)) {
-				if (mlists.size() > 0) {
-					list.setPk_time(mlists.get(0).getPk_time());
-				} else {
-					list.setPk_time("0");
-				}
+				// if (mlists.size() > 0) {
+				// list.setPk_time(mlists.get(0).getPk_time());
+				// } else {
+				list.setPk_time("0");
+				// }
 				getPkList();
 			}
 			if (action.equals(Constants.UPDATE_PK2)) {
@@ -275,4 +287,21 @@ public class PKFragment extends Fragment implements OnClickListener {
 			break;
 		}
 	};
+
+	private void pkPrompt() {
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(getActivity(),
+				"PK规则", "在两人PK的过程中,谁的支持数率先达到十票,则为PK成功", "确定", null,
+				new ConfirmDialog() {
+
+					@Override
+					public void onOKClick() {
+						SharedUtils.setFirstPK(false);
+					}
+
+					public void onCancleClick() {
+
+					}
+				});
+		dialog.show();
+	}
 }

@@ -56,11 +56,15 @@ public class DialogUtil {
 	 * @param content
 	 */
 	public static PromptDialog.Builder confirmDialog(Context context,
-			String content, String txtOk, String txtCancle,
+			String title, String content, String txtOk, String txtCancle,
 			final ConfirmDialog callBack) {
 
 		PromptDialog.Builder dialog = new PromptDialog.Builder(context);
-		dialog.setTitle("提示");
+		if (title == null) {
+			dialog.setTitle("提示");
+		} else {
+			dialog.setTitle(title);
+		}
 		dialog.setViewStyle(PromptDialog.VIEW_STYLE_TITLEBAR);
 		dialog.setMessage(content);
 		dialog.setButton1(txtOk, new PromptDialog.OnClickListener() {
@@ -86,6 +90,12 @@ public class DialogUtil {
 
 		return dialog;
 
+	}
+
+	public static PromptDialog.Builder confirmDialog(Context context,
+			String content, String txtOk, String txtCancle,
+			final ConfirmDialog callBack) {
+		return confirmDialog(context, null, content, txtOk, txtCancle, callBack);
 	}
 
 	/**
