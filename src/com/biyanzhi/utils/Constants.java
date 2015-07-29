@@ -7,6 +7,7 @@ public class Constants {
 	public static final String PLAY_SCORE_USER_ID = "playscore";
 	public static final String GUANZHU_USER_ID = "guanzhu";
 	public static final String PK_USER_ID = "pk";
+	public static final String TIAOZHAN_PK_USER_ID = "tiaozhan_pk";
 
 	public static final int REQUEST_CODE_GETIMAGE_BYSDCARD = 0;// —°‘ÒÕº∆¨
 	public static final int REQUEST_CODE_GETIMAGE_BYCAMERA = 1;// ≈ƒ’’

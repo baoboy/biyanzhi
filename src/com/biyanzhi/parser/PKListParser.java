@@ -38,6 +38,10 @@ public class PKListParser implements IParser {
 			boolean is_voted = obj.getBoolean("is_voted");
 			int pk_state = obj.getInt("pk_state");
 			int pk_winer_user_id = obj.getInt("pk_winer_user_id");
+			int pk1_win_count = obj.getInt("pk1_win_count");
+			int pk1_fail_count = obj.getInt("pk1_fail_count");
+			int pk2_win_count = obj.getInt("pk2_win_count");
+			int pk2_fail_count = obj.getInt("pk2_fail_count");
 			PKData pk = new PKData();
 			PK1 pk1 = new PK1();
 			PK2 pk2 = new PK2();
@@ -45,9 +49,13 @@ public class PKListParser implements IParser {
 			pk1.setPk1_user_id(pk1_user_id);
 			pk1.setPk1_user_gender(pk1_user_gender);
 			pk1.setPk1_user_picture(pk1_user_picture);
+			pk1.setPk1_fail_count(pk1_fail_count);
+			pk1.setPk1_win_count(pk1_win_count);
 			pk2.setPk2_ticket_count(pk2_ticket_count);
 			pk2.setPk2_user_id(pk2_user_id);
 			pk2.setPk2_user_picture(pk2_user_picture);
+			pk2.setPk2_fail_count(pk2_fail_count);
+			pk2.setPk2_win_count(pk2_win_count);
 			pk.setPk1(pk1);
 			pk.setPk2(pk2);
 			pk.setPk_time(pk_time);

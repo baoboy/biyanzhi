@@ -24,6 +24,7 @@ import cn.sharesdk.framework.ShareSDK;
 
 import com.biyanzhi.R;
 import com.biyanzhi.adapter.PKAdapter;
+import com.biyanzhi.adapter.PKFinishedApapter;
 import com.biyanzhi.data.PKData;
 import com.biyanzhi.data.PKList;
 import com.biyanzhi.enums.RetError;
@@ -38,7 +39,7 @@ public class PKFinishedFramgent extends Fragment {
 	private PKList list = new PKList();
 	private List<PKData> mlists = new ArrayList<PKData>();
 	private Dialog dialog;
-	private PKAdapter adapter;
+	private PKFinishedApapter adapter;
 	private PtrClassicFrameLayout mPtrFrame;
 	private boolean isLoading = false;
 	private View foot_view;
@@ -104,7 +105,7 @@ public class PKFinishedFramgent extends Fragment {
 
 			}
 		});
-		adapter = new PKAdapter(getActivity(), mlists);
+		adapter = new PKFinishedApapter(getActivity(), mlists);
 		mListView.setAdapter(adapter);
 	}
 

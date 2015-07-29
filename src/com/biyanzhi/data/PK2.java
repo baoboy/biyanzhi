@@ -7,6 +7,25 @@ public class PK2 implements Serializable {
 	private String pk2_user_picture = "";
 	private int pk2_ticket_count;
 
+	private int pk2_win_count;
+	private int pk2_fail_count;
+
+	public int getPk2_win_count() {
+		return pk2_win_count;
+	}
+
+	public void setPk2_win_count(int pk2_win_count) {
+		this.pk2_win_count = pk2_win_count;
+	}
+
+	public int getPk2_fail_count() {
+		return pk2_fail_count;
+	}
+
+	public void setPk2_fail_count(int pk2_fail_count) {
+		this.pk2_fail_count = pk2_fail_count;
+	}
+
 	public int getPk2_user_id() {
 		return pk2_user_id;
 	}

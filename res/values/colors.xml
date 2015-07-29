@@ -27,5 +27,7 @@
     <color name="qq_bg_chat_bottom_color">#ebecee</color>
     <color name="txt_color">#485355</color>
     <color name="txt_desc_color">#666666</color>
+    <color name="boy">#51c6f5</color>
+    <color name="girl">#f99292</color>
 
 </resources>
