@@ -2,36 +2,62 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333" >
+    android:background="@color/white" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <in.srain.cube.views.ptr.PtrClassicFrameLayout
-            xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/rotate_header_grid_view_frame"
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/btn_pk_zhong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:paddingBottom="12dip"
+                android:paddingTop="12dip"
+                android:text="正在PK"
+                android:textColor="@color/pciture_blue"
+                android:textSize="15sp" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="0.5dip"
+                android:layout_height="match_parent"
+                android:background="#d5d5d5" />
+
+            <Button
+                android:id="@+id/btn_pk_jieguo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:paddingBottom="12dip"
+                android:paddingTop="12dip"
+                android:text="PK结果"
+                android:textColor="@color/pciture_text"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:layout_below="@+id/layout1"
+            android:background="#d5d5d5" />
+
+        <LinearLayout
+            android:id="@+id/main_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            cube_ptr:ptr_duration_to_close="200"
-            cube_ptr:ptr_duration_to_close_header="1000"
-            cube_ptr:ptr_keep_header_when_refresh="true"
-            cube_ptr:ptr_pull_to_fresh="false"
-            cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
-            cube_ptr:ptr_resistance="1.7" >
-
-            <ListView
-                android:id="@+id/listView1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:cacheColorHint="#00000000"
-                android:divider="#d5d5d5"
-                android:dividerHeight="0.5dip"
-                android:listSelector="#00000000"
-                android:scrollbars="none" >
-            </ListView>
-        </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+            android:layout_below="@+id/line"
+            android:orientation="horizontal" >
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/img_pk"

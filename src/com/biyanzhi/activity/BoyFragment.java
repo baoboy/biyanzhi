@@ -104,7 +104,8 @@ public class BoyFragment extends Fragment implements OnItemClickListener {
 			return;
 		}
 		startActivity(new Intent(getActivity(), PictureCommentActivity.class)
-				.putExtra("picture", mLists.get(position)));
+				.putExtra("picture", mLists.get(position)).putExtra(
+						"isCanPlayScore", false));
 		Utils.leftOutRightIn(getActivity());
 	}
 

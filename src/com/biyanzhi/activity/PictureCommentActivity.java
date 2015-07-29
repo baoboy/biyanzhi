@@ -96,6 +96,7 @@ public class PictureCommentActivity extends BaseActivity implements
 	private SharePopwindow share_pop;
 	private View line_ratingbar;
 	private int position = -1;
+	private boolean isCanPlayScore = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +104,7 @@ public class PictureCommentActivity extends BaseActivity implements
 		setContentView(R.layout.activity_comment);
 		picture = (Picture) getIntent().getSerializableExtra("picture");
 		position = getIntent().getIntExtra("position", -1);
+		isCanPlayScore = getIntent().getBooleanExtra("isCanPlayScore", true);
 		initView();
 		setValue();
 		viewLineVisible();
@@ -137,6 +139,13 @@ public class PictureCommentActivity extends BaseActivity implements
 			btn_del.setVisibility(View.GONE);
 		} else {
 			txt_share.setText("炫耀一下");
+		}
+		if (isCanPlayScore) {
+			ratingBar.setVisibility(View.VISIBLE);
+			line_ratingbar.setVisibility(View.VISIBLE);
+		} else {
+			ratingBar.setVisibility(View.GONE);
+			line_ratingbar.setVisibility(View.GONE);
 		}
 		txt_score = (TextView) findViewById(R.id.txt_score);
 		LayoutParams layoutParams = img.getLayoutParams();

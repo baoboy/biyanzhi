@@ -123,8 +123,9 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 		}
 		UniversalImageLoadTool.resume();
 		startActivity(new Intent(getActivity(), PictureCommentActivity.class)
-				.putExtra("picture", mLists.get(position)).putExtra("position",
-						position));
+				.putExtra("picture", mLists.get(position))
+				.putExtra("position", position)
+				.putExtra("isCanPlayScore", true));
 		Utils.leftOutRightIn(getActivity());
 	}
 
