@@ -157,7 +157,7 @@ public class TiaoZhanPromptActivity extends BaseActivity {
 				if (result != RetError.NONE) {
 					return;
 				}
-				ToastUtil.showToast("操作成功");
+				ToastUtil.showToast("快去PK大厅查看吧");
 				conversation.removeMessage(lastMessage.getMsgId());
 				finishThisActivity();
 			}
