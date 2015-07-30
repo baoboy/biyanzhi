@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.biyanzhi.R;
 import com.biyanzhi.activity.LoginActivity;
+import com.biyanzhi.activity.TiaoZhanPKSelectPictureActivity;
 import com.biyanzhi.activity.UserInfoActivity;
 import com.biyanzhi.data.PK1;
 import com.biyanzhi.data.PK2;
@@ -33,6 +34,9 @@ import com.biyanzhi.utils.SharedUtils;
 import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyanzhi.view.RoundAngleImageView;
+import com.biyianzhi.interfaces.ConfirmDialog;
+
+import fynn.app.PromptDialog;
 
 public class PKFinishedApapter extends BaseAdapter {
 	private Context mContext;
@@ -209,8 +213,7 @@ public class PKFinishedApapter extends BaseAdapter {
 					Utils.showBigPicture(mlists.get(position).getPk1()
 							.getPk1_user_picture(), mContext);
 				} else {
-					showMenu(v, mlists.get(position).getPk1().getPk1_user_id(),
-							mlists.get(position).getPk1().getPk1_user_picture());
+					showMenu(v, position);
 				}
 
 				break;
@@ -227,9 +230,7 @@ public class PKFinishedApapter extends BaseAdapter {
 						Utils.showBigPicture(mlists.get(position).getPk2()
 								.getPk2_user_picture(), mContext);
 					} else {
-						showMenu(v, mlists.get(position).getPk2()
-								.getPk2_user_id(), mlists.get(position)
-								.getPk2().getPk2_user_picture());
+						showMenu(v, position);
 					}
 
 				}
@@ -332,7 +333,7 @@ public class PKFinishedApapter extends BaseAdapter {
 		share_pop.show();
 	}
 
-	private void showMenu(View v, final int user_id, final String picture_url) {
+	private void showMenu(final View v, final int item_position) {
 		MenuPopwindow pop = new MenuPopwindow(mContext, v, new String[] {
 				"看大图", "PK  TA", "查看PK者信息" });
 		pop.setCallback(new OnMenuListOnclick() {
@@ -341,18 +342,51 @@ public class PKFinishedApapter extends BaseAdapter {
 			public void onclick(int position) {
 				switch (position) {
 				case 0:
-					Utils.showBigPicture(picture_url, mContext);
+					if (v.getId() == R.id.img_pk1) {
+						Utils.showBigPicture(mlists.get(item_position).getPk1()
+								.getPk1_user_picture(), mContext);
+					} else {
+						Utils.showBigPicture(mlists.get(item_position).getPk2()
+								.getPk2_user_picture(), mContext);
+					}
 					break;
 				case 1:
-					// mContext.startActivity(new Intent(mContext,
-					// UserInfoActivity.class)
-					// .putExtra("user_id", user_id));
-					// Utils.leftOutRightIn(mContext);
+					if (!SharedUtils.getAPPUserGender().equals(
+							mlists.get(item_position).getPk1()
+									.getPk1_user_gender())) {
+						genderPrompt();
+						return;
+					}
+					PK2 pk2 = new PK2();
+					if (v.getId() == R.id.img_pk1) {
+						pk2.setPk2_user_id(mlists.get(item_position).getPk1()
+								.getPk1_user_id());
+						pk2.setPk2_user_picture(mlists.get(item_position)
+								.getPk1().getPk1_user_picture());
+					} else {
+						pk2.setPk2_user_id(mlists.get(item_position).getPk2()
+								.getPk2_user_id());
+						pk2.setPk2_user_picture(mlists.get(item_position)
+								.getPk2().getPk2_user_picture());
+					}
+					mContext.startActivity(new Intent(mContext,
+							TiaoZhanPKSelectPictureActivity.class).putExtra(
+							"pk2", pk2));
+					Utils.leftOutRightIn(mContext);
 					break;
 				case 2:
-					mContext.startActivity(new Intent(mContext,
-							UserInfoActivity.class)
-							.putExtra("user_id", user_id));
+					if (v.getId() == R.id.img_pk1) {
+						mContext.startActivity(new Intent(mContext,
+								UserInfoActivity.class).putExtra("user_id",
+								mlists.get(item_position).getPk1()
+										.getPk1_user_id()));
+					} else {
+						mContext.startActivity(new Intent(mContext,
+								UserInfoActivity.class).putExtra("user_id",
+								mlists.get(item_position).getPk2()
+										.getPk2_user_id()));
+					}
+
 					Utils.leftOutRightIn(mContext);
 					break;
 				default:
@@ -361,6 +395,22 @@ public class PKFinishedApapter extends BaseAdapter {
 			}
 		});
 		pop.show();
+	}
+
+	private void genderPrompt() {
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(mContext,
+				"性别一样才能PK哦", "确定", null, new ConfirmDialog() {
+
+					@Override
+					public void onOKClick() {
+
+					}
+
+					public void onCancleClick() {
+
+					}
+				});
+		dialog.show();
 	}
 
 	private LayoutParams getLayoutParams(RoundAngleImageView img) {
@@ -382,14 +432,4 @@ public class PKFinishedApapter extends BaseAdapter {
 		return layoutParams;
 	}
 
-	private void showDialow() {
-		dialog = DialogUtil.createLoadingDialog(mContext, "投票中...");
-		dialog.show();
-	}
-
-	private void dismissDialog() {
-		if (dialog != null) {
-			dialog.dismiss();
-		}
-	}
 }

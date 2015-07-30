@@ -255,6 +255,16 @@
             android:label="@string/title_activity_pkprompt"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.biyanzhi.activity.TiaoZhanPKSelectPictureActivity"
+            android:label="@string/title_activity_tiao_zhan_pkselect_picture"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.biyanzhi.activity.TiaoZhanPromptActivity"
+            android:label="@string/title_activity_tiao_zhan_prompt"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

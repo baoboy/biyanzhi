@@ -133,13 +133,7 @@ public class PictureCommentActivity extends BaseActivity implements
 		edit_comment = (EditText) findViewById(R.id.edit_content);
 		comment_layout = (LinearLayout) findViewById(R.id.layout_comment);
 		ratingBar = (RatingBar) findViewById(R.id.ratingbar);
-		if (isCanPlayScore) {
-			ratingBar.setVisibility(View.VISIBLE);
-			line_ratingbar.setVisibility(View.VISIBLE);
-		} else {
-			ratingBar.setVisibility(View.GONE);
-			line_ratingbar.setVisibility(View.GONE);
-		}
+
 		// if (!picture.isIs_play_score()) {
 		// ratingBar.setVisibility(View.VISIBLE);
 		// line_ratingbar.setVisibility(View.VISIBLE);
@@ -153,6 +147,13 @@ public class PictureCommentActivity extends BaseActivity implements
 			btn_del.setVisibility(View.GONE);
 		} else {
 			txt_share.setText("炫耀一下");
+		}
+		if (isCanPlayScore) {
+			ratingBar.setVisibility(View.VISIBLE);
+			line_ratingbar.setVisibility(View.VISIBLE);
+		} else {
+			ratingBar.setVisibility(View.GONE);
+			line_ratingbar.setVisibility(View.GONE);
 		}
 		txt_score = (TextView) findViewById(R.id.txt_score);
 		LayoutParams layoutParams = img.getLayoutParams();

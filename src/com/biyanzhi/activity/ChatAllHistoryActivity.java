@@ -159,6 +159,8 @@ public class ChatAllHistoryActivity extends BaseActivity implements
 			conversation.resetUnsetMsgCount();
 		} else if (Constants.PK_USER_ID.equals(username)) {
 			intent = new Intent(this, PKPromptActivity.class);
+		} else if (Constants.TIAOZHAN_PK_USER_ID.equals(username)) {
+			intent = new Intent(this, TiaoZhanPromptActivity.class);
 		} else {
 			intent = new Intent(this, ChatActivity.class);
 			EMMessage message = conversation.getLastMessage();

@@ -14,6 +14,9 @@ public class PKData {
 	private static final String UPDATE_PK2_URL = "upDatePK2.do";
 	private static final String UPDATE_PK2_TICKET_COUNT_URL = "upDatePK2TicketCount.do";
 	private static final String UPDATE_PK1_TICKET_COUNT_URL = "upDatePK1TicketCount.do";
+	private static final String TIANZHAN_PK_URL = "tiaoZhanPK.do";
+	private static final String RECEIVE_PK_URL = "receivePK.do";
+	private static final String REFUSE_PK_URL = "refusePK.do";
 
 	private PK1 pk1;
 	private PK2 pk2;
@@ -138,6 +141,53 @@ public class PKData {
 		params.put("pk2_user_id", pk2.getPk2_user_id());
 		Result ret = ApiRequest.request(UPDATE_PK1_TICKET_COUNT_URL, params,
 				parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError tiaoZhanPK() {
+		IParser parser = new SimpleParser();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("pk1_user_id", pk1.getPk1_user_id());
+		params.put("pk1_user_gender", pk1.getPk1_user_gender());
+		params.put("pk1_user_picture", pk1.getPk1_user_picture());
+		params.put("pk2_user_id", pk2.getPk2_user_id());
+		params.put("pk2_user_picture", pk2.getPk2_user_picture());
+		Result ret = ApiRequest.request(TIANZHAN_PK_URL, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError receivePK() {
+		IParser parser = new SimpleParser();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("pk1_user_id", pk1.getPk1_user_id());
+		params.put("pk1_user_gender", pk1.getPk1_user_gender());
+		params.put("pk1_user_picture", pk1.getPk1_user_picture());
+		params.put("pk1_ticket_count", pk1.getPk1_ticket_count());
+		params.put("pk2_user_id", pk2.getPk2_user_id());
+		params.put("pk2_user_picture", pk2.getPk2_user_picture());
+		params.put("pk2_ticket_count", pk2.getPk2_ticket_count());
+		Result ret = ApiRequest.request(RECEIVE_PK_URL, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError refusePK() {
+		IParser parser = new SimpleParser();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("pk1_user_id", pk1.getPk1_user_id());
+		params.put("pk2_user_id", pk2.getPk2_user_id());
+		Result ret = ApiRequest.request(REFUSE_PK_URL, params, parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			return RetError.NONE;
 		} else {

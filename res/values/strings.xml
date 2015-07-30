@@ -299,5 +299,7 @@
     <string name="title_activity_my_guan_zhu">MyGuanZhuActivity</string>
     <string name="title_activity_select_pk2_picture">SelectPK2PictureActivity</string>
     <string name="title_activity_pkprompt">PKPromptActivity</string>
+    <string name="title_activity_tiao_zhan_pkselect_picture">TiaoZhanPKSelectPictureActivity</string>
+    <string name="title_activity_tiao_zhan_prompt">TiaoZhanPromptActivity</string>
 
 </resources>
