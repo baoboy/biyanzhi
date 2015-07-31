@@ -29,7 +29,7 @@ public class ImageCache {
 	}
 
 	private static ImageCache imageCache = null;
-
+ 
 	public static synchronized ImageCache getInstance() {
 		if (imageCache == null) {
 			imageCache = new ImageCache();

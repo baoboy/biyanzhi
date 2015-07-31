@@ -301,5 +301,6 @@
     <string name="title_activity_pkprompt">PKPromptActivity</string>
     <string name="title_activity_tiao_zhan_pkselect_picture">TiaoZhanPKSelectPictureActivity</string>
     <string name="title_activity_tiao_zhan_prompt">TiaoZhanPromptActivity</string>
+    <string name="title_activity_pkwin">PKWinActivity</string>
 
 </resources>

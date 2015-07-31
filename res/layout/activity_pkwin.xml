@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/girl_tiaozhan" />
+                android:src="@drawable/girl_vs" />
 
             <com.biyanzhi.view.RoundAngleImageView
                 android:id="@+id/img_pk2"
@@ -44,6 +44,24 @@
                 android:layout_centerVertical="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_avatar" />
+
+            <ImageView
+                android:id="@+id/img_pk1_win"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/win"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/img_pk2_win"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/img_pk2"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/win"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <TextView
@@ -64,12 +82,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt"
-            android:layout_marginLeft="15dip"
-            android:layout_marginRight="15dip"
+            android:layout_marginLeft="30dip"
+            android:layout_marginRight="30dip"
             android:layout_marginTop="30dp" >
 
             <Button
-                android:id="@+id/btn_ok"
+                android:id="@+id/btn_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dip"
@@ -77,20 +95,7 @@
                 android:background="@drawable/pk_girl_btn"
                 android:paddingBottom="5dip"
                 android:paddingTop="5dip"
-                android:text="接受PK"
-                android:textColor="@color/white"
-                android:textSize="17sp" />
-
-            <Button
-                android:id="@+id/btn_cancle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_weight="1"
-                android:background="@drawable/pk_girl_btn"
-                android:paddingBottom="5dip"
-                android:paddingTop="5dip"
-                android:text="拒绝PK"
+                android:text="炫耀一下"
                 android:textColor="@color/white"
                 android:textSize="17sp" />
         </LinearLayout>

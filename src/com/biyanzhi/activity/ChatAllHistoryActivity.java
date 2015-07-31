@@ -161,6 +161,8 @@ public class ChatAllHistoryActivity extends BaseActivity implements
 			intent = new Intent(this, PKPromptActivity.class);
 		} else if (Constants.TIAOZHAN_PK_USER_ID.equals(username)) {
 			intent = new Intent(this, TiaoZhanPromptActivity.class);
+		} else if (Constants.PK_WIN_USER_ID.equals(username)) {
+			intent = new Intent(this, PKWinActivity.class);
 		} else {
 			intent = new Intent(this, ChatActivity.class);
 			EMMessage message = conversation.getLastMessage();

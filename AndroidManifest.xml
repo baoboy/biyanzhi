@@ -265,6 +265,11 @@
             android:label="@string/title_activity_tiao_zhan_prompt"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.biyanzhi.activity.PKWinActivity"
+            android:label="@string/title_activity_pkwin"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>
