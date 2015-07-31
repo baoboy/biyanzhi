@@ -179,8 +179,8 @@ public class PictureCommentActivity extends BaseActivity implements
 				}
 				showScore((int) (arg1 * 20));
 				SharedUtils.setFirstPlayScore(false);
-				ratingBar.setVisibility(View.GONE);
-				line_ratingbar.setVisibility(View.GONE);
+				// ratingBar.setVisibility(View.GONE);
+				// line_ratingbar.setVisibility(View.GONE);
 			}
 		});
 		mListView.setOnItemClickListener(this);
