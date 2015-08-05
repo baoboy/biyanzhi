@@ -363,7 +363,7 @@ public class PictureCommentActivity extends BaseActivity implements
 
 	private void firstPrompt() {
 		PromptDialog.Builder dialog = DialogUtil.confirmDialog(this,
-				"点击星星为TA评分,每颗星星20分哦", "确定", null, new ConfirmDialog() {
+				"点击星星为TA评分,满分100分,每颗星星代表20分哦", "确定", null, new ConfirmDialog() {
 
 					@Override
 					public void onOKClick() {
