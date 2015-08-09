@@ -1,3 +1,4 @@
+ 
 # To enable ProGuard in your project, edit project.properties
 # to define the proguard.config property as described in that file.
 #
@@ -18,3 +19,235 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+-verbose
+ -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+
+-keepattributes *Annotation*
+-keepattributes Signature
+ 
+-libraryjars libs/baidumapapi_v3_2_0.jar
+-libraryjars libs/easemobchat_2.1.9.jar
+-libraryjars libs/httpmime-4.2.1.jar
+-libraryjars libs/locSDK_3.3.jar
+-libraryjars libs/MobTools.jar
+-libraryjars libs/ShareSDK-Core-2.6.0.jar
+-libraryjars libs/ShareSDK-QQ-2.6.0.jar
+-libraryjars libs/ShareSDK-QZone-2.6.0.jar
+-libraryjars libs/ShareSDK-SinaWeibo-2.6.0.jar
+-libraryjars libs/ShareSDK-Wechat-2.6.0.jar
+-libraryjars libs/ShareSDK-Wechat-Core-2.6.0.jar
+-libraryjars libs/ShareSDK-Wechat-Favorite-2.6.0.jar
+-libraryjars libs/ShareSDK-Wechat-Moments-2.6.0.jar
+-libraryjars libs/universalimageloaderlibrary1.9.0.jar
+
+
+ 
+
+# 保持哪些类不被混淆
+-keep class android.** {*; }
+-keep public class * extends android.view  
+-keep public class * extends android.app.Activity                             
+-keep public class * extends android.app.Application                            
+-keep public class * extends android.app.Service 
+-keep public class * extends android.content.pm                                
+-keep public class * extends android.content.BroadcastReceiver                
+-keep public class * extends android.content.ContentProvider                  
+           
+
+#ACRA specifics
+# we need line numbers in our stack traces otherwise they are pretty useless
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+
+# ACRA needs "annotations" so add this... 
+-keepattributes *Annotation*
+
+# 保持 native 方法不被混淆
+-keepclasseswithmembernames class * {                                        
+    native <methods>;
+}
+
+# 保持自定义控件类不被混淆
+-keepclasseswithmembers class * {                                               
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);     
+}
+
+-keepclasseswithmembers class * {
+    void onClick*(...);
+}
+-keepclasseswithmembers class * {
+    *** *Callback(...);
+}
+
+# keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+-keepclassmembers public class * extends android.view.View {
+   void set*(***);
+   *** get*();
+}
+
+# 保持自定义控件类不被混淆
+-keepclassmembers class * extends android.app.Activity {                       
+   public void *(android.view.View);
+}
+
+ 
+  
+
+
+
+-keep public class * extends android.app.Fragment  
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class * extends android.support.v4.**
+-keep public class com.android.vending.licensing.ILicensingService
+
+-keep class com.google.gson.stream.** { *; }
+-keep class com.google.gson.examples.android.model.** { *; }
+-keep class com.uuhelper.Application.** { *; }
+-keep class net.sourceforge.zbar.** { *; }
+-keep class com.google.android.gms.** { *; } 
+
+-keep class com.bank.pingan.model.** { *; }
+
+-keep class com.baidu.** { *; } 
+-keep class vi.com.gdi.bgl.android.**{*;}
+
+
+-keep class android.net.http.SslError
+-keep class android.webkit.**{*;}
+-keep class cn.sharesdk.**{*;}
+-keep class com.sina.**{*;}
+-keep class m.framework.**{*;}
+
+-keep public class * extends com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper
+-keep public class * extends com.j256.ormlite.android.apptools.OpenHelperManager
+ 
+-keep class com.android.vending.licensing.ILicensingService
+-keep class android.support.v4.** { *; }  
+-keep class org.apache.commons.net.** { *; }  
+-keep class com.tencent.** { *; }  
+ 
+-keep class com.easemob.** { *; }  
+-keep class com.easemob.chat.** {*;}
+
+-keep class com.biyanzhi.utils.SmileUtils { *; }
+ 
+-keep class com.biyanzhi.activity.ChatActivity { *; }
+ 
+-keep class com.j256.ormlite.** { *; }  
+ 
+ 
+-dontwarn android.support.v4.**  
+-dontwarn org.apache.commons.net.** 
+-dontwarn com.tencent.**  
+-dontwarn cn.sharesdk.**
+-dontwarn com.easemob.**
+
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+-keepclasseswithmembernames class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+-keepclasseswithmembernames class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+
+-keepclassmembers enum * {
+     public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+ # 保持 Parcelable 不被混淆
+-keep class * implements android.os.Parcelable {                             
+  public static final android.os.Parcelable$Creator *;
+}
+
+ 
+
+# http client
+-keep class org.apache.http.** {*; }
+
+ 
+ 
+# fastjson
+-keep class com.alibaba.fastjson.**{*;}
+# keep 所有的 javabean
+-keep class com.goldnet.mobile.entity.**{*;}   
+# keep 泛型
+-keepattributes Signature
+  
+#-keep public class * implements java.io.Serializable {  
+#    public *;  
+#}  
+  
+#-keepclassmembers class * implements java.io.Serializable {  
+#    static final long serialVersionUID;  
+#    private static final java.io.ObjectStreamField[] serialPersistentFields;  
+#    private void writeObject(java.io.ObjectOutputStream);  
+#    private void readObject(java.io.ObjectInputStream);  
+#    java.lang.Object writeReplace();  
+#    java.lang.Object readResolve();  
+#} 
+
+-keep class org.apache.commons.lang.**{*;}
+ 
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context);
+}
+
+-dontshrink
+-dontoptimize
+-dontwarn com.google.android.maps.**
+-dontwarn android.webkit.WebView
+
+-keepattributes Exceptions,InnerClasses,Signature
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+
+
+-keep public class javax.**
+-keep public class android.webkit.**
+ 
+
+-dontwarn org.apache.commons.**
+-keep class org.apache.commons.** { *;}
+
+-dontwarn org.slf4j.impl.**
+-keep class org.slf4j.impl.** { *;}
+
+-dontwarn a.a.**
+-keep class a.a.** { *;}
+
+-dontwarn com.fourmob.datetimepicker.**
+-keep class com.fourmob.datetimepicker.** { *;}
+
+
+-dontwarn  org.a.a.**
+-keep class  org.a.a.** { *;}
+
+-keep class **.R$* {  
+ *;  
+}
+
+
+ 
