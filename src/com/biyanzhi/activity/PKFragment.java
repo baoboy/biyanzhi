@@ -21,8 +21,10 @@ public class PKFragment extends Fragment implements OnClickListener {
 	private FragmentManager manager;
 	private PKIngFrament pk_zhong_fragment;
 	private PKFinishedFramgent pk_jieguo_fragment;
+	private PKResultFragment pk_result_fragment;
 	private Button btn_pk_zhong;
 	private Button btn_pk_jieguo;
+	private Button btn_pk_bang;
 	private ImageView img_pk;
 
 	@Override
@@ -42,12 +44,14 @@ public class PKFragment extends Fragment implements OnClickListener {
 		img_pk = (ImageView) getView().findViewById(R.id.img_pk);
 		btn_pk_zhong = (Button) getView().findViewById(R.id.btn_pk_zhong);
 		btn_pk_jieguo = (Button) getView().findViewById(R.id.btn_pk_jieguo);
+		btn_pk_bang = (Button) getView().findViewById(R.id.btn_pk_bang);
 		setListener();
 	}
 
 	private void setListener() {
 		btn_pk_zhong.setOnClickListener(this);
 		btn_pk_jieguo.setOnClickListener(this);
+		btn_pk_bang.setOnClickListener(this);
 		img_pk.setOnClickListener(this);
 
 	}
@@ -69,8 +73,13 @@ public class PKFragment extends Fragment implements OnClickListener {
 					R.color.pciture_blue));
 			btn_pk_jieguo.setTextColor(getResources().getColor(
 					R.color.pciture_text));
+			btn_pk_bang.setTextColor(getResources().getColor(
+					R.color.pciture_text));
 			if (pk_jieguo_fragment != null) {
 				fraTra.hide(pk_jieguo_fragment);
+			}
+			if (pk_result_fragment != null) {
+				fraTra.hide(pk_result_fragment);
 			}
 			fraTra.show(pk_zhong_fragment);
 			break;
@@ -78,6 +87,8 @@ public class PKFragment extends Fragment implements OnClickListener {
 			btn_pk_jieguo.setTextColor(getResources().getColor(
 					R.color.pciture_blue));
 			btn_pk_zhong.setTextColor(getResources().getColor(
+					R.color.pciture_text));
+			btn_pk_bang.setTextColor(getResources().getColor(
 					R.color.pciture_text));
 			if (pk_jieguo_fragment == null) {
 				pk_jieguo_fragment = new PKFinishedFramgent();
@@ -88,7 +99,31 @@ public class PKFragment extends Fragment implements OnClickListener {
 			if (pk_zhong_fragment != null) {
 				fraTra.hide(pk_zhong_fragment);
 			}
+			if (pk_result_fragment != null) {
+				fraTra.hide(pk_result_fragment);
+			}
 			fraTra.show(pk_jieguo_fragment);
+			break;
+		case R.id.btn_pk_bang:
+			btn_pk_bang.setTextColor(getResources().getColor(
+					R.color.pciture_blue));
+			btn_pk_zhong.setTextColor(getResources().getColor(
+					R.color.pciture_text));
+			btn_pk_jieguo.setTextColor(getResources().getColor(
+					R.color.pciture_text));
+			if (pk_result_fragment == null) {
+				pk_result_fragment = new PKResultFragment();
+				fraTra.add(R.id.main_layout, pk_result_fragment);
+			} else {
+				pk_result_fragment.onResume();
+			}
+			if (pk_zhong_fragment != null) {
+				fraTra.hide(pk_zhong_fragment);
+			}
+			if (pk_jieguo_fragment != null) {
+				fraTra.hide(pk_jieguo_fragment);
+			}
+			fraTra.show(pk_result_fragment);
 			break;
 		case R.id.img_pk:
 			if (SharedUtils.getIntUid() == 0) {

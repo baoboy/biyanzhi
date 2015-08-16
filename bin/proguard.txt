@@ -125,6 +125,7 @@
 # view res/layout/activity_select_pkpicture.xml #generated:14
 # view res/layout/activity_tiao_zhan_pkselect_picture.xml #generated:14
 # view res/layout/biyanzhi_layout.xml #generated:21
+# view res/layout/pk_result_fragment_layout.xml #generated:21
 -keep class com.biyanzhi.utils.GridViewWithHeaderAndFooter { <init>(...); }
 
 # view res/layout/activity_chat.xml #generated:209
@@ -195,6 +196,7 @@
 -keep class com.biyanzhi.view.RoundAngleImageView { <init>(...); }
 
 # view res/layout/grid_view_item_1.xml #generated:15
+# view res/layout/pk_reslult_item_layout.xml #generated:15
 -keep class com.biyanzhi.view.RoundAnglePictureImageView { <init>(...); }
 
 # view res/layout/activity_comment.xml #generated:214
@@ -234,6 +236,7 @@
 # view res/layout/boy_fragment_layout.xml #generated:8
 # view res/layout/girl_fragment_layout.xml #generated:8
 # view res/layout/pk_jieguo_fragment_layout.xml #generated:11
+# view res/layout/pk_result_fragment_layout.xml #generated:8
 # view res/layout/pk_zhong_fragment_layout.xml #generated:11
 -keep class in.srain.cube.views.ptr.PtrClassicFrameLayout { <init>(...); }
 
