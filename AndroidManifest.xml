@@ -270,6 +270,11 @@
             android:label="@string/title_activity_pkwin"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.biyanzhi.activity.PKZhanJiActivity"
+            android:label="@string/title_activity_pkzhan_ji"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

@@ -27,6 +27,12 @@ public class PKResultListParser implements IParser {
 			JSONObject obj = (JSONObject) jsonArr.opt(i);
 			Gson gson = new Gson();
 			PKResult result = gson.fromJson(obj.toString(), PKResult.class);
+			if (result == null) {
+				continue;
+			}
+			if (result.getUser() == null) {
+				continue;
+			}
 			lists.add(result);
 		}
 

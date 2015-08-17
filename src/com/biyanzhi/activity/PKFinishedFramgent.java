@@ -23,7 +23,6 @@ import android.widget.ListView;
 import cn.sharesdk.framework.ShareSDK;
 
 import com.biyanzhi.R;
-import com.biyanzhi.adapter.PKAdapter;
 import com.biyanzhi.adapter.PKFinishedApapter;
 import com.biyanzhi.data.PKData;
 import com.biyanzhi.data.PKList;

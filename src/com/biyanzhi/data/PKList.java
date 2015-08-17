@@ -19,6 +19,9 @@ public class PKList {
 	private static final String LOAD_PK_ING_MORE_PK_LIST = "loadPKIngMorePKList.do";
 	private static final String GET_PK_FINISHED_LIST_URL = "getPKFinishedList.do";
 	private static final String LOAD_PK_FINISHED_ING_MORE_PK_LIST = "loadPKFinishedMorePKList.do";
+	private static final String GETPKLISTBYUSERID = "getPKListByUserID.do";
+	private static final String LOADMOREPKLISTBYUSERID = "loadMorePKListByUserID.do";
+
 	private List<PKData> mlists = new ArrayList<PKData>();
 	private String pk_time = "";
 
@@ -121,6 +124,38 @@ public class PKList {
 		params.put("pk_time", pk_time);
 		Result ret = ApiRequest.request(LOAD_PK_FINISHED_ING_MORE_PK_LIST,
 				params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			PKList pk_lists = (PKList) ret.getData();
+			this.mlists.clear();
+			this.mlists = pk_lists.getMlists();
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError getPKListByUserID(int pk_user_id) {
+		IParser parser = new PKListParser();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pk_time", pk_time);
+		params.put("pk_user_id", pk_user_id);
+		Result ret = ApiRequest.request(GETPKLISTBYUSERID, params, parser);
+		if (ret.getStatus() == RetStatus.SUCC) {
+			PKList pk_lists = (PKList) ret.getData();
+			this.mlists.clear();
+			this.mlists = pk_lists.getMlists();
+			return RetError.NONE;
+		} else {
+			return ret.getErr();
+		}
+	}
+
+	public RetError loadMorePKListByUserID(int pk_user_id) {
+		IParser parser = new PKListParser();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pk_time", pk_time);
+		params.put("pk_user_id", pk_user_id);
+		Result ret = ApiRequest.request(LOADMOREPKLISTBYUSERID, params, parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			PKList pk_lists = (PKList) ret.getData();
 			this.mlists.clear();

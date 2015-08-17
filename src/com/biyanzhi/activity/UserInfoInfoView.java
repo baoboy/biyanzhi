@@ -40,7 +40,8 @@ public class UserInfoInfoView implements OnClickListener {
 		layout_guanzhu.setOnClickListener(this);
 		mContentRootView.findViewById(R.id.layout_ta_guanzhu)
 				.setOnClickListener(this);
-
+		mContentRootView.findViewById(R.id.layout_pk_zhanji)
+				.setOnClickListener(this);
 	}
 
 	public void setValue(String str_address, String str_gender,
@@ -64,6 +65,12 @@ public class UserInfoInfoView implements OnClickListener {
 		case R.id.layout_ta_guanzhu:
 			mActivity.startActivity(new Intent(mActivity,
 					MyGuanZhuActivity.class).putExtra("user_id",
+					mActivity.getUserID()));
+			Utils.leftOutRightIn(mActivity);
+			break;
+		case R.id.layout_pk_zhanji:
+			mActivity.startActivity(new Intent(mActivity,
+					PKZhanJiActivity.class).putExtra("user_id",
 					mActivity.getUserID()));
 			Utils.leftOutRightIn(mActivity);
 		default:

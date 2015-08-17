@@ -61,6 +61,8 @@ public class UserSelfInfoInfoView implements OnClickListener {
 				.setOnClickListener(this);
 		mContentRootView.findViewById(R.id.layout_my_guanzhu)
 				.setOnClickListener(this);
+		mContentRootView.findViewById(R.id.layout_pk_zhanji)
+				.setOnClickListener(this);
 		setValue();
 	}
 
@@ -117,6 +119,12 @@ public class UserSelfInfoInfoView implements OnClickListener {
 		case R.id.layout_my_guanzhu:
 			mActivity.startActivity(new Intent(mActivity,
 					MyGuanZhuActivity.class).putExtra("user_id",
+					SharedUtils.getIntUid()));
+			Utils.leftOutRightIn(mActivity);
+			break;
+		case R.id.layout_pk_zhanji:
+			mActivity.startActivity(new Intent(mActivity,
+					PKZhanJiActivity.class).putExtra("user_id",
 					SharedUtils.getIntUid()));
 			Utils.leftOutRightIn(mActivity);
 			break;
