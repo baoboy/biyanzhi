@@ -73,6 +73,9 @@ public class RoundAngleImageView extends ImageView {
 	public void draw(Canvas canvas) {
 		Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(),
 				Config.ARGB_8888);
+		if (bitmap == null) {
+			return;
+		}
 		Canvas canvas2 = new Canvas(bitmap);
 		super.draw(canvas2);
 		drawLiftUp(canvas2);

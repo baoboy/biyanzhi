@@ -36,6 +36,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
@@ -274,7 +275,9 @@ public class ChatActivity extends BaseActivity implements OnItemClickListener,
 				for (int i = 1; i < 4; i++) {
 					views.add(getGridChildView(i));
 				}
+				Looper.prepare();
 				mEmjoiHandler.sendEmptyMessage(0);
+				Looper.loop();
 			}
 		}.start();
 		edittext_layout.requestFocus();

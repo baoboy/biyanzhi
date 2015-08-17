@@ -126,7 +126,13 @@ public class PictureServerCommentActivity extends BaseActivity implements
 		user_chat_id = getIntent().getStringExtra("user_chat_id");
 		conversation = EMChatManager.getInstance()
 				.getConversation(user_chat_id);
+		if (conversation == null) {
+			return;
+		}
 		lastMessage = conversation.getLastMessage();
+		if (lastMessage == null) {
+			return;
+		}
 		try {
 			picture_id = lastMessage.getIntAttribute("picture_id");
 			picture.setPicture_id(picture_id);

@@ -189,7 +189,8 @@ public class RegisterActivity extends FragmentActivity implements
 
 		case PhotoUtils.INTENT_REQUEST_CODE_CAMERA:
 
-			if (resultCode == RESULT_OK) {
+			if (resultCode == RESULT_OK && reBasicInfo != null) {
+
 				String path = reBasicInfo.getTakePicturePath();
 				// Bitmap bitmap = BitmapFactory.decodeFile(path);
 				Bitmap bitmap = BitmapUtils.FitSizeImg(path);

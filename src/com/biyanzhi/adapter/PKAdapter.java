@@ -120,10 +120,19 @@ public class PKAdapter extends BaseAdapter {
 				holder.btn_pk2.setText("(+" + pk2_ticket_count + ")  ËýÃÀ");
 
 			}
-			holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
-					R.drawable.pk_girl_btn));
-			holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
-					R.drawable.pk_girl_btn));
+
+			int sdk = android.os.Build.VERSION.SDK_INT;
+			if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+				holder.btn_pk1.setBackgroundDrawable(mContext.getResources()
+						.getDrawable(R.drawable.pk_girl_btn));
+				holder.btn_pk2.setBackgroundDrawable(mContext.getResources()
+						.getDrawable(R.drawable.pk_girl_btn));
+			} else {
+				holder.btn_pk1.setBackground(mContext.getResources()
+						.getDrawable(R.drawable.pk_girl_btn));
+				holder.btn_pk2.setBackground(mContext.getResources()
+						.getDrawable(R.drawable.pk_girl_btn));
+			}
 			holder.img_vs.setImageResource(R.drawable.girl_vs);
 			if (mlists.get(position).getPk2().getPk2_user_id() == 0) {
 				UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
@@ -144,10 +153,18 @@ public class PKAdapter extends BaseAdapter {
 			} else {
 				holder.btn_pk2.setText("(+" + pk2_ticket_count + ")  ËûË§");
 			}
-			holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
-					R.drawable.pk_boy_btn));
-			holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
-					R.drawable.pk_boy_btn));
+			int sdk = android.os.Build.VERSION.SDK_INT;
+			if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+				holder.btn_pk1.setBackgroundDrawable(mContext.getResources()
+						.getDrawable(R.drawable.pk_boy_btn));
+				holder.btn_pk2.setBackgroundDrawable(mContext.getResources()
+						.getDrawable(R.drawable.pk_boy_btn));
+			} else {
+				holder.btn_pk1.setBackground(mContext.getResources()
+						.getDrawable(R.drawable.pk_boy_btn));
+				holder.btn_pk2.setBackground(mContext.getResources()
+						.getDrawable(R.drawable.pk_boy_btn));
+			}
 			holder.img_vs.setImageResource(R.drawable.boy_vs);
 			if (pk2.getPk2_user_id() == 0) {
 				UniversalImageLoadTool.disPlay(pk2_picture, holder.img_pk2,
