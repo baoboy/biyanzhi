@@ -43,6 +43,7 @@
 -libraryjars libs/ShareSDK-Wechat-Favorite-2.6.0.jar
 -libraryjars libs/ShareSDK-Wechat-Moments-2.6.0.jar
 -libraryjars libs/universalimageloaderlibrary1.9.0.jar
+ 
 
 
  
@@ -249,5 +250,21 @@
  *;  
 }
 
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *; }
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.biyanzhi.data.** { *; }
+
+##---------------End: proguard configuration for Gson  ----------
 
  

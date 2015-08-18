@@ -42,9 +42,9 @@ public class PKZhanJiActivity extends BaseActivity {
 	private boolean isLoading = false;
 	private View foot_view;
 	private LinearLayout layout_foot;
-	private int load_more_count = 10;
 	private int user_id = 0;
 	private TextView txt_title;
+	private int page = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class PKZhanJiActivity extends BaseActivity {
 		initView();
 		dialog = DialogUtil.createLoadingDialog(this);
 		dialog.show();
-		getPkList();
+		getPkList(page);
 		ShareSDK.initSDK(this);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("BypassApproval", false);
@@ -72,8 +72,9 @@ public class PKZhanJiActivity extends BaseActivity {
 				.findViewById(R.id.layout_footview);
 		initFefushView();
 		mListView = (ListView) findViewById(R.id.listView1);
-		mListView.addFooterView(foot_view);
+		mListView.addFooterView(foot_view, null, true);
 		layout_foot.setVisibility(View.GONE);
+		mListView.setFooterDividersEnabled(false);
 		mListView.setOnScrollListener(new OnScrollListener() {
 
 			@Override
@@ -86,10 +87,14 @@ public class PKZhanJiActivity extends BaseActivity {
 						if (isLoading) {
 							return;
 						}
-						if (load_more_count < 9) {
+						if (list.getLoad_more_count() < 9) {
 							return;
 						}
-						loadMorePKList();
+						// loadMorePKList();
+						layout_foot.setVisibility(View.VISIBLE);
+						mListView.setSelection(mListView.getCount() - 1);
+						isLoading = true;
+						getPkList(++page);
 					}
 				} else {
 					UniversalImageLoadTool.pause();
@@ -117,9 +122,11 @@ public class PKZhanJiActivity extends BaseActivity {
 				// if (mlists.size() > 0) {
 				// list.setPk_time(mlists.get(0).getPk_time());
 				// } else {
-				list.setPk_time("0");
+				// list.setPk_time("0");
 				// }
-				getPkList();
+				// getPkList(1);
+				mPtrFrame.refreshComplete();
+
 			}
 
 			@Override
@@ -169,7 +176,6 @@ public class PKZhanJiActivity extends BaseActivity {
 				if (result != RetError.NONE) {
 					return;
 				}
-				load_more_count = list.getMlists().size();
 				mlists.addAll(list.getMlists());
 				adapter.notifyDataSetChanged();
 				isLoading = false;
@@ -179,12 +185,11 @@ public class PKZhanJiActivity extends BaseActivity {
 		task.executeParallel(list);
 	}
 
-	private void getPkList() {
-		GetPKListByUserIDTask task = new GetPKListByUserIDTask(user_id);
+	private void getPkList(int page) {
+		GetPKListByUserIDTask task = new GetPKListByUserIDTask(user_id, page);
 		task.setmCallBack(new AbstractTaskPostCallBack<RetError>() {
 			@Override
 			public void taskFinish(RetError result) {
-				load_more_count = 10;
 				mPtrFrame.refreshComplete();
 				if (dialog != null) {
 					dialog.dismiss();
@@ -192,9 +197,11 @@ public class PKZhanJiActivity extends BaseActivity {
 				if (result != RetError.NONE) {
 					return;
 				}
-				mlists.clear();
-				mlists.addAll(0, list.getMlists());
+				// mlists.clear();
+				mlists.addAll(list.getMlists());
 				adapter.notifyDataSetChanged();
+				isLoading = false;
+				layout_foot.setVisibility(View.INVISIBLE);
 			}
 		});
 		task.executeParallel(list);

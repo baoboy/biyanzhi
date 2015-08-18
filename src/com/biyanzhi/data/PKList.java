@@ -24,6 +24,15 @@ public class PKList {
 
 	private List<PKData> mlists = new ArrayList<PKData>();
 	private String pk_time = "";
+	private int load_more_count = 0;
+
+	public int getLoad_more_count() {
+		return load_more_count;
+	}
+
+	public void setLoad_more_count(int load_more_count) {
+		this.load_more_count = load_more_count;
+	}
 
 	public String getPk_time() {
 		return pk_time;
@@ -134,16 +143,17 @@ public class PKList {
 		}
 	}
 
-	public RetError getPKListByUserID(int pk_user_id) {
+	public RetError getPKListByUserID(int pk_user_id, int page) {
 		IParser parser = new PKListParser();
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("pk_time", pk_time);
+		params.put("page", page);
 		params.put("pk_user_id", pk_user_id);
 		Result ret = ApiRequest.request(GETPKLISTBYUSERID, params, parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			PKList pk_lists = (PKList) ret.getData();
-			this.mlists.clear();
+			// this.mlists.clear();
 			this.mlists = pk_lists.getMlists();
+			load_more_count = pk_lists.getMlists().size();
 			return RetError.NONE;
 		} else {
 			return ret.getErr();

@@ -72,8 +72,10 @@ public class PKFinishedApapter extends BaseAdapter {
 			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.pk_finish_item, null);
 			holder = new ViewHolder();
-			holder.txt_pk1 = (TextView) convertView.findViewById(R.id.txt_pk1);
-			holder.txt_pk2 = (TextView) convertView.findViewById(R.id.txt_pk2);
+			// holder.txt_pk1 = (TextView)
+			// convertView.findViewById(R.id.txt_pk1);
+			// holder.txt_pk2 = (TextView)
+			// convertView.findViewById(R.id.txt_pk2);
 			holder.img_pk1_win = (ImageView) convertView
 					.findViewById(R.id.img_pk1_win);
 			holder.img_pk2_win = (ImageView) convertView
@@ -91,10 +93,10 @@ public class PKFinishedApapter extends BaseAdapter {
 					.setLayoutParams(getButtonLayoutParams(holder.btn_pk2));
 			holder.img_pk1.setLayoutParams(getLayoutParams(holder.img_pk1));
 			holder.img_pk2.setLayoutParams(getLayoutParams(holder.img_pk2));
-			holder.txt_pk1
-					.setLayoutParams(getTextViewLayoutParams(holder.txt_pk1));
-			holder.txt_pk2
-					.setLayoutParams(getTextViewLayoutParams(holder.txt_pk2));
+			// holder.txt_pk1
+			// .setLayoutParams(getTextViewLayoutParams(holder.txt_pk1));
+			// holder.txt_pk2
+			// .setLayoutParams(getTextViewLayoutParams(holder.txt_pk2));
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -110,20 +112,20 @@ public class PKFinishedApapter extends BaseAdapter {
 		int pk1_user_id = pk1.getPk1_user_id();
 		int pk2_user_id = pk2.getPk2_user_id();
 		if ("Å®".equals(mlists.get(position).getPk1().getPk1_user_gender())) {
-			holder.txt_pk1.setTextColor(mContext.getResources().getColor(
-					R.color.girl));
-			holder.txt_pk2.setTextColor(mContext.getResources().getColor(
-					R.color.girl));
+			// holder.txt_pk1.setTextColor(mContext.getResources().getColor(
+			// R.color.girl));
+			// holder.txt_pk2.setTextColor(mContext.getResources().getColor(
+			// R.color.girl));
 			holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
 					R.drawable.pk_girl_btn));
 			holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
 					R.drawable.pk_girl_btn));
 			holder.img_vs.setImageResource(R.drawable.girl_vs);
 		} else {
-			holder.txt_pk1.setTextColor(mContext.getResources().getColor(
-					R.color.boy));
-			holder.txt_pk2.setTextColor(mContext.getResources().getColor(
-					R.color.boy));
+			// holder.txt_pk1.setTextColor(mContext.getResources().getColor(
+			// R.color.boy));
+			// holder.txt_pk2.setTextColor(mContext.getResources().getColor(
+			// R.color.boy));
 			holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
 					R.drawable.pk_boy_btn));
 			holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
@@ -167,10 +169,10 @@ public class PKFinishedApapter extends BaseAdapter {
 			holder.img_pk2_win.setVisibility(View.GONE);
 			holder.img_pk1_win.setVisibility(View.GONE);
 		}
-		holder.txt_pk1.setText("×Ü   " + pk1.getPk1_win_count() + "Ê¤/"
-				+ pk1.getPk1_fail_count() + "°Ü");
-		holder.txt_pk2.setText("×Ü   " + pk2.getPk2_win_count() + "Ê¤/"
-				+ pk2.getPk2_fail_count() + "°Ü");
+		// holder.txt_pk1.setText("×Ü   " + pk1.getPk1_win_count() + "Ê¤/"
+		// + pk1.getPk1_fail_count() + "°Ü");
+		// holder.txt_pk2.setText("×Ü   " + pk2.getPk2_win_count() + "Ê¤/"
+		// + pk2.getPk2_fail_count() + "°Ü");
 		holder.img_pk1.setOnClickListener(new OnClick(position));
 		holder.img_pk2.setOnClickListener(new OnClick(position));
 		holder.btn_pk1.setOnClickListener(new OnClick(position));
@@ -186,8 +188,8 @@ public class PKFinishedApapter extends BaseAdapter {
 		ImageView img_vs;
 		ImageView img_pk1_win;
 		ImageView img_pk2_win;
-		TextView txt_pk1;
-		TextView txt_pk2;
+		// TextView txt_pk1;
+		// TextView txt_pk2;
 
 	}
 

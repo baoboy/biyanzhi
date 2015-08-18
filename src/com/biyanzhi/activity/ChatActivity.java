@@ -37,6 +37,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.os.PowerManager;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
@@ -203,7 +204,18 @@ public class ChatActivity extends BaseActivity implements OnItemClickListener,
 	private Handler mEmjoiHandler = new Handler() {
 		@Override
 		public void handleMessage(android.os.Message msg) {
-			expressionViewpager.setAdapter(new ExpressionPagerAdapter(views));
+			switch (msg.what) {
+			case 0:
+				expressionViewpager
+						.setAdapter(new ExpressionPagerAdapter(views));
+
+				break;
+			case 1:
+				views.add(getGridChildView((int) msg.obj));
+				break;
+			default:
+				break;
+			}
 		}
 	};
 
@@ -272,10 +284,13 @@ public class ChatActivity extends BaseActivity implements OnItemClickListener,
 
 		new Thread() {
 			public void run() { // 初始化表情viewpager
-				for (int i = 1; i < 4; i++) {
-					views.add(getGridChildView(i));
-				}
 				Looper.prepare();
+				for (int i = 1; i < 4; i++) {
+					Message msg = mEmjoiHandler.obtainMessage();
+					msg.obj = i;
+					msg.what = 1;
+					mEmjoiHandler.sendMessage(msg);
+				}
 				mEmjoiHandler.sendEmptyMessage(0);
 				Looper.loop();
 			}

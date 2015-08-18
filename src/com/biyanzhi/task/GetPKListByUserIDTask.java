@@ -7,15 +7,17 @@ public class GetPKListByUserIDTask extends
 		BaseAsyncTask<PKList, Void, RetError> {
 	private PKList list;
 	private int pk_user_id;
+	private int page;
 
-	public GetPKListByUserIDTask(int pk_user_id) {
+	public GetPKListByUserIDTask(int pk_user_id, int page) {
 		this.pk_user_id = pk_user_id;
+		this.page = page;
 	}
 
 	@Override
 	protected RetError doInBackground(PKList... params) {
 		list = params[0];
-		return list.getPKListByUserID(pk_user_id);
+		return list.getPKListByUserID(pk_user_id, page);
 	}
 
 }

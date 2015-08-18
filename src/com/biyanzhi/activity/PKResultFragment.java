@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.GetPkResultTask;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.GridViewWithHeaderAndFooter;
+import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 
 public class PKResultFragment extends Fragment implements OnItemClickListener {
@@ -72,7 +74,11 @@ public class PKResultFragment extends Fragment implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
-
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), UserInfoActivity.class).putExtra(
+				"user_id", mLists.get(position).getUser().getUser_id());
+		startActivity(intent);
+		Utils.leftOutRightIn(getActivity());
 	}
 
 	private void getPKResultList() {
