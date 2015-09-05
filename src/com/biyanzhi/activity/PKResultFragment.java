@@ -16,7 +16,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.biyanzhi.R;
@@ -27,12 +29,14 @@ import com.biyanzhi.enums.RetError;
 import com.biyanzhi.task.GetPkResultTask;
 import com.biyanzhi.utils.DialogUtil;
 import com.biyanzhi.utils.GridViewWithHeaderAndFooter;
+import com.biyanzhi.utils.UniversalImageLoadTool;
 import com.biyanzhi.utils.Utils;
 import com.biyianzhi.interfaces.AbstractTaskPostCallBack;
 
 public class PKResultFragment extends Fragment implements OnItemClickListener {
 	private Dialog dialog;
 	private List<PKResult> mLists = new ArrayList<PKResult>();
+
 	private PKResultList list = new PKResultList();
 	private GridViewWithHeaderAndFooter mGridView;
 	private PKResultAdapter adapter;
@@ -64,16 +68,38 @@ public class PKResultFragment extends Fragment implements OnItemClickListener {
 		mGridView.addFooterView(footerView);
 		mGridView.hideFootView();
 		mGridView.setOnItemClickListener(this);
+		mGridView.setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+				if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+					UniversalImageLoadTool.resume();
+					adapter.notifyDataSetChanged();
+				} else {
+					UniversalImageLoadTool.pause();
+
+				}
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+
+			}
+		});
 	}
 
 	private void setValue() {
 		adapter = new PKResultAdapter(getActivity(), mLists);
 		mGridView.setAdapter(adapter);
+
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
+		UniversalImageLoadTool.resume();
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), UserInfoActivity.class).putExtra(
 				"user_id", mLists.get(position).getUser().getUser_id());
@@ -93,6 +119,7 @@ public class PKResultFragment extends Fragment implements OnItemClickListener {
 				mPtrFrame.refreshComplete();
 				mLists.addAll(0, list.getLists());
 				adapter.notifyDataSetChanged();
+				// bangAdapter.notifyDataSetChanged();
 			}
 		});
 		task.executeParallel(list);

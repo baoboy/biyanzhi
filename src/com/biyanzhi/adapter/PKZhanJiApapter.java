@@ -41,10 +41,12 @@ public class PKZhanJiApapter extends BaseAdapter {
 	private Context mContext;
 	private int width;
 	private List<PKData> mlists;
+	private float dp;
 
 	public PKZhanJiApapter(Context mContext, List<PKData> mlists) {
 		this.mContext = mContext;
-		width = Utils.getSecreenWidth(mContext) / 2 - 80;// 24 marginֵ
+		dp = mContext.getResources().getDisplayMetrics().density;
+		width = (int) (Utils.getSecreenWidth(mContext) / 2 - (40 * dp));
 		this.mlists = mlists;
 	}
 
@@ -102,18 +104,34 @@ public class PKZhanJiApapter extends BaseAdapter {
 				R.drawable.picture_default_head);
 		int pk1_user_id = pk1.getPk1_user_id();
 		int pk2_user_id = pk2.getPk2_user_id();
+		int sdk = android.os.Build.VERSION.SDK_INT;
+
 		if ("Ů".equals(mlists.get(position).getPk1().getPk1_user_gender())) {
-			holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
-					R.drawable.pk_girl_btn));
-			holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
-					R.drawable.pk_girl_btn));
+			if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+				holder.btn_pk1.setBackgroundDrawable(mContext.getResources()
+						.getDrawable(R.drawable.pk_girl_btn));
+				holder.btn_pk2.setBackgroundDrawable(mContext.getResources()
+						.getDrawable(R.drawable.pk_girl_btn));
+			} else {
+				holder.btn_pk1.setBackground(mContext.getResources()
+						.getDrawable(R.drawable.pk_girl_btn));
+				holder.btn_pk2.setBackground(mContext.getResources()
+						.getDrawable(R.drawable.pk_girl_btn));
+			}
 			holder.img_vs.setImageResource(R.drawable.girl_vs);
 		} else {
-
-			holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
-					R.drawable.pk_boy_btn));
-			holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
-					R.drawable.pk_boy_btn));
+			if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+ 				holder.btn_pk1.setBackgroundDrawable(mContext.getResources().getDrawable(
+						R.drawable.pk_boy_btn));
+				holder.btn_pk2.setBackgroundDrawable(mContext.getResources().getDrawable(
+						R.drawable.pk_boy_btn));
+			} else {
+				holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
+						R.drawable.pk_boy_btn));
+				holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
+						R.drawable.pk_boy_btn));
+			}
+		
 			holder.img_vs.setImageResource(R.drawable.boy_vs);
 		}
 

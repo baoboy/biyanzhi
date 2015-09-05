@@ -1,6 +1,8 @@
 package com.biyanzhi.data;
 
-public class ShuoShuoPraise {
+import java.io.Serializable;
+
+public class ShuoShuoPraise implements Serializable {
 	private int user_id;
 	private int shuoshuo_id;
 	private String user_avatar = "";

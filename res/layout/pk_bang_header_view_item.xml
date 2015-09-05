@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="8dip" >
+
+    <com.biyanzhi.view.RoundAngleImageView
+        android:id="@+id/img"
+        android:layout_width="200dip"
+        android:layout_height="200dip"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dip"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_avatar" />
+
+    <ImageView
+        android:id="@+id/img_bang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/img"
+        android:src="@drawable/pk_no1" />
+
+    <TextView
+        android:id="@+id/txt_pk_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_bang"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="10dip"
+        android:layout_toRightOf="@+id/img"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="10个人喜欢"
+        android:textColor="#666666"
+        android:textSize="13sp" />
+
+</RelativeLayout>

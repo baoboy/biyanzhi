@@ -241,6 +241,9 @@ public class BiYanZhiFragment extends Fragment implements OnItemClickListener {
 				if (position >= mLists.size()) {
 					return;
 				}
+				if (score <= 60) {
+					mLists.get(position).setIs_play_score(true);
+				}
 				int all_score = mLists.get(position).getAverage_score()
 						* mLists.get(position).getScore_number();
 				mLists.get(position).setScore_number(

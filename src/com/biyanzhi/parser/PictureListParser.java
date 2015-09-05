@@ -71,7 +71,7 @@ public class PictureListParser implements IParser {
 			User user = null;
 			if (obj.has("user")) {
 				String userResult = obj.getString("user");
-				if (!"".equals(userResult) || !"null".equals(userResult)) {
+				if (!"".equals(userResult) && !"null".equals(userResult)) {
 					user = new User();
 					JSONObject userObj = new JSONObject(userResult);
 					user.setUser_id(userObj.getInt("user_id"));

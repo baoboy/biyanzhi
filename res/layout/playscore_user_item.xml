@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
@@ -35,9 +36,22 @@
             android:textColor="@color/pciture_text"
             android:textSize="16sp" />
 
-        <RatingBar
+        <!-- <RatingBar -->
+        <!-- android:id="@+id/ratingbar" -->
+        <!-- style="@style/roomRatingBar_small" -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:layout_below="@+id/txt_user_name" -->
+        <!-- android:layout_gravity="center" -->
+        <!-- android:layout_marginTop="5dip" -->
+        <!-- android:layout_toRightOf="@+id/img_avatar" -->
+        <!-- android:isIndicator="true" -->
+        <!-- android:numStars="5" -->
+        <!-- android:stepSize="0.1" > -->
+        <!-- </RatingBar> -->
+
+        <com.biyanzhi.view.FlexibleSmallRatingBar
             android:id="@+id/ratingbar"
-            style="@style/roomRatingBar_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_user_name"
@@ -46,8 +60,14 @@
             android:layout_toRightOf="@+id/img_avatar"
             android:isIndicator="true"
             android:numStars="5"
-            android:stepSize="0.1" >
-        </RatingBar>
+            android:stepSize="0.1"
+            app:colorFillOff="#dddddd"
+            app:colorFillOn="#fb4a83"
+            app:colorFillPressedOff="#dddddd"
+            app:colorFillPressedOn="#fb4a83"
+            app:colorOutlineOff="@android:color/transparent"
+            app:colorOutlineOn="@android:color/transparent"
+            app:colorOutlinePressed="@android:color/transparent" />
 
         <TextView
             android:id="@+id/txt_play_score"

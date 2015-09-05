@@ -150,8 +150,14 @@ public class PictureCommentActivity extends BaseActivity implements
 			line_ratingbar.setVisibility(View.GONE);
 		}
 		if (SharedUtils.getIntUid() != picture.getPublisher_id()) {
-			ratingBar.setVisibility(View.VISIBLE);
-			line_ratingbar.setVisibility(View.VISIBLE);
+			if (picture.isIs_play_score()) {
+				ratingBar.setVisibility(View.GONE);
+				line_ratingbar.setVisibility(View.GONE);
+			} else {
+				ratingBar.setVisibility(View.VISIBLE);
+				line_ratingbar.setVisibility(View.VISIBLE);
+			}
+
 			btn_del.setVisibility(View.GONE);
 		} else {
 			txt_share.setText("炫耀一下");
@@ -346,15 +352,15 @@ public class PictureCommentActivity extends BaseActivity implements
 			str = score + "分 看来TA不是你的菜,分数不够高哦";
 
 		}
-		PromptDialog.Builder dialog = DialogUtil.confirmDialog(this, str, "确定",
-				null, new ConfirmDialog() {
+		PromptDialog.Builder dialog = DialogUtil.confirmDialog(this, str,
+				"打错了,重新打分", "确定", new ConfirmDialog() {
 
 					@Override
 					public void onOKClick() {
-						sendScore(score);
 					}
 
 					public void onCancleClick() {
+						sendScore(score);
 
 					}
 				});
@@ -363,7 +369,8 @@ public class PictureCommentActivity extends BaseActivity implements
 
 	private void firstPrompt() {
 		PromptDialog.Builder dialog = DialogUtil.confirmDialog(this,
-				"点击星星为TA评分,满分100分,每颗星星代表20分哦", "确定", null, new ConfirmDialog() {
+				"点击或者拖动星星为TA评分,满分100分,每颗星星代表20分哦", "确定", null,
+				new ConfirmDialog() {
 
 					@Override
 					public void onOKClick() {
@@ -421,6 +428,11 @@ public class PictureCommentActivity extends BaseActivity implements
 				}
 				sendBroadcast(new Intent(Constants.PLAY_SCORE).putExtra(
 						"position", position).putExtra("score", score));
+				if (score <= 60) {
+					picture.setIs_play_score(true);
+					ratingBar.setVisibility(View.GONE);
+					line_ratingbar.setVisibility(View.GONE);
+				}
 				// updatePicturePublishTime();
 			}
 		});

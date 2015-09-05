@@ -1,6 +1,8 @@
 package com.biyanzhi.data;
 
-public class ShuoShuoImage {
+import java.io.Serializable;
+
+public class ShuoShuoImage implements Serializable {
 	private int img_id = 0;
 	private int shuoshuo_id = 0;
 	private String img_url = "";

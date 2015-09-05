@@ -46,11 +46,13 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	private TextView btn_biyanzhi;
 	private TextView btn_yanzhibang;
 	private TextView btn_pk;
+	private TextView btn_shai;
 	private FragmentTransaction fraTra = null;
 	private FragmentManager manager;
 	private BiYanZhiFragment biyanzhi_fragment;
 	private YanZhiBangFragment yanzhibang_fragment;
 	private PKFragment pk_fragment;
+	private ShaiShaiFragment shai_fragment;
 	private boolean isregister = false;
 	private int current_index = 1;
 
@@ -81,6 +83,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 	}
 
 	private void initView() {
+		btn_shai = (TextView) findViewById(R.id.btn_shai);
 		btn_biyanzhi = (TextView) findViewById(R.id.btn_biyanzhi);
 		btn_yanzhibang = (TextView) findViewById(R.id.btn_yanzhibang);
 		btn_pk = (TextView) findViewById(R.id.btn_pk);
@@ -94,6 +97,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 		btn_biyanzhi.setOnClickListener(this);
 		btn_yanzhibang.setOnClickListener(this);
 		btn_pk.setOnClickListener(this);
+		btn_shai.setOnClickListener(this);
 
 	}
 
@@ -125,6 +129,8 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			if (current_index == 3) {
 				startActivity(new Intent(this, SelectPKPictureActivity.class));
 				Utils.leftOutRightIn(this);
+			} else if (current_index == 4) {
+				shai_fragment.addShuoShuo();
 			} else {
 				startActivity(new Intent(this, PublicshPictureActivity.class));
 				Utils.leftOutRightIn(this);
@@ -155,11 +161,17 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			btn_pk.setTextColor(getResources().getColor(R.color.white));
 			btn_pk.setBackgroundColor(getResources().getColor(
 					R.color.titleBarBackGround));
+			btn_shai.setTextColor(getResources().getColor(R.color.white));
+			btn_shai.setBackgroundColor(getResources().getColor(
+					R.color.titleBarBackGround));
 			if (yanzhibang_fragment != null) {
 				fraTra.hide(yanzhibang_fragment);
 			}
 			if (pk_fragment != null) {
 				fraTra.hide(pk_fragment);
+			}
+			if (shai_fragment != null) {
+				fraTra.hide(shai_fragment);
 			}
 			fraTra.show(biyanzhi_fragment);
 			fraTra.commit();
@@ -178,6 +190,9 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			btn_pk.setTextColor(getResources().getColor(R.color.white));
 			btn_pk.setBackgroundColor(getResources().getColor(
 					R.color.titleBarBackGround));
+			btn_shai.setTextColor(getResources().getColor(R.color.white));
+			btn_shai.setBackgroundColor(getResources().getColor(
+					R.color.titleBarBackGround));
 			if (yanzhibang_fragment == null) {
 				yanzhibang_fragment = new YanZhiBangFragment();
 				fraTra.add(R.id.main_layout, yanzhibang_fragment);
@@ -189,6 +204,9 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			}
 			if (pk_fragment != null) {
 				fraTra.hide(pk_fragment);
+			}
+			if (shai_fragment != null) {
+				fraTra.hide(shai_fragment);
 			}
 			fraTra.show(yanzhibang_fragment);
 			fraTra.commit();
@@ -205,6 +223,9 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			btn_yanzhibang.setTextColor(getResources().getColor(R.color.white));
 			btn_yanzhibang.setBackgroundColor(getResources().getColor(
 					R.color.titleBarBackGround));
+			btn_shai.setTextColor(getResources().getColor(R.color.white));
+			btn_shai.setBackgroundColor(getResources().getColor(
+					R.color.titleBarBackGround));
 			if (pk_fragment == null) {
 				pk_fragment = new PKFragment();
 				fraTra.add(R.id.main_layout, pk_fragment);
@@ -217,7 +238,44 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 			if (yanzhibang_fragment != null) {
 				fraTra.hide(yanzhibang_fragment);
 			}
+			if (shai_fragment != null) {
+				fraTra.hide(shai_fragment);
+			}
 			fraTra.show(pk_fragment);
+			fraTra.commit();
+
+			break;
+		case R.id.btn_shai:
+			current_index = 4;
+			fraTra = getSupportFragmentManager().beginTransaction();
+			btn_shai.setTextColor(getResources().getColor(
+					R.color.titleBarBackGround));
+			btn_shai.setBackgroundColor(getResources().getColor(R.color.white));
+			btn_biyanzhi.setTextColor(getResources().getColor(R.color.white));
+			btn_biyanzhi.setBackgroundColor(getResources().getColor(
+					R.color.titleBarBackGround));
+			btn_yanzhibang.setTextColor(getResources().getColor(R.color.white));
+			btn_yanzhibang.setBackgroundColor(getResources().getColor(
+					R.color.titleBarBackGround));
+			btn_pk.setTextColor(getResources().getColor(R.color.white));
+			btn_pk.setBackgroundColor(getResources().getColor(
+					R.color.titleBarBackGround));
+			if (shai_fragment == null) {
+				shai_fragment = new ShaiShaiFragment();
+				fraTra.add(R.id.main_layout, shai_fragment);
+			} else {
+				shai_fragment.onResume();
+			}
+			if (biyanzhi_fragment != null) {
+				fraTra.hide(biyanzhi_fragment);
+			}
+			if (yanzhibang_fragment != null) {
+				fraTra.hide(yanzhibang_fragment);
+			}
+			if (pk_fragment != null) {
+				fraTra.hide(pk_fragment);
+			}
+			fraTra.show(shai_fragment);
 			fraTra.commit();
 
 			break;

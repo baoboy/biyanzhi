@@ -1,6 +1,8 @@
 package com.biyanzhi.data;
 
-public class ShuoShuoComment {
+import java.io.Serializable;
+
+public class ShuoShuoComment implements Serializable {
 	private int comment_id;
 	private int shuoshuo_id;
 	private int publisher_id;

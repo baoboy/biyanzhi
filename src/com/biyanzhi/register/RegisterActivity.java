@@ -158,7 +158,7 @@ public class RegisterActivity extends FragmentActivity implements
 			if (data == null) {
 				return;
 			}
-			if (resultCode == RESULT_OK) {
+			if (resultCode == RESULT_OK && reBasicInfo != null) {
 				if (data.getData() == null) {
 					return;
 				}

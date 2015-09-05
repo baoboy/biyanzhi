@@ -1,6 +1,7 @@
 package com.biyanzhi.data;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import com.biyanzhi.parser.IParser;
 import com.biyanzhi.parser.SimpleParser;
 import com.biyanzhi.utils.BitmapUtils;
 
-public class ShuoShuo {
+public class ShuoShuo implements Serializable {
 	private static final String PUBLISH_SHUOSHUO_API = "addShuoShuo.do";
 	private int shuoshuo_id = 0;
 	private int publisher_id = 0;

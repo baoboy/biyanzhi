@@ -16,6 +16,15 @@ public class PictureScoreUserList {
 
 	private int picture_id;
 	private List<PictureScore> lists = new ArrayList<PictureScore>();
+	private int load_more_count = 0;
+
+	public int getLoad_more_count() {
+		return load_more_count;
+	}
+
+	public void setLoad_more_count(int load_more_count) {
+		this.load_more_count = load_more_count;
+	}
 
 	public int getPicture_id() {
 		return picture_id;
@@ -33,15 +42,18 @@ public class PictureScoreUserList {
 		this.lists = lists;
 	}
 
-	public RetError getPlayScoreUserListsByPictureID() {
+	public RetError getPlayScoreUserListsByPictureID(int page) {
 		IParser parser = new GetPlayScoreUserListPaser();
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("picture_id", picture_id);
+		params.put("page", page);
 		Result ret = ApiRequest.request(GET_PLAYSCORE_USERLISTS_BY_PICTUREID,
 				params, parser);
 		if (ret.getStatus() == RetStatus.SUCC) {
 			PictureScoreUserList list = (PictureScoreUserList) ret.getData();
 			this.lists = list.getLists();
+			load_more_count = list.getLists().size();
+
 			return RetError.NONE;
 		} else {
 			return ret.getErr();

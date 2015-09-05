@@ -64,6 +64,12 @@
 # view AndroidManifest.xml #generated:126
 -keep class com.biyanzhi.activity.PublicshPictureActivity { <init>(...); }
 
+# view AndroidManifest.xml #generated:278
+-keep class com.biyanzhi.activity.PublicshShuoShuoActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:283
+-keep class com.biyanzhi.activity.PublishShuoShuoImagePagerActivity { <init>(...); }
+
 # view AndroidManifest.xml #generated:248
 -keep class com.biyanzhi.activity.SelectPK2PictureActivity { <init>(...); }
 
@@ -145,10 +151,22 @@
 -keep class com.biyanzhi.view.DampView { <init>(...); }
 
 # view res/layout/expression_gridview.xml #generated:7
+# view res/layout/publish_shuoshuo_activity.xml #generated:25
 # view res/layout/user_info_yanzhi.xml #generated:7
 -keep class com.biyanzhi.view.ExpandGridView { <init>(...); }
 
+# view res/layout/activity_comment.xml #generated:116
+# view res/layout/activity_picture_server_comment.xml #generated:122
+-keep class com.biyanzhi.view.FlexibleRatingBar { <init>(...); }
+
+# view res/layout/playscore_user_item.xml #generated:53
+-keep class com.biyanzhi.view.FlexibleSmallRatingBar { <init>(...); }
+
+# view res/layout/publish_shuoshuo_item.xml #generated:2
+-keep class com.biyanzhi.view.GridViewItemLayout { <init>(...); }
+
 # view res/layout/activity_image_pager.xml #generated:38
+# view res/layout/activity_publish_shuoshuo_image_pager.xml #generated:38
 # view res/layout/image_detail_pager.xml #generated:9
 -keep class com.biyanzhi.view.HackyViewPager { <init>(...); }
 
@@ -164,14 +182,15 @@
 # view res/layout/register_user_name.xml #generated:7
 -keep class com.biyanzhi.view.MyEditTextDeleteImg { <init>(...); }
 
-# view res/layout/activity_comment.xml #generated:68
-# view res/layout/activity_picture_server_comment.xml #generated:74
+# view res/layout/activity_comment.xml #generated:69
+# view res/layout/activity_picture_server_comment.xml #generated:75
 # view res/layout/activity_pkwin.xml #generated:24
 # view res/layout/activity_pkwin.xml #generated:39
 # view res/layout/activity_tiao_zhan_prompt.xml #generated:24
 # view res/layout/activity_tiao_zhan_prompt.xml #generated:39
 # view res/layout/comment_item.xml #generated:8
 # view res/layout/guanzhu_listview_item.xml #generated:18
+# view res/layout/pk_bang_header_view_item.xml #generated:8
 # view res/layout/pk_finish_item.xml #generated:13
 # view res/layout/pk_finish_item.xml #generated:28
 # view res/layout/pk_gridview_item.xml #generated:15
@@ -179,8 +198,9 @@
 # view res/layout/pk_item.xml #generated:28
 # view res/layout/pk_zhanji_item.xml #generated:13
 # view res/layout/pk_zhanji_item.xml #generated:28
-# view res/layout/playscore_user_item.xml #generated:19
+# view res/layout/playscore_user_item.xml #generated:20
 # view res/layout/publish_picture_activity.xml #generated:13
+# view res/layout/publish_shuoshuo_item.xml #generated:6
 # view res/layout/row_chat_history.xml #generated:37
 # view res/layout/row_received_file.xml #generated:21
 # view res/layout/row_received_location.xml #generated:22
@@ -204,8 +224,9 @@
 # view res/layout/pk_reslult_item_layout.xml #generated:15
 -keep class com.biyanzhi.view.RoundAnglePictureImageView { <init>(...); }
 
-# view res/layout/activity_comment.xml #generated:214
-# view res/layout/activity_picture_server_comment.xml #generated:196
+# view res/layout/activity_comment.xml #generated:230
+# view res/layout/activity_picture_server_comment.xml #generated:202
+# view res/layout/pk_bang_header_view.xml #generated:7
 -keep class com.biyanzhi.view.ScrollViewWithListView { <init>(...); }
 
 # view res/layout/row_chat_history.xml #generated:8
@@ -244,6 +265,7 @@
 # view res/layout/pk_jieguo_fragment_layout.xml #generated:11
 # view res/layout/pk_result_fragment_layout.xml #generated:8
 # view res/layout/pk_zhong_fragment_layout.xml #generated:11
+# view res/layout/shaishai_fragment_layout.xml #generated:8
 -keep class in.srain.cube.views.ptr.PtrClassicFrameLayout { <init>(...); }
 
 # onClick res/layout/activity_chat.xml #generated:85

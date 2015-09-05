@@ -47,10 +47,12 @@ public class PKAdapter extends BaseAdapter {
 	private int width;
 	private List<PKData> mlists;
 	private Dialog dialog;
+	private float dp;
 
 	public PKAdapter(Context mContext, List<PKData> mlists) {
 		this.mContext = mContext;
-		width = Utils.getSecreenWidth(mContext) / 2 - 80;// 24 marginֵ
+		dp = mContext.getResources().getDisplayMetrics().density;
+		width = (int) (Utils.getSecreenWidth(mContext) / 2 - (40 * dp));// 24
 		this.mlists = mlists;
 	}
 
