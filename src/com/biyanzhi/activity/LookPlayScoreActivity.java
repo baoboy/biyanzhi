@@ -77,24 +77,18 @@ public class LookPlayScoreActivity extends BaseActivity implements
 
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
-					// 滚动到底,请求下一页数据
-					if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
-						if (isLoading) {
-							return;
-						}
-						if (list.getLoad_more_count() < 9) {
-							return;
-						}
-						layout_foot.setVisibility(View.VISIBLE);
-						isLoading = true;
-						getLists(++page);
+				// 滚动到底,请求下一页数据
+				if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
+					if (isLoading) {
+						return;
 					}
-				} else {
-					UniversalImageLoadTool.pause();
-
+					if (list.getLoad_more_count() < 9) {
+						return;
+					}
+					layout_foot.setVisibility(View.VISIBLE);
+					isLoading = true;
+					getLists(++page);
 				}
-
 			}
 
 			@Override
