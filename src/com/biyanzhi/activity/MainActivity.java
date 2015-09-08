@@ -409,4 +409,7 @@ public class MainActivity extends FragmentActivity implements SelectOnclick,
 		}
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+	}
 }

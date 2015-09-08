@@ -639,7 +639,7 @@ public class PKAdapter extends BaseAdapter {
 
 	private void showMenu(View v, final int user_id, final String picture_url) {
 		MenuPopwindow pop = new MenuPopwindow(mContext, v, new String[] {
-				"看大图", "查看PK者信息" });
+				"看大图", "和TA聊聊" });
 		pop.setCallback(new OnMenuListOnclick() {
 
 			@Override

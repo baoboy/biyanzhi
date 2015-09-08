@@ -38,6 +38,8 @@ import com.biyanzhi.data.User;
 import com.biyanzhi.enums.RetError;
 import com.biyanzhi.popwindow.CommentPopwindow;
 import com.biyanzhi.popwindow.CommentPopwindow.OnCommentOnClick;
+import com.biyanzhi.popwindow.RightMenuPopwindow;
+import com.biyanzhi.popwindow.RightMenuPopwindow.OnMenuListOnclick;
 import com.biyanzhi.popwindow.SharePopwindow;
 import com.biyanzhi.popwindow.SharePopwindow.SelectMenuOnclick;
 import com.biyanzhi.showbigimage.ImagePagerActivity;
@@ -86,7 +88,6 @@ public class PictureCommentActivity extends BaseActivity implements
 	private Picture picture;
 
 	private RatingBar ratingBar;
-	private TextView txt_score;
 	private TextView txt_share;
 	private TextView btn_del;
 
@@ -97,6 +98,7 @@ public class PictureCommentActivity extends BaseActivity implements
 	private View line_ratingbar;
 	private int position = -1;
 	private boolean isCanPlayScore = true;
+	private RightMenuPopwindow pop_right;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,30 +136,14 @@ public class PictureCommentActivity extends BaseActivity implements
 		comment_layout = (LinearLayout) findViewById(R.id.layout_comment);
 		ratingBar = (RatingBar) findViewById(R.id.ratingbar);
 
-		// if (!picture.isIs_play_score()) {
-		// ratingBar.setVisibility(View.VISIBLE);
-		// line_ratingbar.setVisibility(View.VISIBLE);
-		// } else {
-		// ratingBar.setVisibility(View.GONE);
-		// line_ratingbar.setVisibility(View.GONE);
-		// }
-
-		if (isCanPlayScore) {
-			ratingBar.setVisibility(View.VISIBLE);
-			line_ratingbar.setVisibility(View.VISIBLE);
-		} else {
-			ratingBar.setVisibility(View.GONE);
-			line_ratingbar.setVisibility(View.GONE);
-		}
 		if (SharedUtils.getIntUid() != picture.getPublisher_id()) {
-			if (picture.isIs_play_score()) {
+			if (picture.isIs_play_score() || !isCanPlayScore) {
 				ratingBar.setVisibility(View.GONE);
 				line_ratingbar.setVisibility(View.GONE);
 			} else {
 				ratingBar.setVisibility(View.VISIBLE);
 				line_ratingbar.setVisibility(View.VISIBLE);
 			}
-
 			btn_del.setVisibility(View.GONE);
 		} else {
 			txt_share.setText("炫耀一下");
@@ -165,7 +151,6 @@ public class PictureCommentActivity extends BaseActivity implements
 			line_ratingbar.setVisibility(View.GONE);
 			btn_del.setVisibility(View.VISIBLE);
 		}
-		txt_score = (TextView) findViewById(R.id.txt_score);
 		LayoutParams layoutParams = img.getLayoutParams();
 		layoutParams.width = Utils.getSecreenWidth(this) - 100;
 		img.setLayoutParams(layoutParams);
@@ -196,8 +181,8 @@ public class PictureCommentActivity extends BaseActivity implements
 		mListView.setOnItemClickListener(this);
 		img_avatar.setOnClickListener(new OnAvatarClick(picture
 				.getPublisher_id(), this));
-		txt_score.setOnClickListener(this);
 		btn_del.setOnClickListener(this);
+		findViewById(R.id.rightImg).setOnClickListener(this);
 	}
 
 	private void setValue() {
@@ -269,13 +254,36 @@ public class PictureCommentActivity extends BaseActivity implements
 			share_pop.setmSelectOnclick(this);
 			share_pop.show();
 			break;
-		case R.id.txt_score:
-			startActivity(new Intent(this, LookPlayScoreActivity.class)
-					.putExtra("picture_id", picture.getPicture_id()));
-			Utils.leftOutRightIn(this);
-			break;
 		case R.id.btn_del:
 			DelPrompt();
+			break;
+		case R.id.rightImg:
+			pop_right = new RightMenuPopwindow(this, layout_title,
+					new String[] { "评分详情", "和TA聊聊" });
+			pop_right.setOnlistOnclick(new OnMenuListOnclick() {
+
+				@Override
+				public void onclick(int position) {
+					switch (position) {
+					case 0:
+						startActivity(new Intent(PictureCommentActivity.this,
+								LookPlayScoreActivity.class).putExtra(
+								"picture_id", picture.getPicture_id()));
+						break;
+					case 1:
+						Intent intent = new Intent();
+						intent.setClass(PictureCommentActivity.this,
+								UserInfoActivity.class).putExtra("user_id",
+								picture.getPublisher_id());
+						startActivity(intent);
+						break;
+					default:
+						break;
+					}
+					Utils.leftOutRightIn(PictureCommentActivity.this);
+				}
+			});
+			pop_right.show();
 			break;
 		default:
 			break;

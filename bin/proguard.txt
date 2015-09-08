@@ -155,7 +155,7 @@
 # view res/layout/user_info_yanzhi.xml #generated:7
 -keep class com.biyanzhi.view.ExpandGridView { <init>(...); }
 
-# view res/layout/activity_comment.xml #generated:116
+# view res/layout/activity_comment.xml #generated:127
 # view res/layout/activity_picture_server_comment.xml #generated:122
 -keep class com.biyanzhi.view.FlexibleRatingBar { <init>(...); }
 
@@ -182,7 +182,7 @@
 # view res/layout/register_user_name.xml #generated:7
 -keep class com.biyanzhi.view.MyEditTextDeleteImg { <init>(...); }
 
-# view res/layout/activity_comment.xml #generated:69
+# view res/layout/activity_comment.xml #generated:80
 # view res/layout/activity_picture_server_comment.xml #generated:75
 # view res/layout/activity_pkwin.xml #generated:24
 # view res/layout/activity_pkwin.xml #generated:39
@@ -224,7 +224,7 @@
 # view res/layout/pk_reslult_item_layout.xml #generated:15
 -keep class com.biyanzhi.view.RoundAnglePictureImageView { <init>(...); }
 
-# view res/layout/activity_comment.xml #generated:230
+# view res/layout/activity_comment.xml #generated:241
 # view res/layout/activity_picture_server_comment.xml #generated:202
 # view res/layout/pk_bang_header_view.xml #generated:7
 -keep class com.biyanzhi.view.ScrollViewWithListView { <init>(...); }

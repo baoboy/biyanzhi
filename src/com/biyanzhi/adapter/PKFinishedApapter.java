@@ -348,7 +348,7 @@ public class PKFinishedApapter extends BaseAdapter {
 
 	private void showMenu(final View v, final int item_position) {
 		MenuPopwindow pop = new MenuPopwindow(mContext, v, new String[] {
-				"看大图", "PK  TA", "查看PK者信息" });
+				"看大图", "PK  TA", "和TA聊聊" });
 		pop.setCallback(new OnMenuListOnclick() {
 
 			@Override

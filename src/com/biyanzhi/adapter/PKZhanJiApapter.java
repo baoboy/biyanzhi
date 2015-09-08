@@ -121,17 +121,17 @@ public class PKZhanJiApapter extends BaseAdapter {
 			holder.img_vs.setImageResource(R.drawable.girl_vs);
 		} else {
 			if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
- 				holder.btn_pk1.setBackgroundDrawable(mContext.getResources().getDrawable(
-						R.drawable.pk_boy_btn));
-				holder.btn_pk2.setBackgroundDrawable(mContext.getResources().getDrawable(
-						R.drawable.pk_boy_btn));
+				holder.btn_pk1.setBackgroundDrawable(mContext.getResources()
+						.getDrawable(R.drawable.pk_boy_btn));
+				holder.btn_pk2.setBackgroundDrawable(mContext.getResources()
+						.getDrawable(R.drawable.pk_boy_btn));
 			} else {
-				holder.btn_pk1.setBackground(mContext.getResources().getDrawable(
-						R.drawable.pk_boy_btn));
-				holder.btn_pk2.setBackground(mContext.getResources().getDrawable(
-						R.drawable.pk_boy_btn));
+				holder.btn_pk1.setBackground(mContext.getResources()
+						.getDrawable(R.drawable.pk_boy_btn));
+				holder.btn_pk2.setBackground(mContext.getResources()
+						.getDrawable(R.drawable.pk_boy_btn));
 			}
-		
+
 			holder.img_vs.setImageResource(R.drawable.boy_vs);
 		}
 
@@ -333,7 +333,7 @@ public class PKZhanJiApapter extends BaseAdapter {
 
 	private void showMenu(final View v, final int item_position) {
 		MenuPopwindow pop = new MenuPopwindow(mContext, v, new String[] {
-				"看大图", "PK  TA", "查看PK者信息" });
+				"看大图", "PK  TA", "和TA聊聊" });
 		pop.setCallback(new OnMenuListOnclick() {
 
 			@Override
